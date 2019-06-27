@@ -7,6 +7,13 @@ ID90_pt_bins_inc_eta:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "MVA ID 17 WP90"
+  y_range: [0.5,1.05]
+  ratio_y_range: [0.8,1.2]
 
 ID80_pt_eta_bins:
   name: 'ID80_pt_eta_bins'
@@ -17,6 +24,13 @@ ID80_pt_eta_bins:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "MVA ID 17 WP80"
+  y_range: [0.5,1.05]
+  ratio_y_range: [0.8,1.2]
 
 ID90_pt_eta_bins:
   name: 'ID90_pt_eta_bins'
@@ -27,6 +41,13 @@ ID90_pt_eta_bins:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "MVA ID 17 WP90"
+  y_range: [0.5,1.05]
+  ratio_y_range: [0.8,1.2]
 
 Iso_pt_bins_inc_eta:
   name: 'Iso_pt_bins_inc_eta'
@@ -37,6 +58,13 @@ Iso_pt_bins_inc_eta:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} < 0.15"
+  y_range: [0.6,1.0]
+  ratio_y_range: [0.9,1.1]
 
 Iso_pt_eta_bins:
   name: 'Iso_pt_eta_bins'
@@ -47,6 +75,13 @@ Iso_pt_eta_bins:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} < 0.15"
+  y_range: [0.6,1.0]
+  ratio_y_range: [0.9,1.1]
 
 AIso_pt_bins_inc_eta:
   name: 'AIso_pt_bins_inc_eta'
@@ -57,6 +92,13 @@ AIso_pt_bins_inc_eta:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} > 0.15"
+  y_range: [0.6,1.0]
+  ratio_y_range: [0.9,1.1]
 
 AIso_pt_eta_bins:
   name: 'AIso_pt_eta_bins'
@@ -67,16 +109,30 @@ AIso_pt_eta_bins:
   bins_x: [10., 15., 20., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} > 0.15"
+  y_range: [0.6,1.0]
+  ratio_y_range: [0.9,1.1]
 
 Trg_Iso_pt_bins_inc_eta:
   name: 'Trg_Iso_pt_bins_inc_eta'
   var: 'm_ll(50,65,115)'
-  tag: 'trg_t_Ele35 && pt_t >= 36 &&  id_90_t && iso_p < 0.15 && id_90_p', 
+  tag: 'trg_t_Ele35 && pt_t >= 36 &&  id_90_t && iso_p < 0.15 && id_90_p'
   probe: '(trg_p_Ele27 || trg_p_Ele35 || trg_p_Ele32|| trg_p_Ele32_fb)'
   binvar_x: 'pt_p'
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele35 or Ele32"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg_Iso_pt_eta_bins:
   name: 'Trg_Iso_pt_eta_bins'
@@ -87,6 +143,13 @@ Trg_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele35 or Ele32"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg_AIso_pt_bins_inc_eta:
   name: 'Trg_AIso_pt_bins_inc_eta'
@@ -97,6 +160,13 @@ Trg_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele35 or Ele32, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_Iso_pt_eta_bins:
   name: 'Trg27_Iso_pt_eta_bins'
@@ -107,7 +177,14 @@ Trg27_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
-
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele35 or Ele32, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
+  
 Trg27_AIso_pt_bins_inc_eta:
   name: 'Trg27_AIso_pt_bins_inc_eta'
   var: 'm_ll(50,65,115)'
@@ -117,6 +194,13 @@ Trg27_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg32_Iso_pt_eta_bins:
   name: 'Trg32_Iso_pt_eta_bins'
@@ -127,6 +211,13 @@ Trg32_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele32"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg32_AIso_pt_bins_inc_eta:
   name: 'Trg32_AIso_pt_bins_inc_eta'
@@ -137,6 +228,13 @@ Trg32_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele32, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg32_fb_Iso_pt_eta_bins:
   name: 'Trg32_fb_Iso_pt_eta_bins'
@@ -147,6 +245,13 @@ Trg32_fb_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele32_fallback"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg32_fb_AIso_pt_bins_inc_eta:
   name: 'Trg32_fb_AIso_pt_bins_inc_eta'
@@ -157,6 +262,13 @@ Trg32_fb_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele32_fallback, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg35_Iso_pt_eta_bins:
   name: 'Trg35_Iso_pt_eta_bins'
@@ -167,6 +279,13 @@ Trg35_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele35"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg35_AIso_pt_bins_inc_eta:
   name: 'Trg35_AIso_pt_bins_inc_eta'
@@ -177,6 +296,13 @@ Trg35_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele35, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_Iso_pt_eta_bins:
   name: 'Trg27_or_Trg32_Iso_pt_eta_bins'
@@ -187,6 +313,13 @@ Trg27_or_Trg32_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele32"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_AIso_pt_bins_inc_eta:
   name: 'Trg27_or_Trg32_AIso_pt_bins_inc_eta'
@@ -197,6 +330,13 @@ Trg27_or_Trg32_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele32, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg35_Iso_pt_eta_bins:
   name: 'Trg27_or_Trg35_Iso_pt_eta_bins'
@@ -207,6 +347,13 @@ Trg27_or_Trg35_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele35"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg35_AIso_pt_bins_inc_eta:
   name: 'Trg27_or_Trg35_AIso_pt_bins_inc_eta'
@@ -217,6 +364,13 @@ Trg27_or_Trg35_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele35, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_or_Trg35_Iso_pt_eta_bins:
   name: 'Trg27_or_Trg32_or_Trg35_Iso_pt_eta_bins'
@@ -227,6 +381,13 @@ Trg27_or_Trg32_or_Trg35_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele32 or Ele35"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_or_Trg35_AIso_pt_bins_inc_eta:
   name: 'Trg27_or_Trg32_or_Trg35_AIso_pt_bins_inc_eta'
@@ -237,6 +398,13 @@ Trg27_or_Trg32_or_Trg35_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele27 or Ele32 or Ele35, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg32_or_Trg35_Iso_pt_eta_bins:
   name: 'Trg32_or_Trg35_Iso_pt_eta_bins'
@@ -247,6 +415,13 @@ Trg32_or_Trg35_Iso_pt_eta_bins:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele32 or Ele35"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
 
 Trg32_or_Trg35_AIso_pt_bins_inc_eta:
   name: 'Trg32_or_Trg35_AIso_pt_bins_inc_eta'
@@ -257,3 +432,10 @@ Trg32_or_Trg35_AIso_pt_bins_inc_eta:
   bins_x: [10., 20., 25., 26., 27., 28., 29., 30., 31, 32., 33., 34., 35., 36., 37., 38., 39., 40., 42., 44., 46., 48., 50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
   bins_y: [0, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele32 or Ele35, Iso_{rel} > 0.15"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.1,1.9]
