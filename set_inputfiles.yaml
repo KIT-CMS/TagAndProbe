@@ -1,56 +1,39 @@
 '2016': 
   muon: 
-    folder: 'mm_singlemuon_nominal'
-    Data: 
-      file: ''
-    Embedding: 
-      file: ''
-    DY: 
-      file: ''
+    folder: 'mm_singlemuon_nominal/ntuple'
+    Data: ''
+    Embedding: ''
+    DY: ''
 
   electron:
-    folder: 'ee_singleelectron_nominal'
-    Data: 
-      file: ''
-    Embedding: 
-      file: ''
-    DY: 
-      file: ''
+    folder: 'ee_singleelectron_nominal/ntuple'
+    Data: ''
+    Embedding: ''
+    DY: ''
 
 '2017': 
   muon: 
-    folder: 'mm_singlemuon_nominal'
-    Data: 
-      file: 'files/data2017.root'
-    Embedding: 
-      file: 'files/embedding2017.root'
-    DY: 
-      file: 'files/dy2017.root'
+    folder: 'mm_singlemuon_nominal/ntuple'
+    Data: 'files/data2017.root'
+    Embedding: 'files/embedding2017.root'
+    DY: 'files/dy2017.root'
 
   electron:
-    folder: 'ee_singleelectron_nominal'
-    Data: 
-      file: 'files/data2017.root'
-    Embedding: 
-      file: 'files/embedding2017.root'
-    DY: 
-      file: 'files/dy2017.root'
+    folder: 'ee_singleelectron_nominal/ntuple'
+    Data: 'files/data2017.root'
+    Embedding: 'files/embedding2017.root'
+    DY: 'files/dy2017.root'
 
 '2018': 
   muon: 
-    folder: 'mm_singlemuon_nominal'
-    Data: 
-      file: ''
-    Embedding: 
-      file: ''
+    folder: 'mm_singlemuon_nominal/ntuple'
+    Data: ''
+    Embedding: ''
     DY: 
       file: ''
 
   electron:
-    folder: 'ee_singleelectron_nominal'
-    Data: 
-      file: ''
-    Embedding: 
-      file: ''
-    DY: 
-      file: ''
+    folder: 'ee_singleelectron_nominal/ntuple'
+    Data: ''
+    Embedding: ''
+    DY: ''

@@ -54,9 +54,9 @@ for key,cfg in bin_cfgs.items():
 
 
 trees = {
-    'Embedding': analysis.TTreeEvaluator(input_files['era'][args.channel]['folder'], input_files['era'][args.channel]['Embedding']),
-    'DY': analysis.TTreeEvaluator(input_files['era'][args.channel]['folder'], input_files['era'][args.channel]['Embedding']),
-    'Data': analysis.TTreeEvaluator(input_files['era'][args.channel]['folder'], input_files['era'][args.channel]['Embedding']),
+    'Embedding': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Embedding']),
+    'DY': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['DY']),
+    'Data': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Data']),
 }
         
 for sample in trees:

@@ -81,7 +81,7 @@ def MultiDraw(self, Formulae, Compiled=False):
 
         split_var = origFormula.split(';')
         origFormula = split_var[0]
-        print "Formula: ", origFormula, weight
+        # print "Formula: ", origFormula, weight
 
         var_binned_x = False
         var_binned_y = False
