@@ -5,7 +5,7 @@ import yaml
 import os
 import argparse
 from array import array
-import TagAndProbe.TagAndProbe.analysis as analysis
+import UserCode.TagAndProbe.analysis as analysis
 
 ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, 'import')
 ROOT.TH1.AddDirectory(0)

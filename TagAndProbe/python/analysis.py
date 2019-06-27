@@ -1,5 +1,5 @@
 
-from TagAndProbe.TagAndProbe.uncertainties import ufloat
+from UserCode.TagAndProbe.uncertainties import ufloat
 from collections import defaultdict, OrderedDict
 import ROOT
 import glob
@@ -7,7 +7,7 @@ import os
 import json
 import pprint
 import sys
-import TagAndProbe.TagAndProbe.MultiDraw as MultiDraw
+import UserCode.TagAndProbe.MultiDraw as MultiDraw
 import numpy as np
 
 ROOT.TH1.AddDirectory(0)
