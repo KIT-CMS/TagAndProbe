@@ -11,12 +11,13 @@ ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, 'import')
 ROOT.TH1.AddDirectory(0)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--era', '-e', required = True)
-parser.add_argument('--channel', '-c', required = True)
+parser.add_argument('--era', required = True)
+parser.add_argument('--channel', required = True)
+parser.add_argument('--output', default = "output", required = False)
 
 args = parser.parse_args()
 
-bin_cfgs = yaml.load(open("bins_{}_{}.yaml".format(args.channel,args.era)))
+bin_cfgs = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
 input_files = yaml.load(open("set_inputfiles.yaml"))
 
 
@@ -60,10 +61,10 @@ trees = {
 }
         
 for sample in trees:
-    out_dir = "output"
+    out_dir = args.output
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
-    outfile = ROOT.TFile('{}/{}_TP_{}.root'.format(out_dir, args.channel, sample), 'RECREATE')
+    outfile = ROOT.TFile('{}/{}_TP_{}_{}.root'.format(out_dir, args.channel, sample, args.era), 'RECREATE')
     hists = trees[sample].Draw(drawlist, compiled=True)
 
     i = 0

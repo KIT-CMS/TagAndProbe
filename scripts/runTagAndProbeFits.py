@@ -8,23 +8,21 @@ import yaml
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument(
-    '--channel', default="muon", required=True)
-parser.add_argument(
-    '--fit', action="store_true")
-parser.add_argument(
-    '--plot', action="store_true")
-parser.add_argument(
-    '--era', required=True)
+parser.add_argument('--channel', required=True)
+parser.add_argument('--fit', action="store_true")
+parser.add_argument('--plot', action="store_true")
+parser.add_argument('--era', required=True )
+parser.add_argument('--output', default = "output", required = False)
 
+out_dir = args.output
 args = parser.parse_args()
-Dir = "output/tag_and_probe_{}/".format(args.channel)
+Dir = "{}/tag_and_probe_{}/".format(out_dir, args.channel)
 
 parameters = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
 
 if args.fit:
     for label in parameters:
-        filename = ["output/{}_TP_Embedding.root".format(args.channel), "output/{}_TP_Data.root".format(args.channel), "output/{}_TP_DY.root".format(args.channel)]
+        filename = ["{}/{}_TP_Embedding_{}.root".format(out_dir, args.channel, args.era), "{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era), "{}/{}_TP_DY_{}.root".format(out_dir, args.channel, args.era)]
         Dir_ext = ["/embedding", "/data", "/DY"]
         print label
         print parameters[label]
@@ -49,9 +47,9 @@ if args.plot:
     dy_title = "Z#rightarrow#mu#mu simulation" if "muon" in args.channel else "Z#rightarrow ee simulation"
     x_title = "Muon p_{T} (GeV)" if "muon" in args.channel else "Electron p_{T} (GeV)"
     for label in parameters:
-        files = ["output/{}_TP_Data_Fits_{}.root".format(args.channel,label),
-                "output/{}_TP_Embedding_Fits_{}.root".format(args.channel,label),
-                "output/{}_TP_DY_Fits_{}.root".format(args.channel,label)
+        files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.era, args.channel,label),
+                "{}/{}_TP_Embedding_{}_Fits_{}.root".format(out_dir, args.era, args.channel,label),
+                "{}/{}_TP_DY_{}_Fits_{}.root".format(out_dir, args.era, args.channel,label)
                 ]
         draw_options = [
             {
