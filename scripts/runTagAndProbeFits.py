@@ -14,8 +14,9 @@ parser.add_argument('--plot', action="store_true")
 parser.add_argument('--era', required=True )
 parser.add_argument('--output', default = "output", required = False)
 
-out_dir = args.output
 args = parser.parse_args()
+
+out_dir = args.output
 Dir = "{}/tag_and_probe_{}/".format(out_dir, args.channel)
 
 parameters = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
@@ -24,8 +25,6 @@ if args.fit:
     for label in parameters:
         filename = ["{}/{}_TP_Embedding_{}.root".format(out_dir, args.channel, args.era), "{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era), "{}/{}_TP_DY_{}.root".format(out_dir, args.channel, args.era)]
         Dir_ext = ["/embedding", "/data", "/DY"]
-        print label
-        print parameters[label]
         for i, file in enumerate(filename):
             try:
                 fitTagAndProbe_script.main(
@@ -40,7 +39,7 @@ if args.fit:
                     plot_dir=Dir + label + Dir_ext[i],
                     bin_replace=None)
             except AttributeError:
-                pass
+                print label + " could not be created. "
 
 if args.plot:
     emb_title = "#mu#rightarrow#mu embedded" if "muon" in args.channel else "#mu#rightarrow e embedded"
@@ -80,5 +79,4 @@ if args.plot:
                 plot_dir= Dir + label, 
                 label_pos= 3)
         except ReferenceError:
-            print label + " Fits do not exist"
-            pass
+            print label + " Fits do not exist. "

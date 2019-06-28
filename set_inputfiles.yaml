@@ -16,7 +16,7 @@
     folder: 'mm_singlemuon_nominal/ntuple'
     Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root'
     Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root'
-    DY: 'files/dy2017.root'
+    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root'
 
   electron:
     folder: 'ee_singleelectron_nominal/ntuple'
