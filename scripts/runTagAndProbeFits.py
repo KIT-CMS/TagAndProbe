@@ -17,7 +17,7 @@ parser.add_argument('--output', default = "output", required = False)
 args = parser.parse_args()
 
 out_dir = args.output
-Dir = "{}/tag_and_probe_{}/".format(out_dir, args.channel)
+Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
 
 parameters = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
 
@@ -46,9 +46,9 @@ if args.plot:
     dy_title = "Z#rightarrow#mu#mu simulation" if "muon" in args.channel else "Z#rightarrow ee simulation"
     x_title = "Muon p_{T} (GeV)" if "muon" in args.channel else "Electron p_{T} (GeV)"
     for label in parameters:
-        files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.era, args.channel,label),
-                "{}/{}_TP_Embedding_{}_Fits_{}.root".format(out_dir, args.era, args.channel,label),
-                "{}/{}_TP_DY_{}_Fits_{}.root".format(out_dir, args.era, args.channel,label)
+        files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
+                "{}/{}_TP_Embedding_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
+                "{}/{}_TP_DY_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label)
                 ]
         draw_options = [
             {
@@ -68,6 +68,7 @@ if args.plot:
             plotEffSlices_script.main(
                 files=files,
                 label=label,
+                era = args.era,
                 draw_options=draw_options,
                 output="efficiency", 
                 title= parameters[label]["TITLE"], 

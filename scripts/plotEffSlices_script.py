@@ -6,7 +6,7 @@ import argparse
 
 # Boilerplate
 
-def main(files, label, output, draw_options, title, y_range, ratio_y_range, binned_in, x_title, ratio_to, plot_dir, label_pos):
+def main(files, label, era, output, draw_options, title, y_range, ratio_y_range, binned_in, x_title, ratio_to, plot_dir, label_pos):
     ROOT.PyConfig.IgnoreCommandLineOptions = True
     ROOT.gROOT.SetBatch(ROOT.kTRUE)
     ROOT.TH1.AddDirectory(0)
@@ -111,7 +111,13 @@ def main(files, label, output, draw_options, title, y_range, ratio_y_range, binn
         plot.DrawTitle(pads[0], title+' - '+bin_label, 1)
 
         #plot.DrawTitle(pads[0], '18.99 fb^{-1} (13 TeV)', 3)
-        plot.DrawTitle(pads[0], '6.9 fb^{-1} (2018, 13 TeV)', 3)
+        if era == "2016":
+            plot.DrawTitle(pads[0], '35.9 fb^{-1} (2016, 13 TeV)', 3)
+        elif era == "2017":
+            plot.DrawTitle(pads[0], '41.5 fb^{-1} (2017, 13 TeV)', 3)
+        elif era == "2018":
+            plot.DrawTitle(pads[0], '59.7 fb^{-1} (2018, 13 TeV)', 3)
+                  
         if ratio_to is not None:
             pads[1].cd()
             pads[1].SetLogx(True)
