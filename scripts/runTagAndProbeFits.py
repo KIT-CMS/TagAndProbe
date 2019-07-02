@@ -4,7 +4,7 @@ import fitTagAndProbe_script
 import plotEffSlices_script
 import argparse
 import yaml
-
+from multiprocessing import Process
 
 parser = argparse.ArgumentParser()
 
@@ -22,24 +22,30 @@ Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
 parameters = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
 
 if args.fit:
+    particle = "m" if "muon" in args.channel else "e"
+    expression_list = []
     for label in parameters:
         filename = ["{}/{}_TP_Embedding_{}.root".format(out_dir, args.channel, args.era), "{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era), "{}/{}_TP_DY_{}.root".format(out_dir, args.channel, args.era)]
         Dir_ext = ["/embedding", "/data", "/DY"]
         for i, file in enumerate(filename):
-            try:
-                fitTagAndProbe_script.main(
-                    filename=file,
-                    name=label,
-                    sig_model=parameters[label]["SIG"],
-                    bkg_model=parameters[label]["BKG"],
-                    title=parameters[label]["TITLE"],
-                    particle="m",
-                    isMC=False,
-                    postfix="",
-                    plot_dir=Dir + label + Dir_ext[i],
-                    bin_replace=None)
-            except AttributeError:
-                print label + " could not be created. "
+            expression_list.append([file, label, Dir + label + Dir_ext[i], parameters[label]["SIG"], parameters[label]["BKG"], parameters[label]["TITLE"], particle, "", None])
+            # fitTagAndProbe_script.main(
+            #     filename=file,
+            #     name=label,
+            #     sig_model=parameters[label]["SIG"],
+            #     bkg_model=parameters[label]["BKG"],
+            #     title=parameters[label]["TITLE"],
+            #     particle="m",
+            #     postfix="",
+            #     plot_dir=Dir + label + Dir_ext[i],
+            #     bin_replace=None)
+    procs = []
+    for expression in expression_list:
+        p = Process(target=fitTagAndProbe_script.main, args=(expression))
+        procs.append(p)
+        p.start()
+    for p in procs:
+        p.join()
 
 if args.plot:
     emb_title = "#mu#rightarrow#mu embedded" if "muon" in args.channel else "#mu#rightarrow e embedded"

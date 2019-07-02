@@ -11,13 +11,12 @@ import sys
 #     parser.add_argument('--bkg-model', default='Exponential')
 #     parser.add_argument('--title', default='Muon ID Efficiency')
 #     parser.add_argument('--particle', choices=['e', 'm'], default='m')
-#     parser.add_argument('--isMC', default = False, action="store_true")
 #     parser.add_argument('--postfix', default='')
 #     parser.add_argument('--plot-dir', '-p', default='./')
 #     parser.add_argument('--bin-replace', default=None) #(100,2.3,80,2.3)
 #     return parser.parse_args()
 
-def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, postfix, bin_replace):
+def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfix, bin_replace):
     
     ROOT.PyConfig.IgnoreCommandLineOptions = True
     ROOT.gROOT.SetBatch(ROOT.kTRUE)
@@ -265,11 +264,6 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, isMC, 
             plot.Set(axis.GetXaxis().SetTitle('m_{#mu#mu} (GeV)'))
         plot.Set(axis.GetYaxis().SetTitle('Events / %g GeV' % width))
         plot.DrawTitle(pads[1], 'p_{T}: [%g, %g] GeV #eta: [%g, %g]' % (b[2], b[3], b[4], b[5]), 1)
-        if isMC:
-            plot.DrawTitle(pads[1], 'MC Fall17', 3)
-        else:
-            #plot.DrawTitle(pads[1], '18.25 fb^{-1} (13 TeV)', 3)
-            plot.DrawTitle(pads[1], '41.29 fb^{-1} (13 TeV)', 3)
         #plot.DrawTitle(pads[1], 'Fail Region', 1)
         latex.DrawLatex(0.63, 0.75, '#chi^{2} = %.2f' % (xframe2.chiSquare("AllFail", "DataFail", nparams)))
         latex.SetTextFont(font)
