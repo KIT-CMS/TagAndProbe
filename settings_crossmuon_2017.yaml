@@ -1,0 +1,33 @@
+Trg_Mu20_pt_eta_bins:
+  name: 'XTrg_Mu20_pt_eta_bins'
+  var: 'm_ll(50,65,115)'
+  tag: 'trg_t_IsoMu24 && pt_t > 25 && iso_p < 0.15 && id_p && isAntiL1TauMatched_trg_p_mu20tau27>0.5'
+  probe: 'trg_p_mu20tau27'
+  binvar_x: 'pt_p'
+  bins_x: [10., 15.,16.,17.,18.,19., 20.,21.,22.,23.,24., 25., 30., 35., 40., 45., 50., 60., 80., 100., 200., 1000.]
+  binvar_y: 'abs(eta_p)'
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Mu20Tau27 muon leg"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.9,1.1]
+
+Trg_Mu20_pt_incl_eta:
+  name: 'Trg_Mu20_pt_incl_eta'
+  var: 'm_ll(50,65,115)'
+  tag: 'trg_t_IsoMu24 && pt_t > 25 && iso_p < 0.15 && id_p &&  isAntiL1TauMatched_trg_p_mu20tau27>0.5'
+  probe: 'trg_p_mu20tau27'
+  binvar_x: 'pt_p'
+  bins_x: [10., 15.,16.,17.,18.,19., 20.,21.,22.,23.,24., 25., 30., 35., 40., 45., 50., 60., 80., 100., 200., 1000.]
+  binvar_y: 'eta_p'
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Mu20Tau27 muon leg"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.9,1.1]
