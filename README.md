@@ -31,9 +31,9 @@ cd UserCode/TagAndProbe
 
 3. Create the pass and fail histograms using
 
-`python scripts/TagAndProbe.py --channel (muon|electron) --era (2016|2017|2018)`
+`python scripts/TagAndProbe.py --channel (muon|electron|crossmuon|crosselectron) --era (2016|2017|2018)`
 
 4. Run the fits and plot the results
 
-` python scripts/runTagAndProbeFits.py --channel (muon|electron) --fit --plot --era (2016|2017|2018)`
+` python scripts/runTagAndProbeFits.py --channel (muon|electron|crossmuon|crosselectron) --fit --plot --era (2016|2017|2018)`
 
