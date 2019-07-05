@@ -13,7 +13,7 @@ Trg_Mu20_pt_eta_bins:
   # Settings for plotting
   TITLE: "Trg Mu20Tau27"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.5,1.5]
 
 Trg_Mu20_pt_incl_eta:
   name: 'Trg_Mu20_pt_incl_eta'
@@ -30,4 +30,4 @@ Trg_Mu20_pt_incl_eta:
   # Settings for plotting
   TITLE: "Trg Mu20Tau27"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.5,1.5]

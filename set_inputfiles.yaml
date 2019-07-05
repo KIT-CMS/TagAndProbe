@@ -40,25 +40,24 @@
 '2018': 
   muon: 
     folder: 'mm_singlemuon_nominal/ntuple'
-    Data: ''
-    Embedding: ''
-    DY: 
-      file: ''
+    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root'
+    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
+    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
 
   electron:
     folder: 'ee_singleelectron_nominal/ntuple'
-    Data: ''
-    Embedding: ''
-    DY: ''
+    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root'
+    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
+    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
 
   crossmuon: 
     folder: 'mm_crossmuon/ntuple'
-    Data: ''
-    Embedding: ''
-    DY: ''
+    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root'
+    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
+    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
 
   crosselectron:
     folder: 'ee_crosselectron/ntuple'
-    Data: ''
-    Embedding: ''
-    DY: ''
+    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root'
+    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
+    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'

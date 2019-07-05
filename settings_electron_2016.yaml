@@ -64,7 +64,7 @@ Iso_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Iso_pt_eta_bins:
   name: 'Iso_pt_eta_bins'
@@ -81,7 +81,7 @@ Iso_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 AIso_pt_bins_inc_eta:
   name: 'AIso_pt_bins_inc_eta'
@@ -98,7 +98,7 @@ AIso_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} > 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 AIso_pt_eta_bins:
   name: 'AIso_pt_eta_bins'
@@ -115,7 +115,7 @@ AIso_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} > 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Trg_Iso_pt_bins_inc_eta:
   name: 'Trg_Iso_pt_bins_inc_eta'

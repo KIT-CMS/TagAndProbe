@@ -14,7 +14,7 @@ ID_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Medium ID"
   y_range: [0.8,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 ID_pt_eta_bins:
   name: 'ID_pt_eta_bins'
@@ -31,7 +31,7 @@ ID_pt_eta_bins:
   # Settings for plotting
   TITLE: "Medium ID"
   y_range: [0.8,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Iso_pt_bins_inc_eta:
   name: 'Iso_pt_bins_inc_eta'
@@ -48,7 +48,7 @@ Iso_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Iso_pt_eta_bins:
   name: 'Iso_pt_eta_bins'
@@ -65,7 +65,7 @@ Iso_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 AIso1_pt_bins_inc_eta:
   name: 'AIso1_pt_bins_inc_eta'
@@ -82,7 +82,7 @@ AIso1_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.15,0.25]"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 AIso1_pt_eta_bins:
   name: 'AIso1_pt_eta_bins'
@@ -99,7 +99,7 @@ AIso1_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.15,0.25]"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 AIso2_pt_bins_inc_eta:
   name: 'AIso2_pt_bins_inc_eta'
@@ -116,7 +116,7 @@ AIso2_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.25,0.50]"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 AIso2_pt_eta_bins:
   name: 'AIso2_pt_eta_bins'
@@ -133,7 +133,7 @@ AIso2_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.25,0.50]"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Trg_pt_eta_bins:
   name: 'Trg_pt_eta_bins'
@@ -150,7 +150,7 @@ Trg_pt_eta_bins:
   # Settings for plotting
   TITLE: "Trg IsoMu22"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Trg_AIso1_pt_bins_inc_eta:  
   name: 'Trg_AIso1_pt_bins_inc_eta'
@@ -167,7 +167,7 @@ Trg_AIso1_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Trg IsoMu22, Iso_{rel} #in [0.15,0.25]"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
 
 Trg_AIso2_pt_bins_inc_eta:
   name: 'Trg_AIso2_pt_bins_inc_eta'
@@ -184,4 +184,4 @@ Trg_AIso2_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Trg IsoMu22, Iso_{rel} #in [0.15,0.25]"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.9,1.1]
+  ratio_y_range: [0.8,1.2]
