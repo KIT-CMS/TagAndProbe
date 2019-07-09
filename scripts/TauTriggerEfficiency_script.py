@@ -150,7 +150,7 @@ class TauLegEfficiencies(object):
 class Efficiency(object):
     """A class to store and produce trigger efficiencies."""
 
-    bins = yaml.load(open("setting_tau_trigger.yaml", "r"))["bins"]
+    bins = yaml.load(open("settings/settings_tau_trigger.yaml", "r"))["bins"]
     _mod_th1d_pT = root.RDF.TH1DModel(
             "mod_th1d_pT", "mod_th1d_pT",
             len(bins["pT"])-1, np.array(bins["pT"], dtype=float))

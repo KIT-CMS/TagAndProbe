@@ -19,7 +19,7 @@ args = parser.parse_args()
 out_dir = args.output
 Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
 
-parameters = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
+parameters = yaml.load(open("settings/settings_{}_{}.yaml".format(args.channel,args.era)))
 
 if args.fit:
     particle = "m" if "muon" in args.channel else "e"

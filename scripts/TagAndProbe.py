@@ -19,7 +19,7 @@ args = parser.parse_args()
 if "cross" in args.channel and args.era=="2016":
     print "No cross trigger settings available for 2016 yet."
     sys.exit()
-bin_cfgs = yaml.load(open("settings_{}_{}.yaml".format(args.channel,args.era)))
+bin_cfgs = yaml.load(open("settings/settings_{}_{}.yaml".format(args.channel,args.era)))
 input_files = yaml.load(open("set_inputfiles.yaml"))
 
 
