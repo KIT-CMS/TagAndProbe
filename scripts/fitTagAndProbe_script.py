@@ -1,7 +1,7 @@
 import argparse
 import ROOT
 import os
-import UserCode.TagAndProbe.plotting as plot
+import plotting as plot
 import sys
 
 # def parse_arguments():

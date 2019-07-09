@@ -71,7 +71,7 @@ if args.plot:
                 'Title': dy_title}
                 ]
         try:
-            plotEffSlices_script.main(
+            plotEffSlices_script.plot_lepton(
                 files=files,
                 label=label,
                 era = args.era,

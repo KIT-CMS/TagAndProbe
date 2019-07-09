@@ -1,0 +1,24 @@
+bins:
+    pT: [20,25,30,35,40,45,50,60,80,100,150,200,500]
+    eta: [-2.5,-2.1,-1.5,0.,1.5,2.1,2.5]
+    phi: [-3.2,2.8,3.2]
+    etaAVG: [-2.5,-2.1,2.1,2.5]
+    phiAVG: [-3.2, 3.2]
+
+baseline_selection: ["trg_singlemuon_27",
+                     "abs(eta_p) < 2.1",
+                     "m_ll > 40.",
+                     "m_ll < 80.",
+                     "mt < 30",
+                     "decayModeFinding_p > 0.5",
+                     "againstMuonTight3_p > 0.5",
+                     "againstElectronVLooseMVA6_p > 0.5",
+                    ]
+                   
+working_points:
+    vloose: "byVLooseIsolationMVArun2017v2DBoldDMwLT2017_p"
+    loose: "byLooseIsolationMVArun2017v2DBoldDMwLT2017_p"
+    medium: "byMediumIsolationMVArun2017v2DBoldDMwLT2017_p"
+    tight: "byTightIsolationMVArun2017v2DBoldDMwLT2017_p"
+    vtight: "byVTightIsolationMVArun2017v2DBoldDMwLT2017_p"
+    vvtight: "byVVTightIsolationMVArun2017v2DBoldDMwLT2017_p"
