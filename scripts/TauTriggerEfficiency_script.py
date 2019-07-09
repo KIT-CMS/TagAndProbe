@@ -26,7 +26,7 @@ class TauLegEfficiencies(object):
     }
 
     _baseline_selection = [
-        #  "trg_singlemuon_27",
+         "trg_singlemuon_27",
          "abs(eta_p) < 2.1",
          "40. < m_ll && m_ll < 80.",
          "mt_t < 30",
@@ -36,14 +36,14 @@ class TauLegEfficiencies(object):
      ]
 
     _trigger_dict = {
-        #"ETau": "trg_monitor_mu20tau27",
+        "ETau": "trg_monitor_mu20tau27",
         "MuTau": "trg_crossmuon_mu20tau27",
         # "Tau35": "trg_monitor_mu24tau35_tight_tightID",
         # "MedTau40": "trg_monitor_mu24tau35_medium_tightID",
         # "TightTau40": "trg_monitor_mu24tau35_tight",
         # "diTau": "trg_monitor_mu24tau35_medium_tightID||trg_monitor_mu24tau35_tight||trg_monitor_mu24tau35_tight_tightID",  # noqa: E501
         "TauLead": "trg_singletau_leading",
-        "TauTrail": "trg_singletau_trailing",
+        #"TauTrail": "trg_singletau_trailing",
      }
 
     _file_dict = {

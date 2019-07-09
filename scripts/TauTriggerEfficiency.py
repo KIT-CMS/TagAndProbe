@@ -14,12 +14,18 @@ def parse_args():
                              " efficiencies should be calculated for.")
     parser.add_argument("-i", "--input-file", type=str, required=True,
                         help="The input file containing the ntuples.")
-    parser.add_argument("-o", "--output-file", type=str, default="output_tau_leg.root",
+    parser.add_argument("-e", "--era", type=str, required=True,
+                        help="Dataset era")
+    parser.add_argument("-o", "--output-file", type=str, default="output_ERA_tau_leg.root",
                         help="The output file. Defaults to %(default)s")
     parser.add_argument("-f", "--file-types", type=str, nargs="+",
                         choices=["DATA", "MC", "EMB"],
                         default=["DATA", "MC", "EMB"],
                         help="The sample types to be processed.")
+    parser.add_argument("-t", "--triggers", type=str, nargs="+",
+                        choices=["MuTau", "ETau", "TauLead"],
+                        default=["MuTau", "ETau", "TauLead"],
+                        help="The triggers to be processed.")    
     parser.add_argument('--fit', action="store_true")
     parser.add_argument('--plot', action="store_true")
     args = parser.parse_args()
@@ -36,7 +42,7 @@ def setup_logging(level=logging.WARNING):
 
 def main(args):
     wps = args.working_points
-    triggers = ["MuTau"]#, "ETau", "diTau"]
+    triggers = args.triggers
     filetypes = args.file_types
 
     eff = TauLegEfficiencies(
@@ -70,11 +76,12 @@ def make_plots(args):
 
             ]
 
-    era = "2018"  
-    title = "TauTrigger"
+    era = args.era
+    title = "tau leg"
     x_title = "p_{T} (#tau_{h}) (GeV)"
     plotEffSlices_script.plot_hadronic(
         input_file=args.output_file,
+        triggers = args.triggers,
         working_points = args.working_points,
         file_types = args.file_types,
         era = era,
@@ -88,10 +95,13 @@ def make_plots(args):
         ratio_to= 0, 
         plot_dir= plot_dir, 
         label_pos= 3)
-
+    return
+    
 if __name__ == "__main__":
     setup_logging(logging.INFO)
     args = parse_args()
+    if args.output_file == "output_ERA_tau_leg.root":
+        args.output_file = "output_{}_tau_leg.root".format(args.era)
     if args.fit:
         main(args)
     if args.plot:
