@@ -25,18 +25,29 @@ class TauLegEfficiencies(object):
         "vvtight": "byVVTightIsolationMVArun2017v2DBoldDMwLT2017_p",
     }
 
-    _baseline_selection = [
+    _baseline_selection = {
+     "et": [
+         "trg_singleelectron_35",
+         "abs(eta_p) < 2.1",
+         "40. < m_ll && m_ll < 80.",
+         "mt_t < 50",
+         "decayModeFinding_p > 0.5",
+         "againstElectronTightMVA6_p > 0.5",
+         # "(-1.)*(isOS==false)"
+            ],
+     "mt": [
          "trg_singlemuon_27",
          "abs(eta_p) < 2.1",
          "40. < m_ll && m_ll < 80.",
-         "mt_t < 30",
+         "mt_t < 50",
          "decayModeFinding_p > 0.5",
          "againstMuonTight3_p > 0.5",
          # "(-1.)*(isOS==false)"
-     ]
+            ],      
+    }
 
     _trigger_dict = {
-        "ETau": "trg_monitor_mu20tau27",
+        "ETau": "trg_crosselectron_ele24tau30",
         "MuTau": "trg_crossmuon_mu20tau27",
         # "Tau35": "trg_monitor_mu24tau35_tight_tightID",
         # "MedTau40": "trg_monitor_mu24tau35_medium_tightID",
@@ -47,12 +58,19 @@ class TauLegEfficiencies(object):
      }
 
     _file_dict = {
+        "et" : {
             "MC": "DY*JetsToLLM50*",
-            "DATA": "SingleMuon*",
-            "EMB": "Embedding*",  # noqa: E501
+            "DATA": "EGamma*Run2018*",
+            "EMB": "Embedding*ElTau*"
+                },
+        "mt": {
+            "MC": "DY*JetsToLLM50*",
+            "DATA": "SingleMuon*Run2018*",
+            "EMB": "Embedding*MuTau*"
+        }
         }
 
-    def __init__(self, outname, input_dir, treeName="mt/ntuple"):
+    def __init__(self, outname, input_dir, treeName="et/ntuple"):
         self._efficiencies = []
         self._working_points = []
         self._trigger_names = []
@@ -98,17 +116,22 @@ class TauLegEfficiencies(object):
         self._trigger_names.append(trigger)
 
     def add_filetype(self, filetype):
-        if filetype not in self._file_dict.keys():
+        if filetype not in self._file_dict["et"].keys() or filetype not in self._file_dict["mt"].keys():
             logger.fatal("Given trigger path %s is not available."
                          " Trigger path must be one of %s",
                          filetype, self._file_dict.keys())
             raise Exception
         self._filetypes.append(filetype)
 
-    def _create_file_regex(self, filetype):
+    def _create_file_regex(self, filetype, trg):
+        if trg == "ETau":
+            file_dict = self._file_dict["et"]
+        else:
+            file_dict = self._file_dict["mt"]
+
         file_vector = root.vector("string")()
         glob_exp = "{inp}{fi}/{fi}.root".format(inp=self.input_dir,
-                                                fi=self._file_dict[filetype])
+                                                fi=file_dict[filetype])
         print glob_exp
         for path in glob.glob(glob_exp):
             file_vector.push_back(path)
@@ -118,31 +141,30 @@ class TauLegEfficiencies(object):
         return file_vector
 
     def create_efficiencies(self):
-        for filetype in self.filetypes:
-            dataframe = root.RDataFrame(
-                    self.tree_name, self._create_file_regex(filetype))
-            # TODO: not necessary with new ntuple. Kept to remember.
-            # dataframe_woWeights = root.RDataFrame(
-            #         self.tree_name, self._create_file_regex(filetype))
-            # if filetype == "MC":
-            #     dataframe = dataframe_woWeights.Define(
-            #           "bkgSubWeight", "isOS")
-            # else:
-            #     dataframe = dataframe_woWeights.Define(
-            #           "bkgSubWeight", "1.*(isOS) + (-1.)*(!isOS)")
-            logger.debug("Cutstring: {}".format(
-                            "&&".join(self._baseline_selection)))
-            d_baseline = dataframe.Filter("&&".join(self._baseline_selection))
-            for wp in self.working_points:
-                d_wp = d_baseline.Filter(self._available_wp_dict[wp]+">0.5")
-                for trg in self.trigger_names:
+        for trg in self.trigger_names:
+            if trg == "ETau":
+                baseline_selection = self._baseline_selection["et"]
+                tree_name = "et/ntuple"
+            else:
+                baseline_selection = self._baseline_selection["mt"]
+                tree_name = "mt/ntuple"
+
+            for filetype in self.filetypes:
+                dataframe = root.RDataFrame(
+                        tree_name, self._create_file_regex(filetype, trg))
+
+                logger.debug("Cutstring: {}".format(
+                                "&&".join(baseline_selection)))
+                d_baseline = dataframe.Filter("&&".join(baseline_selection))
+                for wp in self.working_points:
+                    d_wp = d_baseline.Filter(self._available_wp_dict[wp]+">0.5")
                     self._efficiencies.append(
                             Efficiency(d_wp, wp, trg, filetype,
-                                       self._trigger_dict))
-            logger.info("Writing resulting histograms to %s.", self._outfile)
-            for eff in self._efficiencies:
-                eff.save_histograms(self._trigger_dict)
-            self._efficiencies = []
+                                        self._trigger_dict))
+                logger.info("Writing resulting histograms to %s.", self._outfile)
+                for eff in self._efficiencies:
+                    eff.save_histograms(self._trigger_dict)
+                self._efficiencies = []
         self._outfile.Close()
         return
 
