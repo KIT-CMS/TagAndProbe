@@ -53,6 +53,6 @@ Create the input files using KIT-Higgs (https://github.com/KIT-CMS/KITHiggsToTau
 
 2. Run the fits and plot the results
 
-`python scripts/TauTriggerEfficiency.py  -i /path/to/artus_outputs/ --fit --plot --era (2016|2017|2018)`
+`python scripts/TauTriggerEfficiency.py  -i /ceph/jbechtel/artus_outputs/TagAndProbe/TauTrigger/new/ --fit --plot --era (2016|2017|2018)`
 
 
