@@ -16,61 +16,22 @@ logger = logging.getLogger(__name__)
 class TauLegEfficiencies(object):
     """A class to store Efficiency objects."""
 
-    _available_wp_dict = {
-        "vloose": "byVLooseIsolationMVArun2017v2DBoldDMwLT2017_p",
-        "loose": "byLooseIsolationMVArun2017v2DBoldDMwLT2017_p",
-        "medium": "byMediumIsolationMVArun2017v2DBoldDMwLT2017_p",
-        "tight": "byTightIsolationMVArun2017v2DBoldDMwLT2017_p",
-        "vtight": "byVTightIsolationMVArun2017v2DBoldDMwLT2017_p",
-        "vvtight": "byVVTightIsolationMVArun2017v2DBoldDMwLT2017_p",
-    }
+    # _file_dict = {
+    #     "et": {
+    #         "MC": "DY*JetsToLLM50*",
+    #         "DATA": "EGamma*Run{}*",
+    #         "EMB": "Embedding*ElTau*"
+    #         },
+    #     "mt": {
+    #         "MC": "DY*JetsToLLM50*",
+    #         "DATA": "SingleMuon*Run{}*",
+    #         "EMB": "Embedding{}*MuTau*"
+    #         }
+    #     }
 
-    _baseline_selection = {
-     "et": [
-         "trg_singleelectron_35",
-         "abs(eta_p) < 2.1",
-         "40. < m_ll && m_ll < 80.",
-         "mt_t < 50",
-         "decayModeFinding_p > 0.5",
-         "againstElectronTightMVA6_p > 0.5",
-         # "(-1.)*(isOS==false)"
-            ],
-     "mt": [
-         "trg_singlemuon_27",
-         "abs(eta_p) < 2.1",
-         "40. < m_ll && m_ll < 80.",
-         "mt_t < 50",
-         "decayModeFinding_p > 0.5",
-         "againstMuonTight3_p > 0.5",
-         # "(-1.)*(isOS==false)"
-            ],      
-    }
-
-    _trigger_dict = {
-        "ETau": "trg_crosselectron_ele24tau30",
-        "MuTau": "trg_crossmuon_mu20tau27",
-        # "Tau35": "trg_monitor_mu24tau35_tight_tightID",
-        # "MedTau40": "trg_monitor_mu24tau35_medium_tightID",
-        # "TightTau40": "trg_monitor_mu24tau35_tight",
-        # "diTau": "trg_monitor_mu24tau35_medium_tightID||trg_monitor_mu24tau35_tight||trg_monitor_mu24tau35_tight_tightID",  # noqa: E501
-        "TauLead": "trg_singletau_leading",
-        #"TauTrail": "trg_singletau_trailing",
-     }
-
-    _file_dict = {
-        "et" : {
-            "MC": "DY*JetsToLLM50*",
-            "DATA": "EGamma*Run2018*",
-            "EMB": "Embedding*ElTau*"
-                },
-        "mt": {
-            "MC": "DY*JetsToLLM50*",
-            "DATA": "SingleMuon*Run2018*",
-            "EMB": "Embedding*MuTau*"
-        }
-        }
-
-    def __init__(self, outname, input_dir, treeName="et/ntuple"):
+    def __init__(self, era, outname, input_dir,
+                 treeName="mt/ntuple",
+                 conf_file="settings/config_tau_legs.yaml"):
         self._efficiencies = []
         self._working_points = []
         self._trigger_names = []
@@ -78,6 +39,7 @@ class TauLegEfficiencies(object):
         self._outfile = root.TFile(outname, "recreate")
         self._input_dir = input_dir
         self._tree_name = treeName
+        self._config = yaml.load(open(conf_file, "r"))[era]
 
     @property
     def working_points(self):
@@ -100,39 +62,39 @@ class TauLegEfficiencies(object):
         return self._tree_name
 
     def add_wp(self, wp):
-        if wp not in self._available_wp_dict.keys():
+        if wp not in self._config["tauId_wps"].keys():
             logger.fatal("Given working point %s is not available."
                          " MVA working point must be one of %s",
-                         wp, self._available_wp_dict.keys())
+                         wp, self._config["tauId_wps"].keys())
             raise Exception
         self.working_points.append(wp)
 
     def add_trigger_name(self, trigger):
-        if trigger not in self._trigger_dict.keys():
+        available_trgs = set(key for val in self._config["trigger_dict"].values() for key in val.keys())
+        logger.debug("Set of possible trigger paths: %s", available_trgs)
+        if trigger not in available_trgs:
             logger.fatal("Given trigger path %s is not available."
                          " Trigger path must be one of %s",
-                         trigger, self._trigger_dict.keys())
+                         trigger,
+                         list(available_trgs))
             raise Exception
         self._trigger_names.append(trigger)
 
     def add_filetype(self, filetype):
-        if filetype not in self._file_dict["et"].keys() or filetype not in self._file_dict["mt"].keys():
+        if filetype not in self._config["file_dict"].keys():
             logger.fatal("Given trigger path %s is not available."
                          " Trigger path must be one of %s",
-                         filetype, self._file_dict.keys())
+                         filetype, self._config["file_dict"].keys())
             raise Exception
         self._filetypes.append(filetype)
 
-    def _create_file_regex(self, filetype, trg):
-        if trg == "ETau":
-            file_dict = self._file_dict["et"]
-        else:
-            file_dict = self._file_dict["mt"]
-
+    def _create_file_regex(self, filetype):
+        file_dict = self._config["file_dict"]
         file_vector = root.vector("string")()
         glob_exp = "{inp}{fi}/{fi}.root".format(inp=self.input_dir,
                                                 fi=file_dict[filetype])
-        print glob_exp
+        logger.debug("Looking for files matching to glob expression: %s",
+                     glob_exp)
         for path in glob.glob(glob_exp):
             file_vector.push_back(path)
         if file_vector.size == 0:
@@ -141,30 +103,23 @@ class TauLegEfficiencies(object):
         return file_vector
 
     def create_efficiencies(self):
-        for trg in self.trigger_names:
-            if trg == "ETau":
-                baseline_selection = self._baseline_selection["et"]
-                tree_name = "et/ntuple"
-            else:
-                baseline_selection = self._baseline_selection["mt"]
-                tree_name = "mt/ntuple"
-
-            for filetype in self.filetypes:
-                dataframe = root.RDataFrame(
-                        tree_name, self._create_file_regex(filetype, trg))
-
-                logger.debug("Cutstring: {}".format(
-                                "&&".join(baseline_selection)))
-                d_baseline = dataframe.Filter("&&".join(baseline_selection))
-                for wp in self.working_points:
-                    d_wp = d_baseline.Filter(self._available_wp_dict[wp]+">0.5")
+        for filetype in self.filetypes:
+            dataframe = root.RDataFrame(
+                    self.tree_name, self._create_file_regex(filetype))
+            logger.debug("Cutstring: {}".format(
+                 "(" + ")&&(".join(self._config["baseline_selection"])) + ")")
+            d_baseline = dataframe.Filter(
+                    "(" + ")&&(".join(self._config["baseline_selection"]) + ")")
+            for wp in self.working_points:
+                d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
+                for trg in self.trigger_names:
                     self._efficiencies.append(
                             Efficiency(d_wp, wp, trg, filetype,
-                                        self._trigger_dict))
-                logger.info("Writing resulting histograms to %s.", self._outfile)
-                for eff in self._efficiencies:
-                    eff.save_histograms(self._trigger_dict)
-                self._efficiencies = []
+                                       self._config["trigger_dict"]))
+            logger.info("Writing resulting histograms to %s.", self._outfile)
+            for eff in self._efficiencies:
+                eff.save_histograms(self._config["trigger_dict"])
+            self._efficiencies = []
         self._outfile.Close()
         return
 
@@ -230,7 +185,8 @@ class Efficiency(object):
         self.hist2d_AVG_total = dataframe.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
 
-        dataframe_pass = dataframe.Filter(trigger_dict[self.trigger_name])
+        print trigger_dict
+        dataframe_pass = dataframe.Filter(trigger_dict[self.suffix][self.trigger_name])
 
         self.hist1d_pass = dataframe_pass.Histo1D(
                 self._mod_th1d_pT, "pt_p", "bkgSubWeight")

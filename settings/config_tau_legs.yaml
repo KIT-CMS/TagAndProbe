@@ -1,0 +1,115 @@
+tauId_wps: &tauId_wps
+    vloose: "byVLooseIsolationMVArun2017v2DBoldDMwLT2017_p"
+    loose: "byLooseIsolationMVArun2017v2DBoldDMwLT2017_p"
+    medium: "byMediumIsolationMVArun2017v2DBoldDMwLT2017_p"
+    tight: "byTightIsolationMVArun2017v2DBoldDMwLT2017_p"
+    vtight: "byVTightIsolationMVArun2017v2DBoldDMwLT2017_p"
+    vvtight: "byVVTightIsolationMVArun2017v2DBoldDMwLT2017_p"
+
+baseline_selection: &baseline_selection
+    - "trg_singlemuon_27"
+    - "abs(eta_p) < 2.1"
+    - "40. < m_ll && m_ll < 80."
+    - "mt_t < 50"
+    - "decayModeFinding_p > 0.5"
+    - "againstMuonTight3_p > 0.5"
+    - "againstElectronVLooseMVA6_p > 0.5"
+    # "(-1.)*(isOS==false)"
+
+baseline_selection_et:
+    - "trg_singleelectron_35"
+    - "abs(eta_p) < 2.1"
+    - "40. < m_ll && m_ll < 80."
+    - "mt_t < 50"
+    - "aecayModeFinding_p > 0.5"
+    - "againstElectronTightMVA6_p > 0.5"
+    # - "(-1.)*(isOS==false)"
+
+trigger_dict_2016: &trgs_2016
+    ETau: "trg_monitor_mu19tau20_singlel1"
+    MuTau: "trg_crossmuon_mu19tau20_singlel1"
+    Tau35: "trg_monitor_mu19tau35_mediso"
+    # Tau35: "trg_monitor_mu24tau35_medcombiso"
+    diTau: "trg_monitor_mu19tau35_mediso"
+    TauLead: "trg_singletau_leading"
+    TauTrail: "trg_singletau_trailing"
+
+trigger_dict_2017: &trgs_2017
+    ETau: "trg_monitor_mu20tau27"
+    MuTau: "trg_crossmuon_mu20tau27"
+    Tau35: "trg_monitor_mu24tau35_tightiso_tightid"
+    MedTau40: "trg_monitor_mu24tau35_mediso_tightid"
+    # MedTau40: "trg_monitor_mu24tau40_mediso_tightid"
+    TightTau40: "trg_monitor_mu24tau35_tightiso"
+    # TightTau40: "trg_monitor_mu24tau40_tightiso"
+    diTau: "trg_monitor_mu24tau35_tightiso_tightid||trg_monitor_mu24tau35_mediso_tightid||trg_monitor_mu24tau35_tightiso"
+    # diTau: "trg_monitor_mu24tau35_tightiso_tightid||trg_monitor_mu24tau40_mediso_tightid||trg_monitor_mu24tau40_tightiso"
+    TauLead: "trg_singletau_leading"
+    TauTrail: "trg_singletau_trailing"
+
+trigger_dict_2018: &trgs_2018
+    ETau: "trg_monitor_mu20tau27_hps"
+    MuTau: "trg_crossmuon_mu20tau27_hps"
+    HPSTau35: "trg_monitor_mu24tau35_mediso_hps"
+    diTau: "trg_monitor_mu24tau35_mediso_hps"
+    diTauVBF: "trg_monitor_mu27tau20_hps"
+    TauLead: "trg_singletau_leading"
+    TauTrail: "trg_singletau_trailing"
+
+
+# file_dict:
+#     et:
+#         MC: "DY*JetsToLLM50*"
+#         DATA: "EGamma*Run2018*"
+#         EMB: "Embedding*ElTau*"
+
+2016:
+    baseline_selection: *baseline_selection
+    tauId_wps: *tauId_wps
+    trigger_dict:
+        MC: *trgs_2016
+        DATA:
+            <<: *trgs_2016
+            ETau: "(trg_monitor_mu19tau20_singlel1&&(run<276215))||(trg_monitor_mu19tau20&&(run>276215&&run<278270))||(trg_monitor_mu19tau30&&(run>278270))"
+            diTau: "(trg_monitor_mu19tau35_mediso&&(run<=278808))||(trg_monitor_mu19tau35_medcombiso&&(run>=278820))"
+        EMB: *trgs_2016
+    file_dict:
+        MC: "DY*JetsToLLM50*"
+        DATA: "SingleMuon*Run2016*"
+        EMB: "Embedding2016*MuTau*"
+    tauId_wps: *tauId_wps
+    baseline_selection: *baseline_selection
+2017:
+    baseline_selection: *baseline_selection
+    tauId_wps: *tauId_wps
+    trigger_dict:
+        MC: *trgs_2017
+        DATA: *trgs_2017
+        EMB: *trgs_2017
+    file_dict:
+        MC: "DY*JetsToLLM50*"
+        DATA: "SingleMuon*Run2017*"
+        EMB: "Embedding2017*MuTau*"
+    tauId_wps: *tauId_wps
+    baseline_selection: *baseline_selection
+2018:
+    baseline_selection: *baseline_selection
+    tauId_wps: *tauId_wps
+    trigger_dict:
+        MC: *trgs_2018
+        DATA:
+            <<: *trgs_2018
+            Tau35: "trg_monitor_mu24tau35_tigthiso_tightid"
+            MedTau40: "trg_monitor_mu24tau40_mediso_tightid"
+            TightTau40: "trg_monitor_mu24tau40_tightiso"
+            diTau: "(trg_monitor_mu24tau35_mediso_hps&&(run>=317509))||((trg_monitor_mu24tau35_tightiso_tightid||trg_monitor_mu24tau40_mediso_tightid||trg_monitor_mu24tau40_tightiso)&&(run<317509))"
+            MuTau: "(trg_monitor_mu20tau27_hps&&(run>=317509))||(trg_monitor_mu20tau27&&(run<317509))"
+            ETau: "(trg_monitor_mu20tau27_hps&&(run>=317509))||(trg_monitor_mu20tau27&&(run<317509))"
+            diTauVBF: "(trg_monitor_mu27tau20&&(run<317509))||(trg_monitor_mu27tau20_hps&&(run>=317509))"
+        EMB: *trgs_2018
+    file_dict:
+        MC: "DY*JetsToLLM50*"
+        DATA: "SingleMuon*Run2018*"
+        EMB: "Embedding2018*MuTau*"
+    tauId_wps: *tauId_wps
+    baseline_selection: *baseline_selection
