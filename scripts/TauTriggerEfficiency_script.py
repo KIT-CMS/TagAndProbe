@@ -31,7 +31,8 @@ class TauLegEfficiencies(object):
 
     def __init__(self, era, outname, input_dir,
                  treeName="mt/ntuple",
-                 conf_file="settings/config_tau_legs.yaml"):
+                 conf_file="settings/config_tau_legs.yaml",
+                 per_dm=False):
         self._efficiencies = []
         self._working_points = []
         self._trigger_names = []
@@ -40,6 +41,8 @@ class TauLegEfficiencies(object):
         self._input_dir = input_dir
         self._tree_name = treeName
         self._config = yaml.load(open(conf_file, "r"))[era]
+        self._per_dm = per_dm
+        self._era = era
 
     @property
     def working_points(self):
@@ -70,7 +73,9 @@ class TauLegEfficiencies(object):
         self.working_points.append(wp)
 
     def add_trigger_name(self, trigger):
-        available_trgs = set(key for val in self._config["trigger_dict"].values() for key in val.keys())
+        available_trgs = set(
+                key for val in self._config["trigger_dict"].values()
+                for key in val.keys())
         logger.debug("Set of possible trigger paths: %s", available_trgs)
         if trigger not in available_trgs:
             logger.fatal("Given trigger path %s is not available."
@@ -97,7 +102,7 @@ class TauLegEfficiencies(object):
                      glob_exp)
         for path in glob.glob(glob_exp):
             file_vector.push_back(path)
-        if file_vector.size == 0:
+        if file_vector.size() == 0:
             logger.fatal("No files matching the given pattern found.")
             raise Exception
         return file_vector
@@ -109,16 +114,28 @@ class TauLegEfficiencies(object):
             logger.debug("Cutstring: {}".format(
                  "(" + ")&&(".join(self._config["baseline_selection"])) + ")")
             d_baseline = dataframe.Filter(
-                    "(" + ")&&(".join(self._config["baseline_selection"]) + ")")
+                 "(" + ")&&(".join(self._config["baseline_selection"]) + ")")
             for wp in self.working_points:
                 d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
-                for trg in self.trigger_names:
-                    self._efficiencies.append(
-                            Efficiency(d_wp, wp, trg, filetype,
-                                       self._config["trigger_dict"]))
+                if self._per_dm:
+                    for trg in self.trigger_names:
+                        for dm in [0, 1, 10]:
+                            d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
+                            self._efficiencies.append(
+                                    Efficiency(d_dm, wp, trg, filetype, self._era,
+                                               self._config["trigger_dict"],
+                                               decayMode=dm))
+                        self._efficiencies.append(
+                                Efficiency(d_wp, wp, trg, filetype, self._era,
+                                           self._config["trigger_dict"]))
+                else:
+                    for trg in self.trigger_names:
+                        self._efficiencies.append(
+                                Efficiency(d_wp, wp, trg, filetype, self._era,
+                                           self._config["trigger_dict"]))
             logger.info("Writing resulting histograms to %s.", self._outfile)
             for eff in self._efficiencies:
-                eff.save_histograms(self._config["trigger_dict"])
+                eff.save_histograms()
             self._efficiencies = []
         self._outfile.Close()
         return
@@ -127,25 +144,16 @@ class TauLegEfficiencies(object):
 class Efficiency(object):
     """A class to store and produce trigger efficiencies."""
 
-    bins = yaml.load(open("settings/settings_tau_trigger.yaml", "r"))["bins"]
-    _mod_th1d_pT = root.RDF.TH1DModel(
-            "mod_th1d_pT", "mod_th1d_pT",
-            len(bins["pT"])-1, np.array(bins["pT"], dtype=float))
-    _mod_th2d_eta_phi = root.RDF.TH2DModel(
-            "mod_th2d_eta_phi", "mod_th2d_eta_phi",
-            len(bins["eta"])-1, np.array(bins["eta"], dtype=float),
-            len(bins["phi"])-1, np.array(bins["phi"], dtype=float))
-    _mod_th2d_eta_phi_AVG = root.RDF.TH2DModel(
-            "mod_th2d_eta_phi_AVG", "mod_th2d_eta_phi_AVG",
-            len(bins["etaAVG"])-1, np.array(bins["etaAVG"], dtype=float),
-            len(bins["phiAVG"])-1, np.array(bins["phiAVG"], dtype=float))
-
     def __init__(self, dataframe, working_point,
-                 trigger, filetype, trigger_dict):
+                 trigger, filetype, era, trigger_dict,
+                 decayMode=None):
         """Init method of Efficiency class."""
         self._working_point = working_point
         self._trigger_name = trigger
         self._suffix = filetype
+        self._era = era
+        self._decayMode = decayMode
+        self._create_histogram_models()
         self._create_histogram_pointers(dataframe, trigger_dict)
 
     @property
@@ -160,7 +168,11 @@ class Efficiency(object):
     def suffix(self):
         return self._suffix
 
-    def save_histograms(self, trigger_dict):
+    @property
+    def decayMode(self):
+        return self._decayMode
+
+    def save_histograms(self):
         logger.info("Saving %s histograms for tau leg of the %s trigger and"
                     " %s MVA working point",
                     self.suffix,
@@ -169,6 +181,26 @@ class Efficiency(object):
 
         self._save_1Dhistogram()
         self._save_2Dhistograms()
+        return
+
+    def _create_histogram_models(self):
+        bin_settings = yaml.load(
+                open("settings/settings_tau_trigger.yaml", "r"))
+        if self._decayMode is None:
+            bins = bin_settings["bins_fits"][self._era][self.trigger_name]
+        else:
+            bins = bin_settings["bins_fits_dm"][self._era][self.trigger_name][self.decayMode]
+        self._mod_th1d_pT = root.RDF.TH1DModel(
+                "mod_th1d_pT", "mod_th1d_pT",
+                len(bins["pT"])-1, np.array(bins["pT"], dtype=float))
+        self._mod_th2d_eta_phi = root.RDF.TH2DModel(
+                "mod_th2d_eta_phi", "mod_th2d_eta_phi",
+                len(bins["eta"])-1, np.array(bins["eta"], dtype=float),
+                len(bins["phi"])-1, np.array(bins["phi"], dtype=float))
+        self._mod_th2d_eta_phi_AVG = root.RDF.TH2DModel(
+                "mod_th2d_eta_phi_AVG", "mod_th2d_eta_phi_AVG",
+                len(bins["etaAVG"])-1, np.array(bins["etaAVG"], dtype=float),
+                len(bins["phiAVG"])-1, np.array(bins["phiAVG"], dtype=float))
         return
 
     def _create_histogram_pointers(self, dataframe, trigger_dict):
@@ -185,7 +217,6 @@ class Efficiency(object):
         self.hist2d_AVG_total = dataframe.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
 
-        print trigger_dict
         dataframe_pass = dataframe.Filter(trigger_dict[self.suffix][self.trigger_name])
 
         self.hist1d_pass = dataframe_pass.Histo1D(
@@ -211,24 +242,17 @@ class Efficiency(object):
                                 0, 1., root.RooAbsData.Poisson, 1.,
                                 root.kTRUE, 1.)
 
-        g_eff.SetName("graph_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        g_eff.SetTitle("graph_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        g_eff.Write("graph_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        g_eff_v2.SetName("graphv2_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        g_eff_v2.SetTitle("graphv2_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        g_eff_v2.Write("graphv2_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff.SetName("hist_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff.SetTitle("hist_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff.Write("hist_{}TriggerEfficiency_{}TauMVA_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
+        form_opts = [self.trigger_name, self.working_point]
+        if self.decayMode is None:
+            ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_{}"
+        else:
+            ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_DM{}_{}"
+            form_opts.append(self.decayMode)
+        form_opts.append(self.suffix)
+
+        self._save_root_object(g_eff, ti_tmpl.format("graph", *form_opts))
+        self._save_root_object(g_eff_v2, ti_tmpl.format("graphv2", *form_opts))
+        self._save_root_object(h_eff, ti_tmpl.format("hist", *form_opts))
         return
 
     def _save_2Dhistograms(self):
@@ -236,22 +260,27 @@ class Efficiency(object):
         h_eff.Sumw2()
         h_eff.Divide(self.hist2d_pass.GetValue(), self.hist2d_total.GetValue(),
                      1., 1., "b(1,1) cl=0.683 mode")
-        h_eff.SetTitle("{}_{}_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff.SetName("{}_{}_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff.Write("{}_{}_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
+
+        form_opts = [self.trigger_name, self.working_point]
+        if self.decayMode is None:
+            ti_tmpl = "{}_{}_{}"
+        else:
+            ti_tmpl = "{}_{}_DM{}_{}"
+            form_opts.append(self.decayMode)
+        form_opts.append(self.suffix)
+
+        self._save_root_object(h_eff, ti_tmpl.format(*form_opts))
 
         h_eff_AVG = root.TH2D(self.hist2d_AVG_pass.GetValue())
         h_eff_AVG.Sumw2()
         h_eff_AVG.Divide(self.hist2d_AVG_pass.GetValue(),
                          self.hist2d_AVG_total.GetValue(),
                          1., 1., "b(1,1) cl=0.683 mode")
-        h_eff_AVG.SetTitle("{}_{}_AVG_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff_AVG.SetName("{}_{}_AVG_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
-        h_eff_AVG.Write("{}_{}_AVG_{}".format(
-            self.trigger_name, self.working_point, self.suffix))
+        self._save_root_object(h_eff_AVG, ti_tmpl.format(*form_opts))
+        return
+
+    def _save_root_object(self, root_obj, title):
+        root_obj.SetName(title)
+        root_obj.SetTitle(title)
+        root_obj.Write(title)
         return

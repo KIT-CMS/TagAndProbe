@@ -27,9 +27,12 @@ def parse_args():
                         choices=["MuTau", "ETau", "Tau35",
                                  "MedTau40", "TightTau40",
                                  "HPSTau35", "diTau",
+                                 "diTauVBF",
                                  "TauLead", "TauTrail"],
-                        default=["MuTau", "ETau", "TauLead"],
+                        default=["MuTau", "ETau", "diTau"],
                         help="The triggers to be processed.")
+    parser.add_argument("--per-dm", action="store_true",
+                        help="Activate decay mode splitting of the efficiencies.")
     parser.add_argument('--fit', action="store_true")
     parser.add_argument('--plot', action="store_true")
     args = parser.parse_args()
@@ -52,7 +55,9 @@ def main(args):
     eff = TauLegEfficiencies(
             int(args.era),
             args.output_file,
-            args.input_file)
+            args.input_file,
+            per_dm=args.per_dm
+    )
     for wp in wps:
         eff.add_wp(wp)
     for trg in triggers:
