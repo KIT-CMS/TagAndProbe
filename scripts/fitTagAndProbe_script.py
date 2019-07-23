@@ -38,7 +38,9 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
 
     infile = ROOT.TFile(filename)
     wsp = infile.Get('wsp_'+name)
-
+    print wsp
+    print wsp.Print()
+    print wsp.data
     pdf_args = [ ]
     nparams = 1
     if sig_model == 'DoubleVCorr':
@@ -112,36 +114,48 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
     bin_cfg = {
         'name': hist.GetName(),
         'binvar_x': hist.GetXaxis().GetTitle(),
-        'binvar_y': hist.GetYaxis().GetTitle()
+        'binvar_y': hist.GetYaxis().GetTitle(),
+        'binvar_z': hist.GetZaxis().GetTitle()
+
     }
 
     bins = []
 
     for i in xrange(1, hist.GetNbinsX()+1):
         for j in xrange(1, hist.GetNbinsY()+1):
-            bins.append((i, j,
-                        hist.GetXaxis().GetBinLowEdge(i),
-                        hist.GetXaxis().GetBinUpEdge(i),
-                        hist.GetYaxis().GetBinLowEdge(j),
-                        hist.GetYaxis().GetBinUpEdge(j)
-                        ))
+            for k in xrange(1, hist.GetNbinsZ()+1):
+
+                bins.append((i, j, k,
+                            hist.GetXaxis().GetBinLowEdge(i),
+                            hist.GetXaxis().GetBinUpEdge(i),
+                            hist.GetYaxis().GetBinLowEdge(j),
+                            hist.GetYaxis().GetBinUpEdge(j),
+                            hist.GetZaxis().GetBinLowEdge(k),
+                            hist.GetZaxis().GetBinUpEdge(k),
+                            ))
 
     res = []
-
+    
     for b in bins:
-        dat = '%s>=%g && %s<%g && %s>=%g && %s<%g' % (
-                bin_cfg['binvar_x'], b[2],
+        dat = '%s>=%g && %s<%g && %s>=%g && %s<%g && %s>=%g && %s<%g' % (
                 bin_cfg['binvar_x'], b[3],
-                bin_cfg['binvar_y'], b[4],
+                bin_cfg['binvar_x'], b[4],
                 bin_cfg['binvar_y'], b[5],
+                bin_cfg['binvar_y'], b[6],
+                bin_cfg['binvar_z'], b[7],
+                bin_cfg['binvar_z'], b[8],
                 )
-        label = '%s.%g_%g.%s.%g_%g' % (
-                bin_cfg['binvar_x'], b[2], b[3],
-                bin_cfg['binvar_y'], b[4], b[5]
+        label = '%s.%g_%g.%s.%g_%g.%s.%g_%g' % (
+                bin_cfg['binvar_x'], b[3], b[4],
+                bin_cfg['binvar_y'], b[5], b[6],
+                bin_cfg['binvar_z'], b[7], b[8]
                 )
         label = label.replace('(', '_')
         label = label.replace(')', '_')
-
+        print dat
+        print label
+        # if  b[5]>2.6:
+        #     continue
         # Set the initial yield and efficiency values
         yield_tot = wsp.data(dat).sumEntries()
         yield_pass = wsp.data(dat).sumEntries("cat==cat::pass")
@@ -185,8 +199,8 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
 
         res.append((dat, wsp.var('efficiency').getVal(), wsp.var('efficiency').getError()))
 
-        hist.SetBinContent(b[0], b[1], wsp.var('efficiency').getVal())
-        hist.SetBinError(b[0], b[1], wsp.var('efficiency').getError())
+        hist.SetBinContent(b[0], b[1], b[2], wsp.var('efficiency').getVal())
+        hist.SetBinError(b[0], b[1], b[2], wsp.var('efficiency').getError())
 
         canv = ROOT.TCanvas('%s' % (label), "%s" % (label))
         pad_left = ROOT.TPad('left', '', 0., 0., 0.5, 1.)

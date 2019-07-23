@@ -29,29 +29,31 @@ if args.fit:
         Dir_ext = ["/embedding", "/data", "/DY"]
         for i, file in enumerate(filename):
             expression_list.append([file, label, Dir + label + Dir_ext[i], parameters[label]["SIG"], parameters[label]["BKG"], parameters[label]["TITLE"], particle, "", None])
-            # fitTagAndProbe_script.main(
-            #     filename=file,
-            #     name=label,
-            #     sig_model=parameters[label]["SIG"],
-            #     bkg_model=parameters[label]["BKG"],
-            #     title=parameters[label]["TITLE"],
-            #     particle="m",
-            #     postfix="",
-            #     plot_dir=Dir + label + Dir_ext[i],
-            #     bin_replace=None)
-    procs = []
-    for expression in expression_list:
-        p = Process(target=fitTagAndProbe_script.main, args=(expression))
-        procs.append(p)
-        p.start()
-    for p in procs:
-        p.join()
+            print expression_list[-1]
+            fitTagAndProbe_script.main(
+                filename=file,
+                name=label,
+                sig_model=parameters[label]["SIG"],
+                bkg_model=parameters[label]["BKG"],
+                title=parameters[label]["TITLE"],
+                particle="m",
+                postfix="",
+                plot_dir=Dir + label + Dir_ext[i],
+                bin_replace=None)
+    # procs = []
+    # for expression in expression_list:
+    #     p = Process(target=fitTagAndProbe_script.main, args=(expression))
+    #     procs.append(p)
+    #     p.start()
+    # for p in procs:
+    #     p.join()
 
 if args.plot:
     emb_title = "#mu#rightarrow#mu embedded" if "muon" in args.channel else "#mu#rightarrow e embedded"
     dy_title = "Z#rightarrow#mu#mu simulation" if "muon" in args.channel else "Z#rightarrow ee simulation"
-    x_title = "Muon p_{T} (GeV)" if "muon" in args.channel else "Electron p_{T} (GeV)"
+    x_title = "Electron #phi" # "Muon p_{T} (GeV)" if "muon" in args.channel else "Electron p_{T} (GeV)"
     for label in parameters:
+        print label
         files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
                 "{}/{}_TP_Embedding_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
                 "{}/{}_TP_DY_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label)

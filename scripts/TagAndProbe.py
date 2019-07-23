@@ -6,6 +6,7 @@ import os
 import argparse
 from array import array
 import UserCode.TagAndProbe.analysis as analysis
+from multiprocessing import Process
 
 ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, 'import')
 ROOT.TH1.AddDirectory(0)
@@ -27,27 +28,34 @@ drawlist = []
 andable = set()
 
 for key,cfg in bin_cfgs.items():
-    cfg['hist'] = ROOT.TH2D(cfg['name'], cfg['name'],
+    cfg['hist'] = ROOT.TH3D(cfg['name'], cfg['name'],
                             len(cfg['bins_x'])-1, array('d', cfg['bins_x']),
-                            len(cfg['bins_y'])-1, array('d', cfg['bins_y']))
+                            len(cfg['bins_y'])-1, array('d', cfg['bins_y']),
+                            len(cfg['bins_z'])-1, array('d', cfg['bins_z']))
     hist = cfg['hist']
     hist.GetXaxis().SetTitle(cfg['binvar_x'])
     hist.GetYaxis().SetTitle(cfg['binvar_y'])
+    hist.GetZaxis().SetTitle(cfg['binvar_z'])
 
     cfg['bins'] = []
 
     for i in xrange(1, hist.GetNbinsX()+1):
         for j in xrange(1, hist.GetNbinsY()+1):
-            cfg['bins'].append('%s>=%g && %s<%g && %s>=%g && %s<%g' % (
-                cfg['binvar_x'], hist.GetXaxis().GetBinLowEdge(i),
-                cfg['binvar_x'], hist.GetXaxis().GetBinUpEdge(i),
-                cfg['binvar_y'], hist.GetYaxis().GetBinLowEdge(j),
-                cfg['binvar_y'], hist.GetYaxis().GetBinUpEdge(j),
-                ))
-            andable.add('%s>=%g' % (cfg['binvar_x'], hist.GetXaxis().GetBinLowEdge(i)))
-            andable.add('%s<%g' % (cfg['binvar_x'], hist.GetXaxis().GetBinUpEdge(i)))
-            andable.add('%s>=%g' % (cfg['binvar_y'], hist.GetYaxis().GetBinLowEdge(j)))
-            andable.add('%s<%g' % (cfg['binvar_y'], hist.GetYaxis().GetBinUpEdge(j)))
+            for k in xrange(1, hist.GetNbinsZ()+1):
+                cfg['bins'].append('%s>=%g && %s<%g && %s>=%g && %s<%g && %s>=%g && %s<%g' % (
+                    cfg['binvar_x'], hist.GetXaxis().GetBinLowEdge(i),
+                    cfg['binvar_x'], hist.GetXaxis().GetBinUpEdge(i),
+                    cfg['binvar_y'], hist.GetYaxis().GetBinLowEdge(j),
+                    cfg['binvar_y'], hist.GetYaxis().GetBinUpEdge(j),
+                    cfg['binvar_z'], hist.GetZaxis().GetBinLowEdge(k),
+                    cfg['binvar_z'], hist.GetZaxis().GetBinUpEdge(k),
+                    ))
+                andable.add('%s>=%g' % (cfg['binvar_x'], hist.GetXaxis().GetBinLowEdge(i)))
+                andable.add('%s<%g' % (cfg['binvar_x'], hist.GetXaxis().GetBinUpEdge(i)))
+                andable.add('%s>=%g' % (cfg['binvar_y'], hist.GetYaxis().GetBinLowEdge(j)))
+                andable.add('%s<%g' % (cfg['binvar_y'], hist.GetYaxis().GetBinUpEdge(j)))
+                andable.add('%s>=%g' % (cfg['binvar_z'], hist.GetZaxis().GetBinLowEdge(k)))
+                andable.add('%s<%g' % (cfg['binvar_z'], hist.GetZaxis().GetBinUpEdge(k)))
 
     for b in cfg['bins']:
         drawlist.append((cfg['var'], '((%s) && !(%s) && (%s))' % (b, cfg['probe'], cfg['tag'])))
@@ -62,7 +70,7 @@ trees = {
     'Data': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Data']),
 }
         
-for sample in trees:
+def make_histo(sample):
     out_dir = args.output
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
@@ -96,3 +104,10 @@ for sample in trees:
         wsp.Delete()
 
     outfile.Close()
+procs = []
+for sample in trees:
+    p = Process(target=make_histo, args=([sample]))
+    procs.append(p)
+    p.start()
+for p in procs:
+    p.join()
