@@ -184,6 +184,10 @@ class Efficiency(object):
             "mod_th2d_eta_phi_AVG", "mod_th2d_eta_phi_AVG",
             len(bins["etaAVG"])-1, np.array(bins["etaAVG"], dtype=float),
             len(bins["phiAVG"])-1, np.array(bins["phiAVG"], dtype=float))
+    _mod_th2d_pT_dm = root.RDF.TH2DModel(
+            "mod_th2d_pT_dm", "mod_th2d_pT_dm",
+            len(bins["pT"])-1, np.array(bins["pT"], dtype=float),
+            len(bins["decayMode"])-1, np.array(bins["decayMode"], dtype=float))
 
     def __init__(self, dataframe, working_point,
                  trigger, filetype, trigger_dict):
@@ -229,6 +233,8 @@ class Efficiency(object):
                 self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         self.hist2d_AVG_total = dataframe.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
+        self.hist2d_dm_total = dataframe.Histo2D(
+                self._mod_th2d_pT_dm, "pt_p", "decayMode_p", "bkgSubWeight")
 
         dataframe_pass = dataframe.Filter(trigger_dict[self.trigger_name])
 
@@ -238,6 +244,8 @@ class Efficiency(object):
                 self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         self.hist2d_AVG_pass = dataframe_pass.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
+        self.hist2d_dm_pass = dataframe_pass.Histo2D(
+                self._mod_th2d_pT_dm, "pt_p", "decayMode_p", "bkgSubWeight")
         return
 
     def _save_1Dhistogram(self):
@@ -297,5 +305,17 @@ class Efficiency(object):
         h_eff_AVG.SetName("{}_{}_AVG_{}".format(
             self.trigger_name, self.working_point, self.suffix))
         h_eff_AVG.Write("{}_{}_AVG_{}".format(
+            self.trigger_name, self.working_point, self.suffix))
+
+        h_eff_dm = root.TH2D(self.hist2d_dm_pass.GetValue())
+        h_eff_dm.Sumw2()
+        h_eff_dm.Divide(self.hist2d_dm_pass.GetValue(),
+                         self.hist2d_dm_total.GetValue(),
+                         1., 1., "b(1,1) cl=0.683 mode")
+        h_eff_dm.SetTitle("{}_{}_dm_{}".format(
+            self.trigger_name, self.working_point, self.suffix))
+        h_eff_dm.SetName("{}_{}_dm_{}".format(
+            self.trigger_name, self.working_point, self.suffix))
+        h_eff_dm.Write("{}_{}_dm_{}".format(
             self.trigger_name, self.working_point, self.suffix))
         return

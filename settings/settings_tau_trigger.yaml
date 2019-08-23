@@ -4,6 +4,7 @@ bins:
     phi: [-3.2,2.8,3.2]
     etaAVG: [-2.5,-2.1,2.1,2.5]
     phiAVG: [-3.2, 3.2]
+    decayMode: [-0.5, 0.5, 1.5, 10.5]
 
 baseline_selection: ["trg_singlemuon_27",
                      "abs(eta_p) < 2.1",
