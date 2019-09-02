@@ -24,15 +24,17 @@ def parse_args():
                         default=["DATA", "MC", "EMB"],
                         help="The sample types to be processed.")
     parser.add_argument("-t", "--triggers", type=str, nargs="+",
-                        choices=["MuTau", "ETau", "Tau35",
-                                 "MedTau40", "TightTau40",
-                                 "HPSTau35", "diTau",
-                                 "diTauVBF",
+                        choices=["mutau", "etau", "tau35",
+                                 "medtau40", "tighttau40",
+                                 "hpstau35", "ditau",
+                                 "ditauvbf",
                                  "TauLead", "TauTrail"],
-                        default=["MuTau", "ETau", "diTau"],
+                        default=["mutau", "etau", "ditau"],
                         help="The triggers to be processed.")
     parser.add_argument("--per-dm", action="store_true",
                         help="Activate decay mode splitting of the efficiencies.")
+    parser.add_argument("--use-et", action="store_true",
+                        help="Use measurement in et channel for etau cross trigger.")
     parser.add_argument('--fit', action="store_true")
     parser.add_argument('--plot', action="store_true")
     args = parser.parse_args()
@@ -56,7 +58,8 @@ def main(args):
             int(args.era),
             args.output_file,
             args.input_file,
-            per_dm=args.per_dm
+            per_dm=args.per_dm,
+            use_et=args.use_et
     )
     for wp in wps:
         eff.add_wp(wp)

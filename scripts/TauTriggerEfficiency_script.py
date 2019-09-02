@@ -16,33 +16,23 @@ logger = logging.getLogger(__name__)
 class TauLegEfficiencies(object):
     """A class to store Efficiency objects."""
 
-    # _file_dict = {
-    #     "et": {
-    #         "MC": "DY*JetsToLLM50*",
-    #         "DATA": "EGamma*Run{}*",
-    #         "EMB": "Embedding*ElTau*"
-    #         },
-    #     "mt": {
-    #         "MC": "DY*JetsToLLM50*",
-    #         "DATA": "SingleMuon*Run{}*",
-    #         "EMB": "Embedding{}*MuTau*"
-    #         }
-    #     }
-
     def __init__(self, era, outname, input_dir,
                  treeName="mt/ntuple",
                  conf_file="settings/config_tau_legs.yaml",
-                 per_dm=False):
+                 per_dm=False,
+                 use_et=False):
         self._efficiencies = []
         self._working_points = []
         self._trigger_names = []
         self._filetypes = []
+
+        self._era = era
         self._outfile = root.TFile(outname, "recreate")
         self._input_dir = input_dir
         self._tree_name = treeName
         self._config = yaml.load(open(conf_file, "r"))[era]
         self._per_dm = per_dm
-        self._era = era
+        self._use_et = use_et
 
     @property
     def working_points(self):
@@ -93,8 +83,11 @@ class TauLegEfficiencies(object):
             raise Exception
         self._filetypes.append(filetype)
 
-    def _create_file_regex(self, filetype):
-        file_dict = self._config["file_dict"]
+    def _create_file_regex(self, filetype, use_et=False):
+        if use_et:
+            file_dict = self._config["file_dict_et"]
+        else:
+            file_dict = self._config["file_dict"]
         file_vector = root.vector("string")()
         glob_exp = "{inp}{fi}/{fi}.root".format(inp=self.input_dir,
                                                 fi=file_dict[filetype])
@@ -109,6 +102,13 @@ class TauLegEfficiencies(object):
 
     def create_efficiencies(self):
         for filetype in self.filetypes:
+            # Do some list magic to be able to process the etau cross trigger seperately.
+            if self._use_et:
+                logger.info("Taking etau trigger efficiency from et channel...")
+                if "etau" in self._trigger_names:
+                    self._trigger_names.remove("etau")
+
+            # Loop over double list to process etau triggers seperately from other triggers.
             dataframe = root.RDataFrame(
                     self.tree_name, self._create_file_regex(filetype))
             logger.debug("Cutstring: {}".format(
@@ -133,10 +133,41 @@ class TauLegEfficiencies(object):
                         self._efficiencies.append(
                                 Efficiency(d_wp, wp, trg, filetype, self._era,
                                            self._config["trigger_dict"]))
-            logger.info("Writing resulting histograms to %s.", self._outfile)
+            logger.info("Writing resulting histograms to %s.", self._outfile.GetName())
             for eff in self._efficiencies:
                 eff.save_histograms()
             self._efficiencies = []
+
+            # Process etau trigger seperately if required.
+            if self._use_et:
+                dataframe = root.RDataFrame(
+                        self.tree_name.replace("mt", "et"), self._create_file_regex(filetype, self._use_et))
+                logger.debug("Cutstring: {}".format(
+                     "(" + ")&&(".join(self._config["baseline_selection_et"])) + ")")
+                d_baseline = dataframe.Filter(
+                     "(" + ")&&(".join(self._config["baseline_selection_et"]) + ")")
+                for wp in self.working_points:
+                    d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
+                    if self._per_dm:
+                        for trg in self.trigger_names:
+                            for dm in [0, 1, 10]:
+                                d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
+                                self._efficiencies.append(
+                                        Efficiency(d_dm, wp, "etau", filetype, self._era,
+                                                   self._config["trigger_dict_et"],
+                                                   decayMode=dm))
+                            self._efficiencies.append(
+                                    Efficiency(d_wp, wp, "etau", filetype, self._era,
+                                               self._config["trigger_dict_et"]))
+                    else:
+                        for trg in self.trigger_names:
+                            self._efficiencies.append(
+                                    Efficiency(d_wp, wp, "etau", filetype, self._era,
+                                               self._config["trigger_dict_et"]))
+                logger.info("Writing resulting histograms to %s.", self._outfile.GetName())
+                for eff in self._efficiencies:
+                    eff.save_histograms()
+                self._efficiencies = []
         self._outfile.Close()
         return
 
@@ -246,7 +277,7 @@ class Efficiency(object):
         if self.decayMode is None:
             ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_{}"
         else:
-            ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_DM{}_{}"
+            ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_dm{}_{}"
             form_opts.append(self.decayMode)
         form_opts.append(self.suffix)
 
@@ -276,7 +307,7 @@ class Efficiency(object):
         h_eff_AVG.Divide(self.hist2d_AVG_pass.GetValue(),
                          self.hist2d_AVG_total.GetValue(),
                          1., 1., "b(1,1) cl=0.683 mode")
-        self._save_root_object(h_eff_AVG, ti_tmpl.format(*form_opts))
+        self._save_root_object(h_eff_AVG, ti_tmpl.format(*form_opts)+"_AVG")
         return
 
     def _save_root_object(self, root_obj, title):
