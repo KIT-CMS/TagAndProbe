@@ -99,6 +99,7 @@ def make_plots(args):
         working_points=args.working_points,
         file_types=args.file_types,
         era=era,
+        per_dm=args.per_dm,
         draw_options=draw_options,
         output="tau_leg_efficiency",
         title=title,
