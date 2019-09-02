@@ -5,6 +5,7 @@ bins_hist_2017: &bins_hist_2017
     phi: [-3.2, 2.8, 3.2]
     etaAVG: [-2.5, -2.1, 2.1, 2.5]
     phiAVG: [-3.2, 3.2]
+    decayMode: [-0.5, 0.5, 1.5, 10.5]
 
 bins_hist_2018: &bins_hist_2018
     <<: *bins_hist_2017

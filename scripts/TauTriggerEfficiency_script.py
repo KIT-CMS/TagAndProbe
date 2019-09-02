@@ -174,7 +174,7 @@ class TauLegEfficiencies(object):
 
 class Efficiency(object):
     """A class to store and produce trigger efficiencies."""
-
+    
     def __init__(self, dataframe, working_point,
                  trigger, filetype, era, trigger_dict,
                  decayMode=None):
@@ -247,6 +247,8 @@ class Efficiency(object):
                 self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         self.hist2d_AVG_total = dataframe.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
+        self.hist2d_dm_total = dataframe.Histo2D(
+                self._mod_th2d_pT_dm, "pt_p", "decayMode_p", "bkgSubWeight")
 
         dataframe_pass = dataframe.Filter(trigger_dict[self.suffix][self.trigger_name])
 
@@ -256,6 +258,8 @@ class Efficiency(object):
                 self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         self.hist2d_AVG_pass = dataframe_pass.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
+        self.hist2d_dm_pass = dataframe_pass.Histo2D(
+                self._mod_th2d_pT_dm, "pt_p", "decayMode_p", "bkgSubWeight")
         return
 
     def _save_1Dhistogram(self):
@@ -314,4 +318,5 @@ class Efficiency(object):
         root_obj.SetName(title)
         root_obj.SetTitle(title)
         root_obj.Write(title)
+
         return
