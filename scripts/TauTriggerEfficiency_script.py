@@ -247,8 +247,6 @@ class Efficiency(object):
                 self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         self.hist2d_AVG_total = dataframe.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
-        self.hist2d_dm_total = dataframe.Histo2D(
-                self._mod_th2d_pT_dm, "pt_p", "decayMode_p", "bkgSubWeight")
 
         dataframe_pass = dataframe.Filter(trigger_dict[self.suffix][self.trigger_name])
 
@@ -258,8 +256,6 @@ class Efficiency(object):
                 self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         self.hist2d_AVG_pass = dataframe_pass.Histo2D(
                 self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
-        self.hist2d_dm_pass = dataframe_pass.Histo2D(
-                self._mod_th2d_pT_dm, "pt_p", "decayMode_p", "bkgSubWeight")
         return
 
     def _save_1Dhistogram(self):
