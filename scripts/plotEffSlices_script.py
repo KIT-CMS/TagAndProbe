@@ -211,7 +211,7 @@ def plot_hadronic(input_file, triggers, working_points, file_types, era, per_dm,
                     if draw_options[j] != None:
                         settings = draw_options[j]
                         plot.Set(hist, **settings)
-                    hist.Draw('HIST LP SAME')#htgr.Draw('SAME')
+                    hist.Draw('LP SAME')#htgr.Draw('SAME')
                     legend.AddEntry(hist)
                     slices.append(hist)
                 latex.SetTextSize(0.06)
@@ -260,7 +260,7 @@ def plot_hadronic(input_file, triggers, working_points, file_types, era, per_dm,
                     for j, ratio in enumerate(ratios):
                         if j == ratio_to:
                             continue
-                        ratio.Draw('HIST LP SAME')#('SAME E0')
+                        ratio.Draw('LP SAME')#('SAME E0')
                     pads[1].SetGrid(0, 1)
                     pads[1].RedrawAxis('g')
 
