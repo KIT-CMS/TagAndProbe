@@ -156,6 +156,7 @@ def plot_hadronic(input_file, triggers, working_points, file_types, era, per_dm,
     plot.ModTDRStyle()
     plot_dir = "plots"
     hists = {}
+    graphs = {}
     if plot_dir != '':
         os.system('mkdir -p %s' % plot_dir)
     if per_dm:
@@ -165,13 +166,19 @@ def plot_hadronic(input_file, triggers, working_points, file_types, era, per_dm,
     file = ROOT.TFile(input_file)
     for trg in triggers:
         hists[trg] = {}
+        graphs[trg] = {}
         for decayMode in decayModes:
             dm_label = "" if decayMode=="inclusive" else "dm{}_".format(decayMode)
             hists[trg][decayMode] = {}
+            graphs[trg][decayMode] = {}
             for wp in working_points:
                 hists[trg][decayMode][wp] = []
+                graphs[trg][decayMode][wp] = []
+
                 for ft in file_types:
                     hists[trg][decayMode][wp].append(file.Get("hist_{}TriggerEfficiency_{}TauMVA_{}{}".format(trg, wp, dm_label, ft)).Clone())
+                    graphs[trg][decayMode][wp].append(file.Get("hist_{}TriggerEfficiency_{}TauMVA_{}{}".format(trg, wp, dm_label, ft)).Clone())
+
     file.Close()
 
 
@@ -203,7 +210,7 @@ def plot_hadronic(input_file, triggers, working_points, file_types, era, per_dm,
                 legend = ROOT.TLegend(0.6, 0.54, 0.95, 0.74, '', 'NDC')		
                 #~ if 'ID' in splitsrc[1]:
                     #~ legend = ROOT.TLegend(0.18, 0.67, 0.5, 0.85, '', 'NDC')		
-                for j, hist in enumerate(hists[trg][decayMode][wp]):
+                for j, hist in enumerate(graphs[trg][decayMode][wp]):
                     #splitsrc = src.split(':')
                     # htgr = hists[j].ProjectionX('%s_projx_%i' % (hists[j].GetName(), j), i, i)
                     #if len(splitsrc) >= 3:
@@ -213,6 +220,10 @@ def plot_hadronic(input_file, triggers, working_points, file_types, era, per_dm,
                         plot.Set(hist, **settings)
                     hist.Draw('LP SAME')#htgr.Draw('SAME')
                     legend.AddEntry(hist)
+                for j, hist in enumerate(hists[trg][decayMode][wp]):
+                    if draw_options[j] != None:
+                        settings = draw_options[j]
+                        plot.Set(hist, **settings)
                     slices.append(hist)
                 latex.SetTextSize(0.06)
                 #~ text.AddText(args.title)
