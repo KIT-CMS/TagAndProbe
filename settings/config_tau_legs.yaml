@@ -128,7 +128,7 @@ trigger_dict_2018: &trgs_2018
             medtau40: "trg_monitor_mu24tau40_mediso_tightid"
             tighttau40: "trg_monitor_mu24tau40_tightiso"
             ditau: "(trg_monitor_mu24tau35_mediso_hps&&(run>=317509))||((trg_monitor_mu24tau35_tightiso_tightid||trg_monitor_mu24tau40_mediso_tightid||trg_monitor_mu24tau40_tightiso)&&(run<317509))"
-            mutau: "(trg_monitor_mu20tau27_hps&&(run>=317509))||(trg_monitor_mu20tau27&&(run<317509))"
+            mutau: "(trg_crossmuon_mu20tau27_hps&&(run>=317509))||(trg_crossmuon_mu20tau27&&(run<317509))"
             etau: "(trg_monitor_mu20tau27_hps&&(run>=317509))||(trg_monitor_mu20tau27&&(run<317509))"
             ditauvbf: "(trg_monitor_mu27tau20&&(run<317509))||(trg_monitor_mu27tau20_hps&&(run>=317509))"
         EMB: *trgs_2018
