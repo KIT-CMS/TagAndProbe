@@ -87,6 +87,9 @@ trigger_dict_2018: &trgs_2018
         MC: "DYJetsToLLM50*"
         DATA: "SingleElectron*Run2016*"
         EMB: "Embedding2016*ElTau*"
+    etaphi_cats:  #TODO: add categorisation for 2016
+        cat1: "cuts"
+        cat2: "cuts"
 2017:
     tree_name: "mt/ntuple"
     tree_name_et: "et/ntuple"
@@ -114,6 +117,17 @@ trigger_dict_2018: &trgs_2018
         MC: "DYJetsToLLM50*"
         DATA: "SingleElectron*Run2017*"
         EMB: "Embedding2017*ElTau*"
+    etaphi_cats:
+        Average:
+            - "true"
+        Endcap:
+            - "abs(eta_p) > 1.5"
+        NonPixelProblemBarrel:
+            - "abs(eta_p) < 1.5"
+            - "(phi_p < 2.8 || eta_p <= 0)"
+        PixelProblemBarrel:
+            - "eta_p > 0 && eta_p < 1.5"
+            - "phi_p > 2.8"
 2018:
     tree_name: "mt/ntuple"
     tree_name_et: "et/ntuple"
@@ -147,3 +161,13 @@ trigger_dict_2018: &trgs_2018
         MC: "DYJetsToLLM50*"
         DATA: "EGamma*Run2018*"
         EMB: "Embedding2018*ElTau*"
+    etaphi_cats:
+        Average:
+            - "true"
+        Barrel:
+            - "abs(eta_p) < 1.5"
+        NonHCALProblemEndcap:
+            - "(((eta_p > -2.1 && eta_p < -1.5) && (phi_p > -3.2  && phi_p < -1.6)) || ((eta_p > -2.1 && eta_p < -1.5) &&  (phi_p > -0.8  && phi_p < 3.2)) || ( eta_p > 1.5 && eta_p < 2.1))"
+        HCALProblemEndcap:
+            - "(eta_p > -2.1 && eta_p < -1.5)"
+            - "(phi_p > -1.6 && phi_p < -0.8)"

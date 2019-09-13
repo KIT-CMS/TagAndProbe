@@ -149,21 +149,19 @@ class TauLegEfficiencies(object):
                 for wp in self.working_points:
                     d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
                     if self._per_dm:
-                        for trg in self.trigger_names:
-                            for dm in [0, 1, 10]:
-                                d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
-                                self._efficiencies.append(
-                                        Efficiency(d_dm, wp, "etau", filetype, self._era,
-                                                   self._config["trigger_dict_et"],
-                                                   decayMode=dm))
+                        for dm in [0, 1, 10]:
+                            d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
                             self._efficiencies.append(
-                                    Efficiency(d_wp, wp, "etau", filetype, self._era,
-                                               self._config["trigger_dict_et"]))
+                                    Efficiency(d_dm, wp, "etau", filetype, self._era,
+                                               self._config["trigger_dict_et"],
+                                               decayMode=dm))
+                        self._efficiencies.append(
+                                Efficiency(d_wp, wp, "etau", filetype, self._era,
+                                           self._config["trigger_dict_et"]))
                     else:
-                        for trg in self.trigger_names:
-                            self._efficiencies.append(
-                                    Efficiency(d_wp, wp, "etau", filetype, self._era,
-                                               self._config["trigger_dict_et"]))
+                        self._efficiencies.append(
+                                Efficiency(d_wp, wp, "etau", filetype, self._era,
+                                           self._config["trigger_dict_et"]))
                 logger.info("Writing resulting histograms to %s.", self._outfile.GetName())
                 for eff in self._efficiencies:
                     eff.save_histograms()
@@ -174,7 +172,7 @@ class TauLegEfficiencies(object):
 
 class Efficiency(object):
     """A class to store and produce trigger efficiencies."""
-    
+
     def __init__(self, dataframe, working_point,
                  trigger, filetype, era, trigger_dict,
                  decayMode=None):
@@ -185,6 +183,7 @@ class Efficiency(object):
         self._era = era
         self._decayMode = decayMode
         self._create_histogram_models()
+        self._categories = yaml.load(open("settings/config_tau_legs.yaml", "r"))[self._era]["etaphi_cats"]
         self._create_histogram_pointers(dataframe, trigger_dict)
 
     @property
@@ -243,19 +242,26 @@ class Efficiency(object):
 
         self.hist1d_total = dataframe.Histo1D(
                 self._mod_th1d_pT, "pt_p", "bkgSubWeight")
-        self.hist2d_total = dataframe.Histo2D(
-                self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
-        self.hist2d_AVG_total = dataframe.Histo2D(
-                self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
 
         dataframe_pass = dataframe.Filter(trigger_dict[self.suffix][self.trigger_name])
 
         self.hist1d_pass = dataframe_pass.Histo1D(
                 self._mod_th1d_pT, "pt_p", "bkgSubWeight")
-        self.hist2d_pass = dataframe_pass.Histo2D(
-                self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
-        self.hist2d_AVG_pass = dataframe_pass.Histo2D(
-                self._mod_th2d_eta_phi_AVG, "eta_p", "phi_p", "bkgSubWeight")
+
+        # Read cuts to be applied before calculating the eta phi histograms.
+        pt_cut = yaml.load(open("settings/settings_tau_trigger.yaml", "r"))["pt_cuts_2d"][self._era][self.trigger_name]
+
+        dataframe_2d = dataframe.Filter(pt_cut)
+        self._hist2d_pointers = {}
+        for cat, cutstr in self._categories.iteritems():
+            self._hist2d_pointers[cat] = {}
+            self._hist2d_pointers[cat]["total"] = dataframe_2d \
+                .Filter("("+")&&(".join(cutstr)+")") \
+                .Histo2D(self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
+            self._hist2d_pointers[cat]["pass"] = dataframe_2d \
+                .Filter("("+")&&(".join(cutstr)+")") \
+                .Filter(trigger_dict[self.suffix][self.trigger_name]) \
+                .Histo2D(self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
         return
 
     def _save_1Dhistogram(self):
@@ -287,32 +293,26 @@ class Efficiency(object):
         return
 
     def _save_2Dhistograms(self):
-        h_eff = root.TH2D(self.hist2d_pass.GetValue())
-        h_eff.Sumw2()
-        h_eff.Divide(self.hist2d_pass.GetValue(), self.hist2d_total.GetValue(),
-                     1., 1., "b(1,1) cl=0.683 mode")
-
-        form_opts = [self.trigger_name, self.working_point]
-        if self.decayMode is None:
-            ti_tmpl = "{}_{}_{}"
-        else:
-            ti_tmpl = "{}_{}_DM{}_{}"
-            form_opts.append(self.decayMode)
-        form_opts.append(self.suffix)
-
-        self._save_root_object(h_eff, ti_tmpl.format(*form_opts))
-
-        h_eff_AVG = root.TH2D(self.hist2d_AVG_pass.GetValue())
-        h_eff_AVG.Sumw2()
-        h_eff_AVG.Divide(self.hist2d_AVG_pass.GetValue(),
-                         self.hist2d_AVG_total.GetValue(),
+        for cat, hist_ptrs in self._hist2d_pointers.iteritems():
+            h_eff = root.TH2D(hist_ptrs["pass"].GetValue())
+            h_eff.Sumw2()
+            h_eff.Divide(hist_ptrs["pass"].GetValue(), hist_ptrs["total"].GetValue(),
                          1., 1., "b(1,1) cl=0.683 mode")
-        self._save_root_object(h_eff_AVG, ti_tmpl.format(*form_opts)+"_AVG")
+            self._save_root_object(h_eff, self._get_2dhist_name(cat))
         return
+
+    def _get_2dhist_name(self, cat_name):
+        form_opts = [self.trigger_name, self.working_point]
+        ti_tmpl = "{}_{}MVAv2_dm{}_{}_{}"
+        if self.decayMode is None:
+            form_opts.append("Cmb")
+        else:
+            form_opts.append(self.decayMode)
+        form_opts.extend([self.suffix, cat_name])
+        return ti_tmpl.format(*form_opts)
 
     def _save_root_object(self, root_obj, title):
         root_obj.SetName(title)
         root_obj.SetTitle(title)
         root_obj.Write(title)
-
         return
