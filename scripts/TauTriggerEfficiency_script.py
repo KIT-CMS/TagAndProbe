@@ -220,7 +220,7 @@ class Efficiency(object):
         if self._decayMode is None:
             bins = bin_settings["bins_fits"][self._era][self.trigger_name]
         else:
-            bins = bin_settings["bins_fits_dm"][self._era][self.trigger_name][self.decayMode]
+            bins = bin_settings["bins_fits_dm"][self._era][self.trigger_name][self.decayMode][self.suffix]
         self._mod_th1d_pT = root.RDF.TH1DModel(
                 "mod_th1d_pT", "mod_th1d_pT",
                 len(bins["pT"])-1, np.array(bins["pT"], dtype=float))
