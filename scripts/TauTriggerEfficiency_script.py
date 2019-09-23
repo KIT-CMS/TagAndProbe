@@ -9,6 +9,7 @@ import ROOT as root
 root.PyConfig.IgnoreCommandLineOptions = True
 root.gErrorIgnoreLevel = root.kError
 root.gROOT.SetBatch(1)
+root.ROOT.EnableImplicitMT(10)
 
 logger = logging.getLogger(__name__)
 
@@ -102,19 +103,25 @@ class TauLegEfficiencies(object):
 
     def create_efficiencies(self):
         for filetype in self.filetypes:
-            # Do some list magic to be able to process the etau cross trigger seperately.
+            # Do some list magic to be able to process the
+            # etau cross trigger seperately.
             if self._use_et:
-                logger.info("Taking etau trigger efficiency from et channel...")
+                logger.info("Taking etau trigger efficiency from et channel..")
                 if "etau" in self._trigger_names:
                     self._trigger_names.remove("etau")
 
-            # Loop over double list to process etau triggers seperately from other triggers.
+            # Loop over double list to process
+            # etau triggers seperately from other triggers.
             dataframe = root.RDataFrame(
                     self.tree_name, self._create_file_regex(filetype))
             logger.debug("Cutstring: {}".format(
-                 "(" + ")&&(".join(self._config["baseline_selection"])) + ")")
+                 "(" + ")&&(".join(
+                     self._config["baseline_selection"] if filetype == "DATA"
+                     else self._config["baseline_selection"]+["isOS"])) + ")")
             d_baseline = dataframe.Filter(
-                 "(" + ")&&(".join(self._config["baseline_selection"]) + ")")
+                 "(" + ")&&(".join(
+                     self._config["baseline_selection"] if filetype == "DATA"
+                     else self._config["baseline_selection"]+["isOS"]) + ")")
             for wp in self.working_points:
                 d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
                 if self._per_dm:
@@ -122,7 +129,8 @@ class TauLegEfficiencies(object):
                         for dm in [0, 1, 10]:
                             d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
                             self._efficiencies.append(
-                                    Efficiency(d_dm, wp, trg, filetype, self._era,
+                                    Efficiency(d_dm, wp, trg, filetype,
+                                               self._era,
                                                self._config["trigger_dict"],
                                                decayMode=dm))
                         self._efficiencies.append(
@@ -133,7 +141,8 @@ class TauLegEfficiencies(object):
                         self._efficiencies.append(
                                 Efficiency(d_wp, wp, trg, filetype, self._era,
                                            self._config["trigger_dict"]))
-            logger.info("Writing resulting histograms to %s.", self._outfile.GetName())
+            logger.info("Writing resulting histograms to %s.",
+                        self._outfile.GetName())
             for eff in self._efficiencies:
                 eff.save_histograms()
             self._efficiencies = []
@@ -141,11 +150,16 @@ class TauLegEfficiencies(object):
             # Process etau trigger seperately if required.
             if self._use_et:
                 dataframe = root.RDataFrame(
-                        self.tree_name.replace("mt", "et"), self._create_file_regex(filetype, self._use_et))
+                        self.tree_name.replace("mt", "et"),
+                        self._create_file_regex(filetype, self._use_et))
                 logger.debug("Cutstring: {}".format(
-                     "(" + ")&&(".join(self._config["baseline_selection_et"])) + ")")
+                     "(" + ")&&(".join(
+                         self._config["baseline_selection_et"] if filetype == "DATA"
+                         else self._config["baseline_selection_et"] + ["isOS"])) + ")")
                 d_baseline = dataframe.Filter(
-                     "(" + ")&&(".join(self._config["baseline_selection_et"]) + ")")
+                     "(" + ")&&(".join(
+                         self._config["baseline_selection_et"] if filetype == "DATA"
+                         else self._config["baseline_selection_et"]+["isOS"]) + ")")
                 for wp in self.working_points:
                     d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
                     if self._per_dm:
@@ -274,6 +288,7 @@ class Efficiency(object):
                                        self.hist1d_total.GetValue())
 
         h_fail = root.TH1D(self.hist1d_total.GetValue())
+        h_fail.Sumw2()
         h_fail.Add(self.hist1d_pass.GetValue(), -1.)
         g_eff_v2 = root.RooHist(self.hist1d_pass.GetValue(), h_fail,
                                 0, 1., root.RooAbsData.Poisson, 1.,
