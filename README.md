@@ -70,12 +70,13 @@ git clone -b run2_SFs https://github.com/cms-tau-pog/TauTriggerSFs $CMSSW_BASE/s
 scram b -j 8
 ```
 
-3. Perform the fits of the 1D efficiency histograms. In order to do so the created output file has to be put under `TauTriggerTools/TauTriggerFitTool/data` and the corresponding script has to be adapted to the new file.
+3. Perform the fits of the 1D efficiency histograms. They are performed using the script `TauTriggerTools/TauTriggerFitTool/python/produceFitResults.py`. In order to do so the created output file has to be put under `TauTriggerTools/TauTriggerFitTool/data` and the corresponding script has to be adapted to the new file.
 
 4. Copy the resulting file to `$CMSSW_BASE/src/TauAnalysisTools/TauTriggerSFs/data` and run
 ```bash
 cd $CMSSW_BASE/src/TauAnalysisTools/TauTriggerSFs/
 python copyEfficiencies.py
 ```
+Here again the script has to be adapted to the correct paths.
 
 5. Add the fit results and the previously created file containing the 2D distributions to a common root file.
