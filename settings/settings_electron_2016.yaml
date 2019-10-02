@@ -30,7 +30,7 @@ ID80_pt_eta_bins:
   # Settings for plotting
   TITLE: "MVA ID 17 WP80"
   y_range: [0.5,1.05]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.6,1.4]
 
 ID90_pt_eta_bins:
   name: 'ID90_pt_eta_bins'
@@ -47,7 +47,7 @@ ID90_pt_eta_bins:
   # Settings for plotting
   TITLE: "MVA ID 17 WP90"
   y_range: [0.5,1.05]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.6,1.4]
 
 Iso_pt_bins_inc_eta:
   name: 'Iso_pt_bins_inc_eta'

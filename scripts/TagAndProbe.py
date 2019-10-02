@@ -55,12 +55,17 @@ for key,cfg in bin_cfgs.items():
         andable.add(cfg['probe'])
         andable.add(cfg['tag'])
 
-
-trees = {
-    'Embedding': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Embedding']),
-    'DY': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['DY']),
-    'Data': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Data']),
-}
+if args.channel == "embeddingselection":
+    trees = {
+        'Data': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Data']),
+    }
+else:
+    trees = {
+        'Embedding': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Embedding']),
+        'old_emb': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['old_emb']),
+        'DY': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['DY']),
+        'Data': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Data']),
+    }
         
 for sample in trees:
     out_dir = args.output
