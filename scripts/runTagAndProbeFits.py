@@ -29,8 +29,11 @@ if args.fit:
             filename = ["{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era)]
             Dir_ext = ["/data"]
         else:
-            filename = ["{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era)]
-            Dir_ext = ["/embedding", "/old_emb", "/data", "/DY"]  
+            filename = ["{}/{}_TP_Embedding_{}.root".format(out_dir, args.channel, args.era),
+            "{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era),
+            "{}/{}_TP_DY_{}.root".format(out_dir, args.channel, args.era)
+            ]
+            Dir_ext = ["/embedding", "/data", "/DY"]  
         for i, file_ in enumerate(filename):
             expression_list.append([file_, label, Dir + label + Dir_ext[i], parameters[label]["SIG"], parameters[label]["BKG"], parameters[label]["TITLE"], particle, "", None]) 
      #       fitTagAndProbe_script.main(
@@ -61,7 +64,6 @@ if args.plot:
         else:
             files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
                 "{}/{}_TP_Embedding_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
-                "{}/{}_TP_old_emb_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
                 "{}/{}_TP_DY_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label)
                 ]        
         draw_options = [
@@ -72,11 +74,6 @@ if args.plot:
                 'LineColor':4,
                 'MarkerStyle':21,
                 'Title': emb_title+" legacy"},
-            {
-                'MarkerColor':8,
-                'LineColor':8,
-                'MarkerStyle':21,
-                'Title': emb_title+" old"},
             {
                 'MarkerColor':2,
                 'LineColor':2,

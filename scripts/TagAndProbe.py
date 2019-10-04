@@ -62,7 +62,6 @@ if args.channel == "embeddingselection":
 else:
     trees = {
         'Embedding': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Embedding']),
-        'old_emb': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['old_emb']),
         'DY': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['DY']),
         'Data': analysis.TTreeEvaluator(input_files[args.era][args.channel]['folder'], input_files[args.era][args.channel]['Data']),
     }
