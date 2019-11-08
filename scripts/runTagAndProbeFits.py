@@ -5,7 +5,11 @@ import plotEffSlices_script
 import argparse
 import yaml
 from multiprocessing import Process
+import plot_lepton_sf
+import sys
+import logging
 
+logger = logging.getLogger("")
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--channel', required=True)
@@ -16,8 +20,23 @@ parser.add_argument('--output', default = "output", required = False)
 
 args = parser.parse_args()
 
+def setup_logging(output_file, level=logging.DEBUG):
+    logger.setLevel(level)
+    formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    file_handler = logging.FileHandler(output_file, "w")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+
 out_dir = args.output
 Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
+
+setup_logging("{}/fits_plots.log".format(out_dir), logging.INFO)
 
 parameters = yaml.load(open("settings/settings_{}_{}.yaml".format(args.channel,args.era)))
 
@@ -55,45 +74,10 @@ if args.fit:
         p.join()
 
 if args.plot:
-    emb_title = "#mu#rightarrow#mu embedded" if "muon" in args.channel else "#mu#rightarrow e embedded"
-    dy_title = "Z#rightarrow#mu#mu simulation" if "muon" in args.channel else "Z#rightarrow ee simulation"
-    x_title = "Muon p_{T} (GeV)" if "muon" in args.channel else "Electron p_{T} (GeV)"
     for label in parameters:
-        if args.channel == "embeddingselection": 
-            files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label)]
-        else:
-            files = ["{}/{}_TP_Data_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
-                "{}/{}_TP_Embedding_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label),
-                "{}/{}_TP_DY_{}_Fits_{}.root".format(out_dir, args.channel, args.era, label)
-                ]        
-        draw_options = [
-            {
-                'Title':'Data'},
-            {
-                'MarkerColor':4,
-                'LineColor':4,
-                'MarkerStyle':21,
-                'Title': emb_title+" legacy"},
-            {
-                'MarkerColor':2,
-                'LineColor':2,
-                'MarkerStyle':21,
-                'Title': dy_title}
-                ]
-        try:
-            plotEffSlices_script.plot_lepton(
-                files=files,
-                label=label,
-                era = args.era,
-                draw_options=draw_options,
-                output="efficiency", 
-                title= parameters[label]["TITLE"], 
-                y_range= parameters[label]["y_range"], 
-                ratio_y_range= parameters[label]["ratio_y_range"], 
-                binned_in= "#eta", 
-                x_title= x_title, 
-                ratio_to= 0, 
-                plot_dir= Dir + label, 
-                label_pos= 3)
-        except ReferenceError:
-            print label + " Fits do not exist. "
+        eta_binning = parameters[label]["bins_y"]
+        for i,etalimit in enumerate(eta_binning[:-1:]):
+            plotoptions = parameters[label]
+            plotoptions["etarange"] = "{}-{}".format(eta_binning[i],eta_binning[i+1])
+            plotoptions["ptrange"] = [min(plotoptions['bins_x']),max(plotoptions['bins_x'])]
+            plot_lepton_sf.build_plot(out_dir, label, args.era, args.channel, i, plotoptions)
