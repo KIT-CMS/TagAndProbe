@@ -1,12 +1,12 @@
 Ele24_Iso_pt_eta_bins:
   name: 'Ele24_Iso_pt_eta_bins'
   var: 'm_ll(50,65,115)'
-  tag: 'trg_t_Ele25eta2p1WPTight && pt_t >= 26 && iso_p < 0.15  && id_90_p && id_90_t && isAntiL1TauMatched_trg_p_ele24tau20_crossL1>0.5'
-  probe: 'trg_p_ele24tau20_crossL1 || trg_p_ele24tau20_singleL1 || trg_p_ele24tau30_crossL1'
+  tag: 'trg_t_Ele25eta2p1WPTight && pt_t >= 26 && iso_p < 0.15  && id_90_p && id_90_t'
+  probe: 'trg_p_ele24tau20_singleL1 '
   binvar_x: 'pt_p'
   bins_x: [10., 15., 20., 21.,22.,23.,24., 25.,26.,27.,28.,29.,  30., 35., 40.,  50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
-  bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  bins_y: [0.0, 1.0, 1.4442, 1.56, 2.1]
   # Settings for fits
   BKG: "Exponential"
   SIG: "DoubleVCorr"
@@ -18,12 +18,12 @@ Ele24_Iso_pt_eta_bins:
 Ele24_Iso_pt_bins_inc_eta:
   name: 'Ele24_Iso_pt_bins_inc_eta'
   var: 'm_ll(50,65,115)'
-  tag: 'trg_t_Ele25eta2p1WPTight && pt_t >=26 && iso_p < 0.15 && id_90_p && id_90_t && isAntiL1TauMatched_trg_p_ele24tau20_crossL1>0.5'
-  probe: 'trg_p_ele24tau20_crossL1 || trg_p_ele24tau20_singleL1 || trg_p_ele24tau30_crossL1'
+  tag: 'trg_t_Ele25eta2p1WPTight && pt_t >=26 && iso_p < 0.15 && id_90_p && id_90_t '
+  probe: 'trg_p_ele24tau20_singleL1 '
   binvar_x: 'pt_p'
   bins_x: [10., 20.,21.,22.,23.,24., 25., 26., 27., 28., 29., 30., 35., 40.,  50., 100., 200., 1000.]
   binvar_y: 'abs(eta_p)'
-  bins_y: [0, 2.4]
+  bins_y: [0, 2.1]
   # Settings for fits
   BKG: "Exponential"
   SIG: "DoubleVCorr"
