@@ -80,4 +80,5 @@ if args.plot:
             plotoptions = parameters[label]
             plotoptions["etarange"] = "{}-{}".format(eta_binning[i],eta_binning[i+1])
             plotoptions["ptrange"] = [min(plotoptions['bins_x']),max(plotoptions['bins_x'])]
+            plotoptions["outputdir"] = Dir
             plot_lepton_sf.build_plot(out_dir, label, args.era, args.channel, i, plotoptions)

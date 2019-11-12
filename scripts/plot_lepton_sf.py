@@ -129,6 +129,6 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     plot.DrawChannelCategoryLabel("{} - #eta [{}]".format(plotoptions["TITLE"], plotoptions["etarange"].replace("-",",")), textsize=0.03)
     # save plot
     plot.save("{folder}/{variable}_{type}_{era}_{etarange}_scalefactor.pdf".format(
-        folder=folder, variable=variable, type=type, era=era, etarange=plotoptions["etarange"]))
+        folder=plotoptions["outputdir"], variable=variable, type=type, era=era, etarange=plotoptions["etarange"]))
     plot.save("{folder}/{variable}_{type}_{era}_{etarange}_scalefactor.png".format(
-        folder=folder, variable=variable, type=type, era=era, etarange=plotoptions["etarange"]))
+        folder=plotoptions["outputdir"], variable=variable, type=type, era=era, etarange=plotoptions["etarange"]))
