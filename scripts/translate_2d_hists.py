@@ -1,9 +1,12 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import yaml
 import argparse
 from array import array
 
 import ROOT as root
+
+root.PyConfig.IgnoreCommandLineOptions = True
+root.gROOT.SetBatch(True)
 
 
 def parse_args():
@@ -28,6 +31,10 @@ def get_hist_params(input_file):
     fts = set(key.GetName().split("_")[3] for key in input_file.GetListOfKeys()
               if isinstance(input_file.Get(key.GetName()), root.TH2D))
     return list(trs), list(wps), list(dms), list(fts)
+    # return map(lambda x: list(set(x)),
+    #            (key.GetName().split("_") for key in input_file.GetListOfKeys()
+    #             if isinstance(input_file.Get(key.GetName()), root.TH2D))
+    #            )
 
 
 def fill_hist(h_to_write, hname, in_file, conf_dict):
@@ -42,11 +49,10 @@ def fill_hist(h_to_write, hname, in_file, conf_dict):
     return h_to_write
 
 
-def fill_avg_hist(h_to_write, hname, in_file):
+def fill_avg_hist(h_to_write, hname, in_file, conf_dict):
     avg_hist = in_file.Get("_".join([hname, "Average"]))
-    for binx in xrange(1, h_to_write.GetNbinsX()+1):
-        for biny in xrange(1, h_to_write.GetNbinsY()+1):
-            h_to_write.SetBinContent(binx, biny, avg_hist.GetBinContent(1, 1))
+    for tup in conf_dict["AVG"]:
+        h_to_write.SetBinContent(tup[0], tup[1], avg_hist.GetBinContent(1, 1))
     return h_to_write
 
 
@@ -60,15 +66,21 @@ def main(args):
             for dm in dms:
                 for ft in filetypes:
                     hname = "{}_{}_{}_{}".format(trg, wp, dm, ft)
-                    h_to_write = root.TH2F(hname, hname,
-                                           len(config["binning"]["eta"])-1, array("f", config["binning"]["eta"]),
-                                           len(config["binning"]["phi"])-1, array("f", config["binning"]["phi"]))
+                    h_to_write = root.TH2F(
+                            hname, hname,
+                            len(config["binning"]["eta"])-1,
+                            array("f", config["binning"]["eta"]),
+                            len(config["binning"]["phi"])-1,
+                            array("f", config["binning"]["phi"]))
                     fill_hist(h_to_write, hname, inp_file, config).Write()
 
-                    havg_to_write = root.TH2F(hname + "_AVG", hname + "_AVG",
-                                              len(config["binning"]["eta_avg"])-1, array("f", config["binning"]["eta_avg"]),
-                                              len(config["binning"]["phi_avg"])-1, array("f", config["binning"]["phi_avg"]))
-                    fill_avg_hist(havg_to_write, hname, inp_file).Write()
+                    havg_to_write = root.TH2F(
+                            hname + "_AVG", hname + "_AVG",
+                            len(config["binning"]["eta_avg"])-1,
+                            array("f", config["binning"]["eta_avg"]),
+                            len(config["binning"]["phi_avg"])-1,
+                            array("f", config["binning"]["phi_avg"]))
+                    fill_avg_hist(havg_to_write, hname, inp_file, config).Write()
     out_file.Close()
     return
 
