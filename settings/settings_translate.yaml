@@ -8,11 +8,13 @@ phi_bins_avg: &phi_avg
 
 2016:
     binning:
-        eta: *eta_bins
-        phi: []
+        eta: *eta_avg
+        phi: *phi_avg
         eta_avg: *eta_avg
         phi_avg: *phi_avg
     categories:
+        Barrel: [[2, 1]]
+    AVG: [[2, 1]]
 2017:
     binning:
         eta: *eta_bins
@@ -22,7 +24,9 @@ phi_bins_avg: &phi_avg
     categories:
         NonPixelProblemBarrel: [[3, 1], [4, 1], [3, 2]]
         PixelProblemBarrel: [[4, 2]]
-        Endcap: [[1, 1], [1, 2], [2, 1], [2, 2], [5, 1], [6, 1], [5, 2], [6, 2]]
+        Endcap: [[2, 1], [2, 2], [5, 1], [5, 2]]
+    AVG:
+        [[2, 1]]
 2018:
     binning:
         eta: *eta_bins
@@ -33,3 +37,5 @@ phi_bins_avg: &phi_avg
         Barrel: [[3, 1], [3, 2], [3, 3], [3, 4], [4, 1], [4, 2], [4, 3], [4, 4]]
         NonHCALProblemEndcap: [[2, 1], [2, 3], [2, 4], [5, 1], [5, 2], [5, 3], [5, 4]]
         HCALProblemEndcap: [[2, 2]]
+    AVG:
+        [[2, 1]]
