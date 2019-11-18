@@ -8,8 +8,7 @@ import ROOT as root
 # Disable ROOT internal argument parser.
 root.PyConfig.IgnoreCommandLineOptions = True
 root.gErrorIgnoreLevel = root.kError
-root.gROOT.SetBatch(1)
-root.ROOT.EnableImplicitMT(10)
+root.gROOT.SetBatch()
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +20,9 @@ class TauLegEfficiencies(object):
                  treeName="mt/ntuple",
                  conf_file="settings/config_tau_legs.yaml",
                  per_dm=False,
-                 use_et=False):
+                 use_et=False,
+                 mva=False,
+                 ncores=None):
         self._efficiencies = []
         self._working_points = []
         self._trigger_names = []
@@ -34,6 +35,9 @@ class TauLegEfficiencies(object):
         self._config = yaml.load(open(conf_file, "r"))[era]
         self._per_dm = per_dm
         self._use_et = use_et
+        self._tauid = "MVAv2" if mva else "DeepTau"
+        if ncores is not None:
+            root.ROOT.EnableImplicitMT(ncores)
 
     @property
     def working_points(self):
@@ -56,11 +60,11 @@ class TauLegEfficiencies(object):
         return self._tree_name
 
     def add_wp(self, wp):
-        if wp not in self._config["tauId_wps"].keys():
+        if wp not in self._config["tauId_wps"][self._tauid].keys():
             logger.fatal("Given working point %s is not available."
                          " MVA working point must be one of %s",
-                         wp, self._config["tauId_wps"].keys())
-            raise Exception
+                         wp, self._config["tauId_wps"][self._tauid].keys())
+            raise ValueError
         self.working_points.append(wp)
 
     def add_trigger_name(self, trigger):
@@ -73,7 +77,7 @@ class TauLegEfficiencies(object):
                          " Trigger path must be one of %s",
                          trigger,
                          list(available_trgs))
-            raise Exception
+            raise ValueError
         self._trigger_names.append(trigger)
 
     def add_filetype(self, filetype):
@@ -81,7 +85,7 @@ class TauLegEfficiencies(object):
             logger.fatal("Given trigger path %s is not available."
                          " Trigger path must be one of %s",
                          filetype, self._config["file_dict"].keys())
-            raise Exception
+            raise ValueError
         self._filetypes.append(filetype)
 
     def _create_file_regex(self, filetype, use_et=False):
@@ -116,31 +120,34 @@ class TauLegEfficiencies(object):
                     self.tree_name, self._create_file_regex(filetype))
             logger.debug("Cutstring: {}".format(
                  "(" + ")&&(".join(
-                     self._config["baseline_selection"] if filetype == "DATA"
-                     else self._config["baseline_selection"]+["isOS"])) + ")")
+                     self._config["baseline_selection"][self._tauid].values() if filetype == "DATA"
+                     else self._config["baseline_selection"][self._tauid].values() + ["isOS"])) + ")")
             d_baseline = dataframe.Filter(
                  "(" + ")&&(".join(
-                     self._config["baseline_selection"] if filetype == "DATA"
-                     else self._config["baseline_selection"]+["isOS"]) + ")")
+                     self._config["baseline_selection"][self._tauid].values() if filetype == "DATA"
+                     else self._config["baseline_selection"][self._tauid].values() + ["isOS"]) + ")")
             for wp in self.working_points:
-                d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
+                d_wp = d_baseline.Filter(self._config["tauId_wps"][self._tauid][wp]+">0.5")
                 if self._per_dm:
                     for trg in self.trigger_names:
-                        for dm in [0, 1, 10]:
+                        dms = [0, 1, 10] if "MVA" in self._tauid else [0, 1, 10, 11]
+                        for dm in dms:
                             d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
                             self._efficiencies.append(
                                     Efficiency(d_dm, wp, trg, filetype,
                                                self._era,
                                                self._config["trigger_dict"],
-                                               decayMode=dm))
+                                               decayMode=dm,
+                                               tauid=self._tauid))
                         self._efficiencies.append(
                                 Efficiency(d_wp, wp, trg, filetype, self._era,
-                                           self._config["trigger_dict"]))
+                                           self._config["trigger_dict"],
+                                           tauid=self._tauid))
                 else:
                     for trg in self.trigger_names:
                         self._efficiencies.append(
                                 Efficiency(d_wp, wp, trg, filetype, self._era,
-                                           self._config["trigger_dict"]))
+                                           self._config["trigger_dict"], tauid=self._tauid))
             logger.info("Writing resulting histograms to %s.",
                         self._outfile.GetName())
             for eff in self._efficiencies:
@@ -154,28 +161,29 @@ class TauLegEfficiencies(object):
                         self._create_file_regex(filetype, self._use_et))
                 logger.debug("Cutstring: {}".format(
                      "(" + ")&&(".join(
-                         self._config["baseline_selection_et"] if filetype == "DATA"
-                         else self._config["baseline_selection_et"] + ["isOS"])) + ")")
+                         self._config["baseline_selection_et"][self._tauid].values() if filetype == "DATA"
+                         else self._config["baseline_selection_et"][self._tauid].values() + ["isOS"])) + ")")
                 d_baseline = dataframe.Filter(
                      "(" + ")&&(".join(
-                         self._config["baseline_selection_et"] if filetype == "DATA"
-                         else self._config["baseline_selection_et"]+["isOS"]) + ")")
+                         self._config["baseline_selection_et"][self._tauid].values() if filetype == "DATA"
+                         else self._config["baseline_selection_et"][self._tauid].values() + ["isOS"]) + ")")
                 for wp in self.working_points:
-                    d_wp = d_baseline.Filter(self._config["tauId_wps"][wp]+">0.5")
+                    d_wp = d_baseline.Filter(self._config["tauId_wps"][self._tauid][wp]+">0.5")
                     if self._per_dm:
-                        for dm in [0, 1, 10]:
+                        dms = [0, 1, 10] if "MVA" in self._tauid else [0, 1, 10, 11]
+                        for dm in dms:
                             d_dm = d_wp.Filter("decayMode_p == {}".format(dm))
                             self._efficiencies.append(
                                     Efficiency(d_dm, wp, "etau", filetype, self._era,
                                                self._config["trigger_dict_et"],
-                                               decayMode=dm))
+                                               decayMode=dm, tauid=self._tauid))
                         self._efficiencies.append(
                                 Efficiency(d_wp, wp, "etau", filetype, self._era,
-                                           self._config["trigger_dict_et"]))
+                                           self._config["trigger_dict_et"], tauid=self._tauid))
                     else:
                         self._efficiencies.append(
                                 Efficiency(d_wp, wp, "etau", filetype, self._era,
-                                           self._config["trigger_dict_et"]))
+                                           self._config["trigger_dict_et"], tauid=self._tauid))
                 logger.info("Writing resulting histograms to %s.", self._outfile.GetName())
                 for eff in self._efficiencies:
                     eff.save_histograms()
@@ -189,13 +197,14 @@ class Efficiency(object):
 
     def __init__(self, dataframe, working_point,
                  trigger, filetype, era, trigger_dict,
-                 decayMode=None):
+                 decayMode=None, tauid="DeepTau"):
         """Init method of Efficiency class."""
         self._working_point = working_point
         self._trigger_name = trigger
         self._suffix = filetype
         self._era = era
         self._decayMode = decayMode
+        self._tauid = tauid
         self._create_histogram_models()
         self._categories = yaml.load(open("settings/config_tau_legs.yaml", "r"))[self._era]["etaphi_cats"]
         self._create_histogram_pointers(dataframe, trigger_dict)
@@ -215,6 +224,10 @@ class Efficiency(object):
     @property
     def decayMode(self):
         return self._decayMode
+
+    @property
+    def tauid(self):
+        return self._tauid
 
     def save_histograms(self):
         logger.info("Saving %s histograms for tau leg of the %s trigger and"
@@ -295,11 +308,18 @@ class Efficiency(object):
                                 root.kTRUE, 1.)
 
         form_opts = [self.trigger_name, self.working_point]
-        if self.decayMode is None:
-            ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_{}"
+        if "MVA" in self._tauid:
+            if self.decayMode is None:
+                ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_{}"
+            else:
+                ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_dm{}_{}"
+                form_opts.append(self.decayMode)
         else:
-            ti_tmpl = "{}_{}TriggerEfficiency_{}TauMVA_dm{}_{}"
-            form_opts.append(self.decayMode)
+            if self.decayMode is None:
+                ti_tmpl = "{}_{}TriggerEfficiency_{}DeepTau_{}"
+            else:
+                ti_tmpl = "{}_{}TriggerEfficiency_{}DeepTau_dm{}_{}"
+                form_opts.append(self.decayMode)
         form_opts.append(self.suffix)
 
         self._save_root_object(g_eff, ti_tmpl.format("graph", *form_opts))
@@ -318,7 +338,7 @@ class Efficiency(object):
 
     def _get_2dhist_name(self, cat_name):
         form_opts = [self.trigger_name, self.working_point]
-        ti_tmpl = "{}_{}MVAv2_dm{}_{}_{}"
+        ti_tmpl = "{}_{}" + self._tauid + "_dm{}_{}_{}"
         if self.decayMode is None:
             form_opts.append("Cmb")
         else:

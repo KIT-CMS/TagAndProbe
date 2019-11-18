@@ -8,8 +8,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="To be filled.")
     parser.add_argument("-w", "--working-points", type=str,
                         nargs="+", default=["all"],
-                        choices=["all", "vloose", "loose", "medium",
-                                 "tight", "vtight", "vvtight"],
+                        choices=["all", "vvvloose", "vvloose", "vloose", "loose",
+                                 "medium", "tight", "vtight", "vvtight"],
                         help="The MVA tau Id working points the"
                              " efficiencies should be calculated for.")
     parser.add_argument("-i", "--input-file", type=str, required=True,
@@ -35,6 +35,10 @@ def parse_args():
                         help="Activate decay mode splitting of the efficiencies.")
     parser.add_argument("--use-et", action="store_true",
                         help="Use measurement in et channel for etau cross trigger.")
+    parser.add_argument("--mva", action="store_true",
+                        help="Use MVA tau id instead of deep tau")
+    parser.add_argument("-n", "--ncores", default=None, type=int,
+                        help="Number of core to be run on. Default is no multithreading.")
     parser.add_argument('--fit', action="store_true")
     parser.add_argument('--plot', action="store_true")
     args = parser.parse_args()
@@ -59,7 +63,9 @@ def main(args):
             args.output_file,
             args.input_file,
             per_dm=args.per_dm,
-            use_et=args.use_et
+            use_et=args.use_et,
+            mva=args.mva,
+            ncores=args.ncores
     )
     for wp in wps:
         eff.add_wp(wp)
@@ -107,7 +113,7 @@ def make_plots(args):
         ratio_y_range=[0.0, 2.0],
         binned_in="#eta",
         x_title=x_title,
-        ratio_to=0,
+        ratio_to=None,
         plot_dir=plot_dir,
         label_pos=3)
 
