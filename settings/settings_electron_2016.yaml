@@ -12,8 +12,8 @@ ID90_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "MVA ID 17 WP90"
-  y_range: [0.5,1.05]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.05]
+  ratio_y_range: [0.5,2.5]
 
 ID80_pt_eta_bins:
   name: 'ID80_pt_eta_bins'
@@ -29,8 +29,8 @@ ID80_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "MVA ID 17 WP80"
-  y_range: [0.5,1.05]
-  ratio_y_range: [0.6,1.4]
+  y_range: [0.0,1.05]
+  ratio_y_range: [0.5,2.5]
 
 ID90_pt_eta_bins:
   name: 'ID90_pt_eta_bins'
@@ -63,8 +63,8 @@ Iso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.7,1.0]
+  ratio_y_range: [0.9,1.1]
 
 Iso_pt_eta_bins:
   name: 'Iso_pt_eta_bins'
@@ -80,8 +80,8 @@ Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.7,1.0]
+  ratio_y_range: [0.9,1.1]
 
 AIso_pt_bins_inc_eta:
   name: 'AIso_pt_bins_inc_eta'
@@ -97,8 +97,8 @@ AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} > 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 AIso_pt_eta_bins:
   name: 'AIso_pt_eta_bins'
@@ -114,8 +114,8 @@ AIso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} > 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 Trg_Iso_pt_bins_inc_eta:
   name: 'Trg_Iso_pt_bins_inc_eta'
@@ -131,7 +131,7 @@ Trg_Iso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele25"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg_Iso_pt_eta_bins:
@@ -148,7 +148,7 @@ Trg_Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele25"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg_AIso_pt_bins_inc_eta:
@@ -165,5 +165,5 @@ Trg_AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele25, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]

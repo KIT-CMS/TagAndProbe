@@ -12,7 +12,7 @@ Trg_Mu19Tau20_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Mu19Tau20"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.6,1.4]
 
 Trg_Mu19Tau20_pt_incl_eta:
@@ -29,5 +29,5 @@ Trg_Mu19Tau20_pt_incl_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Mu19Tau20"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.6,1.4]

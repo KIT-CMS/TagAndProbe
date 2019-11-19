@@ -13,8 +13,8 @@ ID_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Medium ID"
-  y_range: [0.85,1.05]
-  ratio_y_range: [0.95,1.05]
+  y_range: [0.9,1.0]
+  ratio_y_range: [0.90,1.1]
 
 ID_pt_eta_bins:
   name: 'ID_pt_eta_bins'
@@ -30,8 +30,8 @@ ID_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Medium ID"
-  y_range: [0.85,1.05]
-  ratio_y_range: [0.95,1.05]
+  y_range: [0.9,1.0]
+  ratio_y_range: [0.90,1.1]
 
 Iso_pt_bins_inc_eta:
   name: 'Iso_pt_bins_inc_eta'
@@ -65,7 +65,7 @@ Iso_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.9,1.1]
 
 AIso1_pt_bins_inc_eta:
   name: 'AIso1_pt_bins_inc_eta'
@@ -82,7 +82,7 @@ AIso1_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.15,0.25]"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.5,1.5]
+  ratio_y_range: [0.6,1.4]
 
 AIso1_pt_eta_bins:
   name: 'AIso1_pt_eta_bins'
@@ -99,7 +99,7 @@ AIso1_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.15,0.25]"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.5,1.5]
+  ratio_y_range: [0.6,1.4]
 
 AIso2_pt_bins_inc_eta:
   name: 'AIso2_pt_bins_inc_eta'
@@ -116,7 +116,7 @@ AIso2_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.25,0.50]"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.5,1.5]
+  ratio_y_range: [0.6,1.4]
 
 AIso2_pt_eta_bins:
   name: 'AIso2_pt_eta_bins'
@@ -133,7 +133,7 @@ AIso2_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.25,0.50]"
   y_range: [0.0,1.0]
-  ratio_y_range: [0.5,1.5]
+  ratio_y_range: [0.6,1.4]
 
 Trg_pt_eta_bins:
   name: 'Trg_pt_eta_bins'

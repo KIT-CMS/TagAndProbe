@@ -12,7 +12,7 @@ Ele24_Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele24Tau30 electron leg"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.5,1.5]
 
 Ele24_Iso_pt_bins_inc_eta:
@@ -29,5 +29,5 @@ Ele24_Iso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele24Tau30 electron leg"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.5,1.5]

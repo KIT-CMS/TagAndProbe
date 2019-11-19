@@ -12,8 +12,8 @@ ID90_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "MVA ID 17 WP90"
-  y_range: [0.5,1.05]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.05]
+  ratio_y_range: [0.6,1.4]
 
 ID80_pt_eta_bins:
   name: 'ID80_pt_eta_bins'
@@ -29,8 +29,8 @@ ID80_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "MVA ID 17 WP80"
-  y_range: [0.5,1.05]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.05]
+  ratio_y_range: [0.6,1.4]
 
 ID90_pt_eta_bins:
   name: 'ID90_pt_eta_bins'
@@ -63,8 +63,8 @@ Iso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.8,1.0]
+  ratio_y_range: [0.9,1.1]
 
 Iso_pt_eta_bins:
   name: 'Iso_pt_eta_bins'
@@ -80,8 +80,8 @@ Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.8,1.0]
+  ratio_y_range: [0.9,1.1]
 
 AIso_pt_bins_inc_eta:
   name: 'AIso_pt_bins_inc_eta'
@@ -97,8 +97,8 @@ AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} > 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 AIso_pt_eta_bins:
   name: 'AIso_pt_eta_bins'
@@ -114,8 +114,8 @@ AIso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} > 0.15"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 Trg_Iso_pt_bins_inc_eta:
   name: 'Trg_Iso_pt_bins_inc_eta'
@@ -131,7 +131,7 @@ Trg_Iso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele27 or Ele35 or Ele32"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg_Iso_pt_eta_bins:
@@ -147,8 +147,8 @@ Trg_Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele35 or Ele32"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||32||32fb||35)"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg_AIso_pt_bins_inc_eta:
@@ -164,8 +164,8 @@ Trg_AIso_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele35 or Ele32, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||32||32fb||35), Iso_{rel} > 0.15"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_Iso_pt_eta_bins:
@@ -181,8 +181,8 @@ Trg27_Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele35 or Ele32, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele27"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
   
 Trg27_AIso_pt_bins_inc_eta:
@@ -199,7 +199,7 @@ Trg27_AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele27, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg32_Iso_pt_eta_bins:
@@ -216,7 +216,7 @@ Trg32_Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele32"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg32_AIso_pt_bins_inc_eta:
@@ -233,7 +233,7 @@ Trg32_AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele32, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg32_fb_Iso_pt_eta_bins:
@@ -250,7 +250,7 @@ Trg32_fb_Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele32_fallback"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg32_fb_AIso_pt_bins_inc_eta:
@@ -267,7 +267,7 @@ Trg32_fb_AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele32_fallback, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg35_Iso_pt_eta_bins:
@@ -284,7 +284,7 @@ Trg35_Iso_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele35"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg35_AIso_pt_bins_inc_eta:
@@ -301,7 +301,7 @@ Trg35_AIso_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg Ele35, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_Iso_pt_eta_bins:
@@ -317,8 +317,8 @@ Trg27_or_Trg32_Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele32"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||32)"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_AIso_pt_bins_inc_eta:
@@ -334,8 +334,8 @@ Trg27_or_Trg32_AIso_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele32, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||32), Iso_{rel} > 0.15"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg35_Iso_pt_eta_bins:
@@ -351,8 +351,8 @@ Trg27_or_Trg35_Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele35"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||35)"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg35_AIso_pt_bins_inc_eta:
@@ -368,8 +368,8 @@ Trg27_or_Trg35_AIso_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele35, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||35), Iso_{rel} > 0.15"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_or_Trg35_Iso_pt_eta_bins:
@@ -385,8 +385,8 @@ Trg27_or_Trg32_or_Trg35_Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele32 or Ele35"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||32||35)"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg27_or_Trg32_or_Trg35_AIso_pt_bins_inc_eta:
@@ -402,8 +402,8 @@ Trg27_or_Trg32_or_Trg35_AIso_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele27 or Ele32 or Ele35, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(27||32||35), Iso_{rel} > 0.15"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg32_or_Trg35_Iso_pt_eta_bins:
@@ -419,8 +419,8 @@ Trg32_or_Trg35_Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele32 or Ele35"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(32||35)"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]
 
 Trg32_or_Trg35_AIso_pt_bins_inc_eta:
@@ -436,6 +436,6 @@ Trg32_or_Trg35_AIso_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg Ele32 or Ele35, Iso_{rel} > 0.15"
-  y_range: [0.0,1.0]
+  TITLE: "Trg Ele(32||35), Iso_{rel} > 0.15"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.1,1.9]

@@ -13,8 +13,8 @@ ID_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Medium ID"
-  y_range: [0.8,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.9,1.0]
+  ratio_y_range: [0.9,1.1]
 
 ID_pt_eta_bins:
   name: 'ID_pt_eta_bins'
@@ -30,8 +30,8 @@ ID_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Medium ID"
-  y_range: [0.8,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.9,1.0]
+  ratio_y_range: [0.9,1.1]
 
 Iso_pt_bins_inc_eta:
   name: 'Iso_pt_bins_inc_eta'
@@ -48,7 +48,7 @@ Iso_pt_bins_inc_eta:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.9,1.1]
 
 Iso_pt_eta_bins:
   name: 'Iso_pt_eta_bins'
@@ -65,7 +65,7 @@ Iso_pt_eta_bins:
   # Settings for plotting
   TITLE: "Iso_{rel} < 0.15"
   y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  ratio_y_range: [0.9,1.1]
 
 AIso1_pt_bins_inc_eta:
   name: 'AIso1_pt_bins_inc_eta'
@@ -81,8 +81,8 @@ AIso1_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.15,0.25]"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 AIso1_pt_eta_bins:
   name: 'AIso1_pt_eta_bins'
@@ -98,8 +98,8 @@ AIso1_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.15,0.25]"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 AIso2_pt_bins_inc_eta:
   name: 'AIso2_pt_bins_inc_eta'
@@ -115,25 +115,25 @@ AIso2_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Iso_{rel} #in [0.25,0.50]"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
-AIso2_pt_eta_bins:
-  name: 'AIso2_pt_eta_bins'
-  var: 'm_ll(50,65,115)'
-  tag: 'trg_t_IsoMu27 && pt_t > 28 && id_p'
-  probe: 'iso_p >= 0.25 && iso_p < 0.50'
-  binvar_x: 'pt_p'
-  bins_x: [10., 15., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 60., 80., 100., 200., 1000.]
-  binvar_y: 'abs(eta_p)'
-  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
-  # Settings for fits
-  BKG: "Exponential"
-  SIG: "DoubleVCorr"
-  # Settings for plotting
-  TITLE: "Iso_{rel} #in [0.25,0.50]"
-  y_range: [0.6,1.0]
-  ratio_y_range: [0.8,1.2]
+# AIso2_pt_eta_bins:
+#   name: 'AIso2_pt_eta_bins'
+#   var: 'm_ll(50,65,115)'
+#   tag: 'trg_t_IsoMu27 && pt_t > 28 && id_p'
+#   probe: 'iso_p >= 0.25 && iso_p < 0.50'
+#   binvar_x: 'pt_p'
+#   bins_x: [10., 15., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 60., 80., 100., 200., 1000.]
+#   binvar_y: 'abs(eta_p)'
+#   bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+#   # Settings for fits
+#   BKG: "Exponential"
+#   SIG: "DoubleVCorr"
+#   # Settings for plotting
+#   TITLE: "Iso_{rel} #in [0.25,0.50]"
+#   y_range: [0.0,1.0]
+#   ratio_y_range: [0.6,1.4]
 
 Trg_IsoMu27_pt_eta_bins:
   name: 'Trg_IsoMu27_pt_eta_bins'
@@ -149,7 +149,7 @@ Trg_IsoMu27_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg IsoMu27"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu27_AIso1_pt_bins_inc_eta:  
@@ -166,7 +166,7 @@ Trg_IsoMu27_AIso1_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg IsoMu27, Iso_{rel} #in [0.15,0.25]"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu27_AIso2_pt_bins_inc_eta:
@@ -183,7 +183,7 @@ Trg_IsoMu27_AIso2_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg IsoMu27, Iso_{rel} #in [0.15,0.25]"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu24_pt_eta_bins:
@@ -200,7 +200,7 @@ Trg_IsoMu24_pt_eta_bins:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg IsoMu24"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu24_AIso1_pt_bins_inc_eta:  
@@ -217,7 +217,7 @@ Trg_IsoMu24_AIso1_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Trg IsoMu24, Iso_{rel} #in [0.15,0.25]"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu24_AIso2_pt_bins_inc_eta:  
@@ -234,7 +234,7 @@ Trg_IsoMu24_AIso2_pt_bins_inc_eta:
   SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE:  "Trg IsoMu24, Iso_{rel} #in [0.25,0.5]"
-  y_range: [0.0,1.0]
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu27_or_IsoMu24_pt_eta_bins:  
@@ -252,8 +252,8 @@ Trg_IsoMu27_or_IsoMu24_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg IsoMu24 or IsoMu27"
-  y_range: [0.0,1.0]
+  TITLE: "Trg IsoMu(24||27)"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta:  
@@ -269,8 +269,8 @@ Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg IsoMu24 or IsoMu27, Iso_{rel} #in [0.15,0.25]"
-  y_range: [0.0,1.0]
+  TITLE: "Trg IsoMu(24||27), Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
 
 Trg_IsoMu27_or_IsoMu24_AIso2_pt_bins_inc_eta:  
@@ -286,6 +286,6 @@ Trg_IsoMu27_or_IsoMu24_AIso2_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Trg IsoMu24 or IsoMu27, Iso_{rel} #in [0.25,0.5]"
-  y_range: [0.0,1.0]
+  TITLE: "Trg IsoMu(24||Mu27), Iso_{rel} #in [0.25,0.5]"
+  y_range: [0.0,1.1]
   ratio_y_range: [0.8,1.2]
