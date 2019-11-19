@@ -2,12 +2,15 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+import logging
 # include dumbledraw package from topfolder
 sys.path.append("{}/Dumbledraw".format(os.getcwd()))
 
 import Dumbledraw.dumbledraw as dd
 import Dumbledraw.sf_rootfile_parser as rootfile_parser
 import Dumbledraw.styles as styles
+logger = logging.getLogger(__name__)
+
 
 def sf_label(type, process):
     # definition of the labels used in the plot
@@ -28,6 +31,7 @@ def sf_label(type, process):
     else:
         return dict["electron"][process]
 
+
 def sf_color(process):
     # definition of the colors used in the plot
     dict = {
@@ -36,6 +40,7 @@ def sf_color(process):
         "Embedding": 60
     }
     return dict[process]
+
 
 def build_plot(folder, variable, era, type, etabin, plotoptions):
 
@@ -82,11 +87,14 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     # normalize the two ratios so they represent the sf: Data/Emb and Data/MC
     plot.subplot(1).normalize("Data_Embedding_ratio", "Embedding_ratio")
     plot.subplot(1).normalize("Data_DY_ratio", "DY_ratio")
+    logger.debug("y Range: {} - {}".format(plotoptions['y_range'][0], plotoptions['y_range'][1]))
+    logger.debug("y Subrange: {} - {}".format(plotoptions['ratio_y_range'][0], plotoptions['ratio_y_range'][1]))
+    logger.debug("pT Range: {} - {}".format(plotoptions['ptrange'][0], int(plotoptions['ptrange'][1])))
     # take ranges from the .yaml settings file
     plot.subplot(0).setYlims(plotoptions['y_range'][0], plotoptions['y_range'][1])
     plot.subplot(1).setYlims(plotoptions['ratio_y_range'][0], plotoptions['ratio_y_range'][1])
-    plot.subplot(0).setXlims(plotoptions['ptrange'][0], plotoptions['ptrange'][1])
-    plot.subplot(1).setXlims(plotoptions['ptrange'][0], plotoptions['ptrange'][1])
+    plot.subplot(0).setXlims(plotoptions['ptrange'][0], int(plotoptions['ptrange'][1]))
+    plot.subplot(1).setXlims(plotoptions['ptrange'][0], int(plotoptions['ptrange'][1]))
     plot.subplot(0).setLogX()
     plot.subplot(1).setLogX()
     if "muon" in type:
@@ -96,14 +104,13 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     plot.subplot(0).setYlabel("Efficiency")
     plot.subplot(1).setYlabel("Scalefactor")
 
-
     plot.scaleXTitleSize(0.8)
     plot.scaleXLabelSize(0.8)
     plot.scaleYTitleSize(0.8)
     plot.scaleYLabelSize(0.8)
     plot.scaleXLabelOffset(2.0)
     plot.scaleYTitleOffset(1.1)
-
+    logger.debug("plotting {} - #eta [{}]".format(plotoptions["TITLE"], plotoptions["etarange"].replace("-", ",")))
     # draw subplots. Argument contains names of objects to be drawn in corresponding order.
     plot.subplot(0).Draw(["Data", "Embedding", "DY"])
     plot.subplot(1).Draw(["Data_Embedding_ratio", "Data_DY_ratio"])
@@ -111,7 +118,7 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     for i in range(2):
         plot.add_legend(width=0.3, height=0.15, pos=6)
         for process in processes:
-            plot.legend(i).add_entry(0, process, sf_label(type, process), 'PLE')
+            plot.legend(i).add_entry(i, process, sf_label(type, process), 'PLE')
         plot.legend(i).setNColumns(1)
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
@@ -126,8 +133,10 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
         plot.DrawLumi("59.7 fb^{-1} (2018, 13 TeV)")
 
     # take plot label from the .yaml settings file
-    plot.DrawChannelCategoryLabel("{} - #eta [{}]".format(plotoptions["TITLE"], plotoptions["etarange"].replace("-",",")), textsize=0.03)
+    plot.DrawChannelCategoryLabel("{} - #eta [{}]".format(plotoptions["TITLE"], plotoptions["etarange"].replace("-", ",")), textsize=0.03)
     # save plot
+    
+    logger.debug("Saving Plot")
     plot.save("{folder}/{variable}_{type}_{era}_{etarange}_scalefactor.pdf".format(
         folder=plotoptions["outputdir"], variable=variable, type=type, era=era, etarange=plotoptions["etarange"]))
     plot.save("{folder}/{variable}_{type}_{era}_{etarange}_scalefactor.png".format(

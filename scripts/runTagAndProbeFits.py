@@ -78,7 +78,9 @@ if args.plot:
         eta_binning = parameters[label]["bins_y"]
         for i,etalimit in enumerate(eta_binning[:-1:]):
             plotoptions = parameters[label]
-            plotoptions["etarange"] = "{}-{}".format(eta_binning[i],eta_binning[i+1])
-            plotoptions["ptrange"] = [min(plotoptions['bins_x']),max(plotoptions['bins_x'])]
+            plotoptions["etarange"] = "{}-{}".format(eta_binning[i], eta_binning[i+1])
+            plotoptions["ptrange"] = [min(plotoptions['bins_x']), max(plotoptions['bins_x'])]
+            if max(plotoptions['bins_x']) == 1000.:
+                plotoptions["ptrange"][1] = 999.
             plotoptions["outputdir"] = Dir
             plot_lepton_sf.build_plot(out_dir, label, args.era, args.channel, i, plotoptions)
