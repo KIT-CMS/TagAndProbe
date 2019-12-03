@@ -10,7 +10,16 @@ then
     MVA_ARG="--mva"
 fi
 
-source /cvmfs/sft.cern.ch/lcg/views/LCG_94/x86_64-slc6-gcc7-opt/setup.sh
+if [[ "$hostname" =~ "bms2" ]]
+then
+    source /cvmfs/sft.cern.ch/lcg/views/LCG_94/x86_64-slc6-gcc7-opt/setup.sh
+elif [[ "$hostname" =~ "bms1" ]] || [[ "$hostname" =~ "bms3" ]]
+then 
+    source /cvmfs/sft.cern.ch/lcg/views/LCG_94/x86_64-centos7-gcc7-opt/setup.sh
+else
+    echo "[FATAL] Host currently not known. Aborting..."
+    exit 1
+fi
 
 echo "[INFO] Producing efficiencies for ${ERA}.."
 if [[ $ERA =~ "2016" ]]; then
