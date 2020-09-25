@@ -27,7 +27,7 @@ def parse_args():
                         choices=["mutau", "etau", "tau35",
                                  "medtau40", "tighttau40",
                                  "hpstau35", "ditau",
-                                 "ditauvbf",
+                                 "ditauvbf", "ditauvbf_glob", "ditauvbf_comp",
                                  "TauLead", "TauTrail"],
                         default=["mutau", "etau", "ditau"],
                         help="The triggers to be processed.")

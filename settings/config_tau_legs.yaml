@@ -82,6 +82,9 @@ trigger_dict_2017: &trgs_2017
     # TightTau40: "trg_monitor_mu24tau40_tightiso"
     # ditau: "trg_monitor_mu24tau35_tight_tightID||trg_monitor_mu24tau40_medium_tightID||trg_monitor_mu24tau40_tight"
     ditau: "trg_monitor_mu24tau35_tightiso_tightid||trg_monitor_mu24tau40_mediso_tightid||trg_monitor_mu24tau40_tightiso"
+    ditauvbf: "trg_monitor_mu24tau20_looseiso_reg"
+    ditauvbf_glob: "trg_monitor_mu24tau20_looseiso"
+    ditauvbf_comp: "trg_monitor_mu24tau20_looseiso_comp"
     TauLead: "trg_singletau_leading"
     TauTrail: "trg_singletau_trailing"
 
@@ -147,8 +150,9 @@ trigger_dict_2018: &trgs_2018
         EMB:
             etau: "trg_crosselectron_ele24tau30"
     file_dict:
-        MC: "DYJetsToLLM50*Fall17*"
-        DATA: "SingleMuon*Run2017*"
+        # MC: "DYJetsToLLM50*Fall17*"
+        MC: "VBFHToTauTau*Summer17*"
+        DATA: "SingleMuon*Run2017D*"
         EMB: "Embedding2017*MuTau*"
     file_dict_et:
         MC: "DYJetsToLLM50*Fall17*"
