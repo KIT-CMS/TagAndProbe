@@ -10,7 +10,7 @@ if [ $MVA == 1 ]; then
 fi
 
 echo "[INFO] Change to directory of scale factor tool.."
-pushd /portal/ekpbms2/home/mburkart/trigger_studies/tautriggersfs/CMSSW_10_2_16/src/TauAnalysisTools/TauTriggerSFs/
+pushd /portal/ekpbms3/home/mburkart/workdir/trigger_studies/taupog/CMSSW_10_2_18/src/TauAnalysisTools/TauTriggerSFs/
 
 # Clean up older plots
 ls plots
@@ -21,12 +21,12 @@ eval `scramv1 runtime -sh`
 
 echo "[INFO] Switching naming scheme of efficiencies.."
 python python/copyEfficiencies.py \
-    /portal/ekpbms2/home/mburkart/trigger_studies/taupog/CMSSW_10_2_14/src/TauTriggerTools/TauTriggerFitTool/data/tauTriggerFitResults${ERA}KIT${SUFFIX}.root \
+    /portal/ekpbms3/home/mburkart/workdir/trigger_studies/taupog/CMSSW_10_2_18/src/TauTriggerTools/TauTriggerFitTool/data/tauTriggerFitResults${ERA}KIT${SUFFIX}.root \
     data/tauTriggerEfficiencies${ERA}KIT_copied${SUFFIX}.root\
-    -s MC DATA \
+    -s MC DATA EMB \
     $MVA_ARG
 
-hadd -f data/tauTriggerEfficiencies${ERA}KIT${SUFFIX}.root data/tauTriggerEfficiencies${ERA}KIT_copied${SUFFIX}.root /portal/ekpbms2/home/mburkart/trigger_studies/CMSSW_8_0_26_patch1/src/UserCode/TagAndProbe/etaphimapKIT_${ERA}${SUFFIX}.root
+hadd -f data/tauTriggerEfficiencies${ERA}KIT${SUFFIX}.root data/tauTriggerEfficiencies${ERA}KIT_copied${SUFFIX}.root /portal/ekpbms3/home/mburkart/workdir/trigger_studies/CMSSW_8_0_26_patch1/src/UserCode/TagAndProbe/etaphimapKIT_${ERA}${SUFFIX}.root
 
 # Plotting resulting efficiencies in comparison to the old ones and upload them to the plots archive
 # echo "[INFO] Plotting efficiency comparison.."
