@@ -22,7 +22,8 @@ class TauLegEfficiencies(object):
                  per_dm=False,
                  use_et=False,
                  mva=False,
-                 ncores=None):
+                 ncores=None,
+                 apply_pu_weight=False):
         self._efficiencies = []
         self._working_points = []
         self._trigger_names = []
@@ -36,6 +37,7 @@ class TauLegEfficiencies(object):
         self._per_dm = per_dm
         self._use_et = use_et
         self._tauid = "MVAv2" if mva else "DeepTau"
+        self.apply_pu_weight=apply_pu_weight
         if ncores is not None:
             root.ROOT.EnableImplicitMT(ncores)
 
@@ -100,6 +102,7 @@ class TauLegEfficiencies(object):
                      glob_exp)
         for path in glob.glob(glob_exp):
             file_vector.push_back(path)
+            logging.info("Adding input file %s", path)
         if file_vector.size() == 0:
             logger.fatal("No files matching the given pattern found.")
             raise Exception
@@ -122,10 +125,18 @@ class TauLegEfficiencies(object):
                  "(" + ")&&(".join(
                      self._config["baseline_selection"][self._tauid].values() if filetype == "DATA"
                      else self._config["baseline_selection"][self._tauid].values() + ["isOS"])) + ")")
-            d_baseline = dataframe.Filter(
-                 "(" + ")&&(".join(
-                     self._config["baseline_selection"][self._tauid].values() if filetype == "DATA"
-                     else self._config["baseline_selection"][self._tauid].values() + ["isOS"]) + ")")
+            if self.apply_pu_weight and filetype == "MC":
+                d_baseline = dataframe.Define("weight", "puWeight") \
+                                      .Filter(
+                                              "(" + ")&&(".join(
+                                                  self._config["baseline_selection"][self._tauid].values() if filetype == "DATA"
+                                                  else self._config["baseline_selection"][self._tauid].values() + ["isOS"]) + ")")
+            else:
+                d_baseline = dataframe.Define("weight", "bkgSubWeight") \
+                                      .Filter(
+                                              "(" + ")&&(".join(
+                                                  self._config["baseline_selection"][self._tauid].values() if filetype == "DATA"
+                                                  else self._config["baseline_selection"][self._tauid].values() + ["isOS"]) + ")")
             for wp in self.working_points:
                 d_wp = d_baseline.Filter(self._config["tauId_wps"][self._tauid][wp]+">0.5")
                 if self._per_dm:
@@ -243,7 +254,7 @@ class Efficiency(object):
     def _create_histogram_models(self):
         bin_settings = yaml.load(
                 open("settings/settings_tau_trigger.yaml", "r"))
-        if self._decayMode is None:
+        if self.decayMode is None:
             bins = bin_settings["bins_fits"][self._era][self.trigger_name]
         else:
             bins = bin_settings["bins_fits_dm"][self._era][self.trigger_name][self.decayMode][self.suffix]
@@ -268,12 +279,12 @@ class Efficiency(object):
                      self.working_point)
 
         self.hist1d_total = dataframe.Histo1D(
-                self._mod_th1d_pT, "pt_p", "bkgSubWeight")
+                self._mod_th1d_pT, "pt_p", "weight")
 
         dataframe_pass = dataframe.Filter(trigger_dict[self.suffix][self.trigger_name])
 
         self.hist1d_pass = dataframe_pass.Histo1D(
-                self._mod_th1d_pT, "pt_p", "bkgSubWeight")
+                self._mod_th1d_pT, "pt_p", "weight")
 
         # Read cuts to be applied before calculating the eta phi histograms.
         pt_cut = yaml.load(open("settings/settings_tau_trigger.yaml", "r"))["pt_cuts_2d"][self._era][self.trigger_name]
@@ -284,11 +295,11 @@ class Efficiency(object):
             self._hist2d_pointers[cat] = {}
             self._hist2d_pointers[cat]["total"] = dataframe_2d \
                 .Filter("("+")&&(".join(cutstr)+")") \
-                .Histo2D(self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
+                .Histo2D(self._mod_th2d_eta_phi, "eta_p", "phi_p", "weight")
             self._hist2d_pointers[cat]["pass"] = dataframe_2d \
                 .Filter("("+")&&(".join(cutstr)+")") \
                 .Filter(trigger_dict[self.suffix][self.trigger_name]) \
-                .Histo2D(self._mod_th2d_eta_phi, "eta_p", "phi_p", "bkgSubWeight")
+                .Histo2D(self._mod_th2d_eta_phi, "eta_p", "phi_p", "weight")
         return
 
     def _save_1Dhistogram(self):

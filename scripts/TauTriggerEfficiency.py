@@ -39,6 +39,8 @@ def parse_args():
                         help="Use MVA tau id instead of deep tau")
     parser.add_argument("-n", "--ncores", default=None, type=int,
                         help="Number of core to be run on. Default is no multithreading.")
+    parser.add_argument("--apply-pu-weight", action="store_true",
+                        help="Apply pileup weights in histogram creation.")
     parser.add_argument('--fit', action="store_true")
     parser.add_argument('--plot', action="store_true")
     args = parser.parse_args()
@@ -65,7 +67,8 @@ def main(args):
             per_dm=args.per_dm,
             use_et=args.use_et,
             mva=args.mva,
-            ncores=args.ncores
+            ncores=args.ncores,
+            apply_pu_weight=args.apply_pu_weight
     )
     for wp in wps:
         eff.add_wp(wp)
