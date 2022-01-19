@@ -45,11 +45,11 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
         nparams = 15
         pdf_args.extend(
                 [
-                    "Voigtian::signal1Pass(m_ll, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
-                    "Voigtian::signal2Pass(m_ll, mean2[90,80,100], width,        sigma2[4,2,10])",
+                    "Voigtian::signal1Pass(m_vis, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
+                    "Voigtian::signal2Pass(m_vis, mean2[90,80,100], width,        sigma2[4,2,10])",
                     "SUM::signalPass(vFrac[0.7,0,1]*signal1Pass, signal2Pass)",
-                    "Voigtian::signal1Fail(m_ll, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
-                    "Voigtian::signal2Fail(m_ll, mean2[90,80,100], width,        sigma2[4,2,10])",
+                    "Voigtian::signal1Fail(m_vis, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
+                    "Voigtian::signal2Fail(m_vis, mean2[90,80,100], width,        sigma2[4,2,10])",
                     "SUM::signalFail(vFrac[0.7,0,1]*signal1Fail, signal2Fail)",
                 ]
             )
@@ -57,11 +57,11 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
         nparams = 20
         pdf_args.extend(
                 [
-                    "Voigtian::signal1Pass(m_ll, mean1p[90,80,100], widthp[2.495], sigma1p[2,1,3])",
-                    "Voigtian::signal2Pass(m_ll, mean2p[90,80,100], widthp,        sigma2p[4,2,10])",
+                    "Voigtian::signal1Pass(m_vis, mean1p[90,80,100], widthp[2.495], sigma1p[2,1,3])",
+                    "Voigtian::signal2Pass(m_vis, mean2p[90,80,100], widthp,        sigma2p[4,2,10])",
                     "SUM::signalPass(vFracp[0.7,0,1]*signal1Pass, signal2Pass)",
-                    "Voigtian::signal1Fail(m_ll, mean1f[90,80,100], widthf[2.495], sigma1f[2,1,3])",
-                    "Voigtian::signal2Fail(m_ll, mean2f[90,80,100], widthf,        sigma2f[4,2,10])",
+                    "Voigtian::signal1Fail(m_vis, mean1f[90,80,100], widthf[2.495], sigma1f[2,1,3])",
+                    "Voigtian::signal2Fail(m_vis, mean2f[90,80,100], widthf,        sigma2f[4,2,10])",
                     "SUM::signalFail(vFracf[0.7,0,1]*signal1Fail, signal2Fail)"
                 ]
             )
@@ -71,22 +71,22 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
     if bkg_model == 'Exponential':
         pdf_args.extend(
                 [
-                    "Exponential::backgroundPass(m_ll, lp[-0.1,-1,0.1])",
-                    "Exponential::backgroundFail(m_ll, lf[-0.1,-1,0.1])"
+                    "Exponential::backgroundPass(m_vis, lp[-0.1,-1,0.1])",
+                    "Exponential::backgroundFail(m_vis, lf[-0.1,-1,0.1])"
                 ]
             )
     elif bkg_model == 'CMSShape':
         pdf_args.extend(
                 [
-                    "RooCMSShape::backgroundPass(m_ll, alphaPass[70,60,90], betaPass[0.001,0,0.1], gammaPass[0.001,0,0.1], peak[90])",
-                    "RooCMSShape::backgroundFail(m_ll, alphaFail[70,60,90], betaFail[0.001,0,0.1], gammaFail[0.001,0,0.1], peak[90])",
+                    "RooCMSShape::backgroundPass(m_vis, alphaPass[70,60,90], betaPass[0.001,0,0.1], gammaPass[0.001,0,0.1], peak[90])",
+                    "RooCMSShape::backgroundFail(m_vis, alphaFail[70,60,90], betaFail[0.001,0,0.1], gammaFail[0.001,0,0.1], peak[90])",
                 ]
             )
     elif bkg_model == 'Chebychev':
         pdf_args.extend(
                 [
-                    "RooChebychev::backgroundPass(m_ll, {a0p[0.25,0,0.5], a1p[-0.25,-1,0.1],a2p[0.,-0.25,0.25]})",
-                    "RooChebychev::backgroundFail(m_ll, {a0f[0.25,0,0.5], a1f[-0.25,-1,0.1],a2f[0.,-0.25,0.25]})",
+                    "RooChebychev::backgroundPass(m_vis, {a0p[0.25,0,0.5], a1p[-0.25,-1,0.1],a2p[0.,-0.25,0.25]})",
+                    "RooChebychev::backgroundFail(m_vis, {a0f[0.25,0,0.5], a1f[-0.25,-1,0.1],a2f[0.,-0.25,0.25]})",
                 ]
             )
     else:
@@ -141,10 +141,11 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
                 )
         label = label.replace('(', '_')
         label = label.replace(')', '_')
-
         # Set the initial yield and efficiency values
         yield_tot = wsp.data(dat).sumEntries()
         yield_pass = wsp.data(dat).sumEntries("cat==cat::pass")
+        yield_fail = wsp.data(dat).sumEntries("cat==cat::fail")
+        print("In bin %s, yield_tot = %g, yield_pass = %g, yield_fail = %g" % (label, yield_tot, yield_pass, yield_fail))
         wsp.var("numTot").setVal(yield_tot)
         try:
             wsp.var("efficiency").setVal(yield_pass/yield_tot)
@@ -201,8 +202,8 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
         ROOT.TGaxis.SetExponentOffset(-0.08, -0.02)
 
         splitData = wsp.data(dat).split(wsp.cat('cat'))
-        xframe = wsp.var("m_ll").frame(ROOT.RooFit.Title("Passing"))
-        width = (wsp.var("m_ll").getMax() - wsp.var("m_ll").getMin()) / splitData.At(1).numEntries()
+        xframe = wsp.var("m_vis").frame(ROOT.RooFit.Title("Passing"))
+        width = (wsp.var("m_vis").getMax() - wsp.var("m_vis").getMin()) / splitData.At(1).numEntries()
         splitData.At(1).plotOn(xframe, ROOT.RooFit.DataError(ROOT.RooAbsData.Poisson), ROOT.RooFit.Name("DataPass"))
         wsp.pdf("passing").plotOn(xframe,
                                 ROOT.RooFit.Slice(wsp.cat('cat'), "pass"),
@@ -242,7 +243,7 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
         legend1.AddEntry(xframe.findObject("BkgPass"), "BG", "l")
         legend1.Draw()
 
-        xframe2 = wsp.var("m_ll").frame(ROOT.RooFit.Title("Failing"))
+        xframe2 = wsp.var("m_vis").frame(ROOT.RooFit.Title("Failing"))
         splitData.At(0).plotOn(xframe2, ROOT.RooFit.DataError(ROOT.RooAbsData.Poisson), ROOT.RooFit.Name("DataFail"))
         wsp.pdf("failing").plotOn(xframe2,
                                 ROOT.RooFit.Slice(wsp.cat('cat'), "fail"),
