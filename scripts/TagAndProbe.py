@@ -79,7 +79,7 @@ for key, cfg_dict in bin_cfgs.items():
     cfg.update(
         translate_from_crown(cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"])
     )
-    pp.pprint(cfg)
+    # pp.pprint(cfg)
     cfg["hist"] = []
     cfg["bins"] = []
     # number of bins multiplied by four because of pass / fail and the switching of tag and probe

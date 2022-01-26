@@ -149,11 +149,11 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
 
     # plot.DrawCMS()
     if "2016" in era:
-        plot.DrawLumi("35.9 fb^{-1} (2016, 13 TeV)")
+        plot.DrawLumi("36.33 fb^{-1} (2016, 13 TeV)")
     elif "2017" in era:
-        plot.DrawLumi("41.5 fb^{-1} (2017, 13 TeV)")
+        plot.DrawLumi("41.48 fb^{-1} (2017, 13 TeV)")
     elif "2018" in era:
-        plot.DrawLumi("59.7 fb^{-1} (2018, 13 TeV)")
+        plot.DrawLumi("59.83 fb^{-1} (2018, 13 TeV)")
 
     # take plot label from the .yaml settings file
     plot.DrawChannelCategoryLabel(
@@ -224,6 +224,8 @@ def plot_efficiency(folder, variable, era, type, etabin, plotoptions):
         plot.subplot(0).setXlabel("p_{T}^{#mu} (GeV)")
     elif "electron" in type:
         plot.subplot(0).setXlabel("p_{T}^{e} (GeV)")
+    else:
+        plot.subplot(0).setXlabel("p_{T} (GeV)")
     plot.subplot(0).setYlabel("Efficiency")
 
     plot.scaleXTitleSize(0.8)
@@ -248,11 +250,11 @@ def plot_efficiency(folder, variable, era, type, etabin, plotoptions):
 
     # plot.DrawCMS()
     if "2016" in era:
-        plot.DrawLumi("35.9 fb^{-1} (2016, 13 TeV)")
+        plot.DrawLumi("36.33 fb^{-1} (2016, 13 TeV)")
     elif "2017" in era:
-        plot.DrawLumi("41.5 fb^{-1} (2017, 13 TeV)")
+        plot.DrawLumi("41.48 fb^{-1} (2017, 13 TeV)")
     elif "2018" in era:
-        plot.DrawLumi("59.7 fb^{-1} (2018, 13 TeV)")
+        plot.DrawLumi("59.83 fb^{-1} (2018, 13 TeV)")
 
     # take plot label from the .yaml settings file
     plot.DrawChannelCategoryLabel(

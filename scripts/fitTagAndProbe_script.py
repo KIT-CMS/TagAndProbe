@@ -45,11 +45,11 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
         nparams = 15
         pdf_args.extend(
                 [
-                    "Voigtian::signal1Pass(m_vis, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
-                    "Voigtian::signal2Pass(m_vis, mean2[90,80,100], width,        sigma2[4,2,10])",
+                    "Voigtian::signal1Pass(m_vis, mean1[90,85,95], width[2.495], sigma1[2,1,3])",
+                    "Voigtian::signal2Pass(m_vis, mean2[90,85,95], width,        sigma2[4,2,10])",
                     "SUM::signalPass(vFrac[0.7,0,1]*signal1Pass, signal2Pass)",
-                    "Voigtian::signal1Fail(m_vis, mean1[90,80,100], width[2.495], sigma1[2,1,3])",
-                    "Voigtian::signal2Fail(m_vis, mean2[90,80,100], width,        sigma2[4,2,10])",
+                    "Voigtian::signal1Fail(m_vis, mean1[90,85,95], width[2.495], sigma1[2,1,3])",
+                    "Voigtian::signal2Fail(m_vis, mean2[90,85,95], width,        sigma2[4,2,10])",
                     "SUM::signalFail(vFrac[0.7,0,1]*signal1Fail, signal2Fail)",
                 ]
             )
@@ -57,14 +57,41 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
         nparams = 20
         pdf_args.extend(
                 [
-                    "Voigtian::signal1Pass(m_vis, mean1p[90,80,100], widthp[2.495], sigma1p[2,1,3])",
-                    "Voigtian::signal2Pass(m_vis, mean2p[90,80,100], widthp,        sigma2p[4,2,10])",
-                    "SUM::signalPass(vFracp[0.7,0,1]*signal1Pass, signal2Pass)",
-                    "Voigtian::signal1Fail(m_vis, mean1f[90,80,100], widthf[2.495], sigma1f[2,1,3])",
-                    "Voigtian::signal2Fail(m_vis, mean2f[90,80,100], widthf,        sigma2f[4,2,10])",
-                    "SUM::signalFail(vFracf[0.7,0,1]*signal1Fail, signal2Fail)"
-                ]
+                    "Voigtian::signal1Pass(m_vis, mean1p[90,85,95], widthp[2.495], sigma1p[2,1,4])",
+                    "Voigtian::signal2Pass(m_vis, mean2p[90,85,95], widthp,        sigma2p[4,2,10])",
+                    "SUM::signalPass(vFracp[0.8,0,1]*signal1Pass, signal2Pass)",
+                    "Voigtian::signal1Fail(m_vis, mean1f[90,85,95], widthf[2.495], sigma1f[2,1,4])",
+                    "Voigtian::signal2Fail(m_vis, mean2f[90,85,95], widthf,        sigma2f[4,2,10])",
+                    "SUM::signalFail(vFracf[0.8,0,1]*signal1Fail, signal2Fail)"
+              ]
             )
+    elif sig_model == 'DoubleVPartcorr':
+      nparams = 6
+      pdf_args.extend(
+              [
+                  "Voigtian::signal1Pass(m_vis, mean[90,85,95], width[2.495], sigma[2,1,4])",
+                  "Voigtian::signal2Pass(m_vis, meanp[90,85,95], width[2.495], sigmap[2,1,15])",
+                  "SUM::signalPass(vFracp[0.01,0,1]*signal1Pass, signal2Pass)",
+                  "Voigtian::signal1Fail(m_vis, mean[90,85,95], width[2.495], sigma[2,1,4])",
+                  "Voigtian::signal2Fail(m_vis, meanf[90,85,95], width[2.495], sigmaf[2,1,15])",
+                  "SUM::signalFail(vFracf[0.01,0,1]*signal1Fail, signal2Fail)"
+              ]
+          )
+    elif sig_model == 'BWDoubleCBConvCorr':
+      nparams = 15
+      pdf_args.extend(
+              [
+                  "BreitWigner::BW(m_vis, meanbw[0], widthbw[2.495])",
+                  "CBShape::CBPass1(m_vis, mean[90,85,95], sigma[2,1,4], alpha[1,-50,50], n[1,0,50])",
+                  "CBShape::CBPass2(m_vis, meanp[90,85,95], sigmap[4,4,10], alphap[1,-50,50], np[1,0,50])",
+                  "SUM::DoubleCBPass(CBPass1, vFracp[0.01,0,1]*CBPass2)",
+                  "FFTConvPdf::signalPass(m_vis,DoubleCBPass,BW)",
+                  "CBShape::CBFail1(m_vis, mean[90,85,95], sigma[2,1,4], alpha[1,-50,50], n[1,0,50])",
+                  "CBShape::CBFail2(m_vis, meanf[90,85,95], sigmaf[4,4,10], alphaf[1,-50,50], nf[1,0,50])",
+                  "SUM::DoubleCBFail(CBFail1, vFracf[0.01,0,1]*CBFail2)",
+                  "FFTConvPdf::signalFail(m_vis,DoubleCBFail,BW)",
+              ]
+          )
     else:
         raise RuntimeError('Chosen --sig-model %s not supported' % sig_model)
 
@@ -78,8 +105,8 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
     elif bkg_model == 'CMSShape':
         pdf_args.extend(
                 [
-                    "RooCMSShape::backgroundPass(m_vis, alphaPass[70,60,90], betaPass[0.001,0,0.1], gammaPass[0.001,0,0.1], peak[90])",
-                    "RooCMSShape::backgroundFail(m_vis, alphaFail[70,60,90], betaFail[0.001,0,0.1], gammaFail[0.001,0,0.1], peak[90])",
+                    "RooCMSShape::backgroundPass(m_vis, alphaPass[70,60,200], betaPass[0.001,0,0.1], gammaPass[0.001,0,1], peak[90])",
+                    "RooCMSShape::backgroundFail(m_vis, alphaFail[70,60,200], betaFail[0.001,0,0.1], gammaFail[0.001,0,1], peak[90])",
                 ]
             )
     elif bkg_model == 'Chebychev':
@@ -94,11 +121,10 @@ def main(filename, name, plot_dir, sig_model, bkg_model, title, particle, postfi
 
     for arg in pdf_args:
         wsp.factory(arg)
-
-    model_args = [
-        "expr::nSignalPass('efficiency*fSigAll*numTot',efficiency[0,1], fSigAll[0,1],numTot[1,0,1e10])",
+        model_args = [
+        "expr::nSignalPass('efficiency*fSigAll*numTot',efficiency[0,1], fSigAll[0.9,0,1],numTot[1,0,1e10])",
         "expr::nSignalFail('(1-efficiency)*fSigAll*numTot',efficiency,fSigAll,numTot)",
-        "expr::nBkgPass('effBkg*(1-fSigAll)*numTot',effBkg[0,1],fSigAll,numTot)",
+        "expr::nBkgPass('effBkg*(1-fSigAll)*numTot',effBkg[0.9,0,1],fSigAll,numTot)",
         "expr::nBkgFail('(1-effBkg)*(1-fSigAll)*numTot',effBkg,fSigAll,numTot)",
         "SUM::passing(nSignalPass*signalPass,nBkgPass*backgroundPass)",
         "SUM::failing(nSignalFail*signalFail,nBkgFail*backgroundFail)",
