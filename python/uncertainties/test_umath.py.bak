@@ -6,7 +6,7 @@ These tests can be run through the Nose testing framework.
 (c) 2010-2016 by Eric O. LEBIGOT (EOL).
 """
 
-
+from __future__ import division
 
 # Standard modules
 import sys
@@ -17,7 +17,7 @@ from uncertainties import ufloat
 import uncertainties.core as uncert_core
 import uncertainties.umath_core as umath_core
 
-from . import test_uncertainties
+import test_uncertainties
 
 ###############################################################################
 # Unit tests
