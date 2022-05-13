@@ -6,6 +6,7 @@ import yaml
 import os
 import pprint as pp
 import argparse
+import pdb
 from array import array
 
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "python"))
@@ -138,18 +139,20 @@ def main(channel, era, output):
                         )
                     )
                     andable.add(
-                        "%s>=%g"
+                        "%s >= %g"
                         % (cfg["binvar_x"][n], hist.GetXaxis().GetBinLowEdge(i))
                     )
                     andable.add(
-                        "%s<%g" % (cfg["binvar_x"][n], hist.GetXaxis().GetBinUpEdge(i))
+                        "%s < %g"
+                        % (cfg["binvar_x"][n], hist.GetXaxis().GetBinUpEdge(i))
                     )
                     andable.add(
-                        "%s>=%g"
+                        "%s >= %g"
                         % (cfg["binvar_y"][n], hist.GetYaxis().GetBinLowEdge(j))
                     )
                     andable.add(
-                        "%s<%g" % (cfg["binvar_y"][n], hist.GetYaxis().GetBinUpEdge(j))
+                        "%s < %g"
+                        % (cfg["binvar_y"][n], hist.GetYaxis().GetBinUpEdge(j))
                     )
 
             for b in cfg["bins"][n]:
@@ -190,8 +193,8 @@ def main(channel, era, output):
                 input_files[era][channel]["Data"],
             ),
         }
-
     for sample in trees:
+        print("Processing {}".format(sample))
         out_dir = output
         if not os.path.exists(out_dir):
             os.mkdir(out_dir)
@@ -240,6 +243,7 @@ def main(channel, era, output):
         i = 0
 
         for key, cfg in bin_cfgs.items():
+            print("Writing histogram {}".format(key))
             wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
             var = wsp.factory("m_vis[100,65,115]")
 
@@ -270,11 +274,11 @@ def main(channel, era, output):
             cfg["hist"][0].GetYaxis().SetTitle(convert_hist_label(yaxis_label))
             cfg["hist"][0].Write()
             # outfile.Close()
-            wsp.Delete()
-
+            # wsp.Delete()
         outfile.Close()
 
 
 if __name__ == "__main__":
     args = parse_arguments()
     main(era=args.era, channel=args.channel, output=args.output)
+    exit()
