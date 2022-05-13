@@ -39,7 +39,7 @@ Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
 
 setup_logging("{}/fits_plots.log".format(out_dir), logging.INFO)
 
-parameters = yaml.load(
+parameters = yaml.safe_load(
     open("settings/settings_{}_{}.yaml".format(args.channel, args.era))
 )
 

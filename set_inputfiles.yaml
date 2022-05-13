@@ -1,78 +1,82 @@
-'2016': 
-  muon: 
-    folder: 'mm_singlemuon_nominal/ntuple'
-    Data: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/data/SingleMuon_2016.root'
-    Embedding: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/emb/MuonEmbedding_2016.root'
-    DY: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/mc/DYJets_2016.root'
+# "2016":
+#   muon:
+#     folder: "mm_singlemuon_nominal/ntuple"
+#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/data/SingleMuon_2016.root"
+#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/emb/MuonEmbedding_2016.root"
+#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/mc/DYJets_2016.root"
 
-  electron:
-    folder: 'ee_singleelectron_nominal/ntuple'
-    Data: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/data/SingleElectron_2016.root'
-    Embedding: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/emb/ElectronEmbedding_2016.root'
-    DY: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/mc/DYJets_2016.root'
+#   electron:
+#     folder: "ee_singleelectron_nominal/ntuple"
+#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/data/SingleElectron_2016.root"
+#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/emb/ElectronEmbedding_2016.root"
+#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/mc/DYJets_2016.root"
 
-  embeddingselection: 
-    folder: 'mm_embeddingselection_nominal/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/DoubleMuon/DoubleMuon_Run2016.root'
-  crossmuon:
-    folder: 'mm_crossmuon/ntuple'
-    Data: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/data/SingleMuon_2016.root'
-    Embedding: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/emb/MuonEmbedding_2016.root'
-    DY: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/mc/DYJets_2016.root'
+#   embeddingselection:
+#     folder: "mm_embeddingselection_nominal/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/DoubleMuon/DoubleMuon_Run2016.root"
+#   crossmuon:
+#     folder: "mm_crossmuon/ntuple"
+#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/data/SingleMuon_2016.root"
+#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/emb/MuonEmbedding_2016.root"
+#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/mc/DYJets_2016.root"
 
-  crosselectron:
-    folder: 'ee_crosselectron/ntuple'
-    Data: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/data/SingleElectron_2016.root'
-    Embedding: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/emb/ElectronEmbedding_2016.root'
-    DY: '/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/mc/DYJets_2016.root'
+#   crosselectron:
+#     folder: "ee_crosselectron/ntuple"
+#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/data/SingleElectron_2016.root"
+#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/emb/ElectronEmbedding_2016.root"
+#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/mc/DYJets_2016.root"
 
-'2017': 
-  muon: 
-    folder: 'mm_singlemuon_nominal/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root'
+# "2017":
+#   muon:
+#     folder: "mm_singlemuon_nominal/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root"
 
-  electron:
-    folder: 'ee_singleelectron_nominal/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/SingleElectron_Run2017.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/Embedding2017_ElectronEmbedding.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/DYJetsToLLM50_RunIIFall17.root'
+#   electron:
+#     folder: "ee_singleelectron_nominal/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/SingleElectron_Run2017.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/Embedding2017_ElectronEmbedding.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/DYJetsToLLM50_RunIIFall17.root"
 
-  crossmuon: 
-    folder: 'mm_crossmuon/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root'
+#   crossmuon:
+#     folder: "mm_crossmuon/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root"
 
-  crosselectron:
-    folder: 'ee_crosselectron/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/SingleElectron_Run2017.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/Embedding2017_ElectronEmbedding.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/DYJetsToLLM50_RunIIFall17.root'
+#   crosselectron:
+#     folder: "ee_crosselectron/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/SingleElectron_Run2017.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/Embedding2017_ElectronEmbedding.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/DYJetsToLLM50_RunIIFall17.root"
 
+# "2018":
+#   muon:
+#     folder: "mm_singlemuon_nominal/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
 
-'2018': 
-  muon: 
-    folder: 'mm_singlemuon_nominal/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
+#   electron:
+#     folder: "ee_singleelectron_nominal/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
 
-  electron:
-    folder: 'ee_singleelectron_nominal/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
+#   crossmuon:
+#     folder: "mm_crossmuon/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
 
-  crossmuon: 
-    folder: 'mm_crossmuon/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
+#   crosselectron:
+#     folder: "ee_crosselectron/ntuple"
+#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root"
+#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
+#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
 
-  crosselectron:
-    folder: 'ee_crosselectron/ntuple'
-    Data: '/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root'
-    Embedding: '/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root'
-    DY: '/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root'
+"2018UL":
+  embeddingselection:
+    folder: "ntuple"
+    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/ntuple_DoubleMuon_Run2018.root"
