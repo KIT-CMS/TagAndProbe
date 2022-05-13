@@ -7,7 +7,7 @@ cmsenv
 mkdir UserCode 
 cd UserCode
 
-git clone --recursive https://github.com/KIT-CMS/TagAndProbe -b crown
+git clone --recursive git@github.com:KIT-CMS/TagAndProbe.git -b crown
 
 cd -
 
