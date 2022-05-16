@@ -83,6 +83,6 @@
 
   muon:
     folder: "ntuple"
-    Data: /ceph/sbrommer/embedding_ul/scalefactors/inputfiles/ntuple_DoubleMuon_Run2018.root"
+    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/ntuple_SingleMuon_UL2018.root"
     Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/ntuple_MuEmbedding_Run2018.root"
     DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/ntuple_DYJets_UL2018.root"
