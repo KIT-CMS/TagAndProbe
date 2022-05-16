@@ -52,25 +52,25 @@ def main(
     pdf_args = []
     nparams = 1
     if sig_model == "DoubleVCorr":
-        nparams = 15
+        nparams = 6
         pdf_args.extend(
             [
-                "Voigtian::signal1Pass(m_vis, mean1[90,85,95], width[2.495], sigma1[2,1,3])",
+                "Voigtian::signal1Pass(m_vis, mean1[90,85,95], width[2.495], sigma1[2,0.2,4])",
                 "Voigtian::signal2Pass(m_vis, mean2[90,85,95], width,        sigma2[4,2,10])",
-                "SUM::signalPass(vFrac[0.7,0,1]*signal1Pass, signal2Pass)",
-                "Voigtian::signal1Fail(m_vis, mean1[90,85,95], width[2.495], sigma1[2,1,3])",
+                "SUM::signalPass(vFrac[0.8,0,1]*signal1Pass, signal2Pass)",
+                "Voigtian::signal1Fail(m_vis, mean1[90,85,95], width[2.495], sigma1[2,0.2,4])",
                 "Voigtian::signal2Fail(m_vis, mean2[90,85,95], width,        sigma2[4,2,10])",
-                "SUM::signalFail(vFrac[0.7,0,1]*signal1Fail, signal2Fail)",
+                "SUM::signalFail(vFrac[0.8,0,1]*signal1Fail, signal2Fail)",
             ]
         )
     elif sig_model == "DoubleVUncorr":
-        nparams = 20
+        nparams = 12
         pdf_args.extend(
             [
-                "Voigtian::signal1Pass(m_vis, mean1p[90,85,95], widthp[2.495], sigma1p[2,1,4])",
+                "Voigtian::signal1Pass(m_vis, mean1p[90,85,95], widthp[2.495], sigma1p[2,0.2,4])",
                 "Voigtian::signal2Pass(m_vis, mean2p[90,85,95], widthp,        sigma2p[4,2,10])",
                 "SUM::signalPass(vFracp[0.8,0,1]*signal1Pass, signal2Pass)",
-                "Voigtian::signal1Fail(m_vis, mean1f[90,85,95], widthf[2.495], sigma1f[2,1,4])",
+                "Voigtian::signal1Fail(m_vis, mean1f[90,85,95], widthf[2.495], sigma1f[2,0.2,4])",
                 "Voigtian::signal2Fail(m_vis, mean2f[90,85,95], widthf,        sigma2f[4,2,10])",
                 "SUM::signalFail(vFracf[0.8,0,1]*signal1Fail, signal2Fail)",
             ]
@@ -80,10 +80,10 @@ def main(
         pdf_args.extend(
             [
                 "Voigtian::signal1Pass(m_vis, mean[90,85,95], width[2.495], sigma[2,1,4])",
-                "Voigtian::signal2Pass(m_vis, meanp[90,85,95], width[2.495], sigmap[2,1,15])",
+                "Voigtian::signal2Pass(m_vis, meanp[90,85,95], width[2.495], sigmap[2,1,10])",
                 "SUM::signalPass(vFracp[0.01,0,1]*signal1Pass, signal2Pass)",
                 "Voigtian::signal1Fail(m_vis, mean[90,85,95], width[2.495], sigma[2,1,4])",
-                "Voigtian::signal2Fail(m_vis, meanf[90,85,95], width[2.495], sigmaf[2,1,15])",
+                "Voigtian::signal2Fail(m_vis, meanf[90,85,95], width[2.495], sigmaf[2,1,10])",
                 "SUM::signalFail(vFracf[0.01,0,1]*signal1Fail, signal2Fail)",
             ]
         )
@@ -106,13 +106,15 @@ def main(
         raise RuntimeError("Chosen --sig-model %s not supported" % sig_model)
 
     if bkg_model == "Exponential":
+        nparams += 2
         pdf_args.extend(
             [
-                "Exponential::backgroundPass(m_vis, lp[-0.1,-1,0.1])",
-                "Exponential::backgroundFail(m_vis, lf[-0.1,-1,0.1])",
+                "Exponential::backgroundPass(m_vis, lp[-0.1,-1,0])",
+                "Exponential::backgroundFail(m_vis, lf[-0.1,-1,0])",
             ]
         )
     elif bkg_model == "CMSShape":
+        nparams += 4
         pdf_args.extend(
             [
                 "RooCMSShape::backgroundPass(m_vis, alphaPass[70,60,200], betaPass[0.001,0,0.1], gammaPass[0.001,0,1], peak[90])",
@@ -120,6 +122,7 @@ def main(
             ]
         )
     elif bkg_model == "Chebychev":
+        nparams += 6
         pdf_args.extend(
             [
                 "RooChebychev::backgroundPass(m_vis, {a0p[0.25,0,0.5], a1p[-0.25,-1,0.1],a2p[0.,-0.25,0.25]})",
@@ -193,10 +196,12 @@ def main(
         yield_tot = wsp.data(dat).sumEntries()
         yield_pass = wsp.data(dat).sumEntries("cat==cat::pass")
         yield_fail = wsp.data(dat).sumEntries("cat==cat::fail")
-        print((
-            "In bin %s, yield_tot = %g, yield_pass = %g, yield_fail = %g"
-            % (label, yield_tot, yield_pass, yield_fail)
-        ))
+        print(
+            (
+                "In bin %s, yield_tot = %g, yield_pass = %g, yield_fail = %g"
+                % (label, yield_tot, yield_pass, yield_fail)
+            )
+        )
         wsp.var("numTot").setVal(yield_tot)
         try:
             wsp.var("efficiency").setVal(yield_pass / yield_tot)
@@ -219,15 +224,25 @@ def main(
         #                     ROOT.RooFit.PrintLevel(-1),
         #                     ROOT.RooFit.NumCPU(10))
 
+        wsp.pdf("model").fitTo(
+            wsp.data(dat),
+            ROOT.RooFit.Optimize(False),
+            ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
+            ROOT.RooFit.Offset(True),
+            ROOT.RooFit.Extended(True),
+            ROOT.RooFit.SumW2Error(False),
+            ROOT.RooFit.PrintLevel(-1),
+        )
+
         fitres = wsp.pdf("model").fitTo(
             wsp.data(dat),
             ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
-            # ROOT.RooFit.Strategy(2),
+            ROOT.RooFit.Optimize(False),
+            ROOT.RooFit.Strategy(2),
             ROOT.RooFit.Offset(True),
             ROOT.RooFit.Extended(True),
-            ROOT.RooFit.SumW2Error(True),
             ROOT.RooFit.PrintLevel(-1),
-            # ROOT.RooFit.NumCPU(10),
+            ROOT.RooFit.SumW2Error(False),
             ROOT.RooFit.Save(),
         )
         # ROOT.RooFit.Minos())
@@ -383,19 +398,21 @@ def main(
             src_val, src_err = hist.GetBinContent(
                 src_bin_x, src_bin_y
             ), hist.GetBinError(src_bin_x, src_bin_y)
-            print((
-                "Replacing content of bin %g,%g (%g +/- %g) with %g,%g (%g +/- %g)"
-                % (
-                    dest_bin_x,
-                    dest_bin_y,
-                    dest_val,
-                    dest_err,
-                    src_bin_x,
-                    src_bin_y,
-                    src_val,
-                    src_err,
+            print(
+                (
+                    "Replacing content of bin %g,%g (%g +/- %g) with %g,%g (%g +/- %g)"
+                    % (
+                        dest_bin_x,
+                        dest_bin_y,
+                        dest_val,
+                        dest_err,
+                        src_bin_x,
+                        src_bin_y,
+                        src_val,
+                        src_err,
+                    )
                 )
-            ))
+            )
             hist.SetBinContent(dest_bin_x, dest_bin_y, src_val)
             hist.SetBinError(dest_bin_x, dest_bin_y, src_err)
 

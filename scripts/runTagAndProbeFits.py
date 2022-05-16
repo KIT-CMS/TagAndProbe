@@ -99,6 +99,7 @@ if args.plot:
                 min(plotoptions["bins_x"]),
                 max(plotoptions["bins_x"]),
             ]
+            plotoptions["dataonly"] = False
             if max(plotoptions["bins_x"]) == 1000.0:
                 plotoptions["ptrange"][1] = 999.0
             plotoptions["outputdir"] = Dir

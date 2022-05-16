@@ -6,7 +6,7 @@ import yaml
 import os
 import pprint as pp
 import argparse
-import pdb
+from multiprocessing import Pool
 from array import array
 
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "python"))
@@ -28,7 +28,6 @@ def get_outputfiles(channel, era, out_dir):
     # small function to get the path for all expected output files
     # this is used to check if the output files exist
     bin_cfgs = yaml.safe_load(open("settings/settings_{}_{}.yaml".format(channel, era)))
-    input_files = yaml.safe_load(open("set_inputfiles.yaml"))
     outputfiles = []
     if channel == "embeddingselection":
         samples = ["Data"]
@@ -83,6 +82,92 @@ def translate_from_crown(tag, probe, binvar_x, binvar_y):
     converted_cfg["binvar_x"].append(convert_cutstrings(binvar_x, tag=2))
     converted_cfg["binvar_y"].append(convert_cutstrings(binvar_y, tag=2))
     return converted_cfg
+
+
+def process_trees(
+    sample, output, channel, era, tree, drawlist, bin_cfgs, number_of_bins
+):
+    print("Processing {}".format(sample))
+    out_dir = output
+    if not os.path.exists(out_dir):
+        os.mkdir(out_dir)
+    outputfilepath = "{}/{}_TP_{}_{}.root".format(out_dir, channel, sample, era)
+    if os.path.exists(outputfilepath):
+        os.remove(outputfilepath)
+    outfile = ROOT.TFile(
+        outputfilepath,
+        "RECREATE",
+    )
+    outfile.cd()
+
+    hists = tree.Draw(drawlist, compiled=True)
+
+    # if we are using crown, we have to add identical histograms together
+    total_hists = len(hists)
+    print("Total number of histograms: {}".format(total_hists))
+    print("Bins per histogram: {}".format(number_of_bins))
+    cleaned_hists = []
+    counter = 0
+    for nbins in number_of_bins:
+        nentries = 0
+        for bin in range(int(nbins / 2)):
+            cleaned_hists.append(
+                hists[int(counter) + int(bin)]
+                + hists[int(counter) + int(bin) + int(nbins / 2)]
+            )
+            # print(
+            #     "Ading histogram with {} Entries to {} existing Entries ".format(
+            #         hists[int(counter) + int(bin) + int(nbins / 2)].Integral(),
+            #         hists[int(counter) + int(bin)].Integral(),
+            #     )
+            # )
+            nentries += cleaned_hists[-1].Integral()
+            cleaned_hists[-1].SetName(convert_hist_label(cleaned_hists[-1].GetName()))
+        #     print(
+        #         "Combined histogram {} has {} entries ".format(
+        #             cleaned_hists[-1].GetName(), cleaned_hists[-1].Integral()
+        #         )
+        #     )
+        # print("Total number of entries: {}".format(nentries))
+        counter += nbins
+
+    i = 0
+
+    for key, cfg in bin_cfgs.items():
+        print("Writing histogram {}".format(key))
+        wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
+        var = wsp.factory("m_vis[100,50,150]")
+        wsp.Silence(True)
+
+        outfile.cd()
+        outfile.mkdir(cfg["name"])
+        ROOT.gDirectory.cd(cfg["name"])
+        for b in cfg["bins"][0]:
+            cleaned_hists[2 * i].SetName(convert_hist_label(b) + ":fail")
+            cleaned_hists[2 * i + 1].SetName(convert_hist_label(b) + ":pass")
+            cleaned_hists[2 * i].Write()
+            cleaned_hists[2 * i + 1].Write()
+            dat = wsp.imp(
+                ROOT.RooDataHist(
+                    convert_hist_label(b),
+                    "",
+                    ROOT.RooArgList(var),
+                    ROOT.RooFit.Index(wsp.factory("cat[fail,pass]")),
+                    ROOT.RooFit.Import("fail", cleaned_hists[2 * i]),
+                    ROOT.RooFit.Import("pass", cleaned_hists[2 * i + 1]),
+                )
+            )
+            i += 1
+        outfile.cd()
+        wsp.Write()
+        xaxis_label = cfg["hist"][0].GetXaxis().GetTitle()
+        yaxis_label = cfg["hist"][0].GetYaxis().GetTitle()
+        cfg["hist"][0].GetXaxis().SetTitle(convert_hist_label(xaxis_label))
+        cfg["hist"][0].GetYaxis().SetTitle(convert_hist_label(yaxis_label))
+        cfg["hist"][0].Write()
+        # outfile.Close()
+        # wsp.Delete()
+    outfile.Close()
 
 
 def main(channel, era, output):
@@ -193,92 +278,43 @@ def main(channel, era, output):
                 input_files[era][channel]["Data"],
             ),
         }
-    for sample in trees:
-        print("Processing {}".format(sample))
-        out_dir = output
-        if not os.path.exists(out_dir):
-            os.mkdir(out_dir)
-        outputfilepath = "{}/{}_TP_{}_{}.root".format(out_dir, channel, sample, era)
-        if os.path.exists(outputfilepath):
-            os.remove(outputfilepath)
-        outfile = ROOT.TFile(
-            outputfilepath,
-            "RECREATE",
+    # run the processing of trees in parallel
+    print("Processing using {} threads".format(len(trees)))
+    with Pool(processes=len(trees)) as pool:
+        results = pool.starmap(
+            process_trees,
+            [
+                [
+                    key,
+                    output,
+                    channel,
+                    era,
+                    trees[key],
+                    drawlist,
+                    bin_cfgs,
+                    number_of_bins,
+                ]
+                for key in trees
+            ],
         )
-        outfile.cd()
+    print(results)
 
-        hists = trees[sample].Draw(drawlist, compiled=True)
 
-        # if we are using crown, we have to add identical histograms together
-        total_hists = len(hists)
-        print("Total number of histograms: {}".format(total_hists))
-        print("Bins per histogram: {}".format(number_of_bins))
-        cleaned_hists = []
-        counter = 0
-        for nbins in number_of_bins:
-            nentries = 0
-            for bin in range(int(nbins / 2)):
-                cleaned_hists.append(
-                    hists[int(counter) + int(bin)]
-                    + hists[int(counter) + int(bin) + int(nbins / 2)]
-                )
-                print(
-                    "Ading histogram with {} Entries to {} existing Entries ".format(
-                        hists[int(counter) + int(bin) + int(nbins / 2)].Integral(),
-                        hists[int(counter) + int(bin)].Integral(),
-                    )
-                )
-                nentries += cleaned_hists[-1].Integral()
-                cleaned_hists[-1].SetName(
-                    convert_hist_label(cleaned_hists[-1].GetName())
-                )
-                print(
-                    "Combined histogram {} has {} entries ".format(
-                        cleaned_hists[-1].GetName(), cleaned_hists[-1].Integral()
-                    )
-                )
-            print("Total number of entries: {}".format(nentries))
-            counter += nbins
-
-        i = 0
-
-        for key, cfg in bin_cfgs.items():
-            print("Writing histogram {}".format(key))
-            wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
-            var = wsp.factory("m_vis[100,65,115]")
-
-            outfile.cd()
-            outfile.mkdir(cfg["name"])
-            ROOT.gDirectory.cd(cfg["name"])
-            for b in cfg["bins"][0]:
-                cleaned_hists[2 * i].SetName(convert_hist_label(b) + ":fail")
-                cleaned_hists[2 * i + 1].SetName(convert_hist_label(b) + ":pass")
-                cleaned_hists[2 * i].Write()
-                cleaned_hists[2 * i + 1].Write()
-                dat = wsp.imp(
-                    ROOT.RooDataHist(
-                        convert_hist_label(b),
-                        "",
-                        ROOT.RooArgList(var),
-                        ROOT.RooFit.Index(wsp.factory("cat[fail,pass]")),
-                        ROOT.RooFit.Import("fail", cleaned_hists[2 * i]),
-                        ROOT.RooFit.Import("pass", cleaned_hists[2 * i + 1]),
-                    )
-                )
-                i += 1
-            outfile.cd()
-            wsp.Write()
-            xaxis_label = cfg["hist"][0].GetXaxis().GetTitle()
-            yaxis_label = cfg["hist"][0].GetYaxis().GetTitle()
-            cfg["hist"][0].GetXaxis().SetTitle(convert_hist_label(xaxis_label))
-            cfg["hist"][0].GetYaxis().SetTitle(convert_hist_label(yaxis_label))
-            cfg["hist"][0].Write()
-            # outfile.Close()
-            # wsp.Delete()
-        outfile.Close()
+def validate_inputfiles(era, channel):
+    input_files = yaml.safe_load(open("set_inputfiles.yaml"))
+    if channel == "embeddingselection":
+        samples = ["Data"]
+    else:
+        samples = ["Data", "DY", "Embedding"]
+    for sample in samples:
+        print("Validating {}".format(sample))
+        filename = input_files[era][channel][sample]
+        if not os.path.exists(filename):
+            raise Exception("File {} does not exist".format(filename))
 
 
 if __name__ == "__main__":
     args = parse_arguments()
+    validate_inputfiles(era=args.era, channel=args.channel)
     main(era=args.era, channel=args.channel, output=args.output)
     exit()
