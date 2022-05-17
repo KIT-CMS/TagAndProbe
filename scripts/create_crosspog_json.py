@@ -19,7 +19,16 @@ class CorrectionSet(object):
             self.add_correction(corr)
 
     def add_correction(self, correction):
-        self.corrections.append(correction)
+        if isinstance(correction, dict):
+            self.corrections.append(correction)
+        elif isinstance(correction, Correction):
+            self.corrections.append(correction.correctionset)
+        else:
+            raise TypeError(
+                "Correction must be a Correction object or a dictionary, not {}".format(
+                    type(correction)
+                )
+            )
 
     def write_json(self, outputfile):
         # Create the JSON object
@@ -60,6 +69,12 @@ class Correction(object):
         self.correctionset = None
         self.inputobjects = {}
         self.types = ["Data", "Embedding", "DY"]
+
+    def __repr__(self) -> str:
+        return "Correction({})".format(self.name)
+
+    def __str__(self) -> str:
+        return "Correction({})".format(self.name)
 
     def parse_config(self):
         pass
@@ -165,75 +180,93 @@ class pt_eta_correction(Correction):
             )
 
     def generate_sfs(self):
+        sfs = {}
         if self.data_only:
-            sfs = schema.Binning.parse_obj(
-                {
-                    "nodetype": "binning",
-                    "input": "pt",
-                    "edges": self.ptbinning,
-                    "flow": "clamp",
-                    "content": [
-                        {
-                            "nodetype": "binning",
-                            "input": "abs(eta)",
-                            "edges": self.etabinning,
-                            "flow": "clamp",
-                            "content": self.get_single_sf(
-                                pt, self.etabinning, self.data_only
-                            ),
-                        }
-                        for pt in self.ptbinning[:-1]
-                    ],
-                }
-            )
+            sfs = {
+                "nodetype": "binning",
+                "input": "pt",
+                "edges": self.ptbinning,
+                "flow": "clamp",
+                "content": [
+                    {
+                        "nodetype": "binning",
+                        "input": "abs(eta)",
+                        "edges": self.etabinning,
+                        "flow": "clamp",
+                        "content": self.get_sfs_for_etas(
+                            pt, self.etabinning, self.data_only
+                        ),
+                    }
+                    for pt in self.ptbinning[:-1]
+                ],
+            }
         else:
             # without data only, we add both the mc and the embedding sfs
-            sfs = schema.Binning.parse_obj(
-                {
-                    "nodetype": "binning",
-                    "input": "pt",
-                    "edges": self.ptbinning,
-                    "flow": "clamp",
-                    "content": [
-                        {
-                            "nodetype": "binning",
-                            "input": "eta",
-                            "edges": self.etabinning,
-                            "flow": "clamp",
-                            "content": [
-                                {
-                                    "nodetype": "category",
-                                    "input": "type",
-                                    "content": [
-                                        {
-                                            "key": "mc",
-                                            "value": self.get_single_sf(
-                                                pt,
-                                                self.etabinning,
-                                                self.data_only,
-                                                inputtype="mc",
-                                            ),
-                                        },
-                                        {
-                                            "key": "emb",
-                                            "value": self.get_single_sf(
-                                                pt,
-                                                self.etabinning,
-                                                self.data_only,
-                                                inputtype="emb",
-                                            ),
-                                        },
-                                    ],
-                                }
-                            ],
-                        }
-                        for pt in self.ptbinning[:-1]
-                    ],
-                }
-            )
-        return sfs
+            sfs = {
+                "nodetype": "binning",
+                "input": "pt",
+                "edges": self.ptbinning,
+                "flow": "clamp",
+                "content": [
+                    {
+                        "nodetype": "binning",
+                        "input": "abs(eta)",
+                        "edges": self.etabinning,
+                        "flow": "clamp",
+                        "content": [
+                            {
+                                "nodetype": "category",
+                                "input": "type",
+                                "content": [
+                                    {
+                                        "key": "mc",
+                                        "value": self.get_single_sf(
+                                            pt,
+                                            eta,
+                                            self.data_only,
+                                            inputtype="DY",
+                                        ),
+                                    },
+                                    {
+                                        "key": "emb",
+                                        "value": self.get_single_sf(
+                                            pt,
+                                            eta,
+                                            self.data_only,
+                                            inputtype="Embedding",
+                                        ),
+                                    },
+                                ],
+                            }
+                            for eta in self.etabinning[:-1]
+                        ],
+                    }
+                    for pt in self.ptbinning[:-1]
+                ],
+            }
+        return schema.Binning.parse_obj(sfs)
 
-    def get_single_sf(self, pt, etas, data_only, inputtype=None):
+    def get_single_sf(self, pt, eta, data_only, inputtype=None):
+        # leave of the last eta bin, which is the overflow bin
+        efficiency = {}
+        for type in self.types:
+            efficiency[type] = self.inputobjects[type]["object"].GetBinContent(
+                self.inputobjects[type]["object"].GetXaxis().FindBin(pt),
+                self.inputobjects[type]["object"].GetYaxis().FindBin(eta),
+            )
+        if data_only:
+            sf = 1.0 / efficiency["Data"]
+        else:
+            sf = efficiency["Data"] / efficiency[inputtype]
+        if self.verbose:
+            print("pt:", pt, "eta:", eta)
+            print(f"input Data: {self.inputobjects['Data']}")
+            if not data_only:
+                print(f"input {inputtype}: {self.inputobjects[inputtype]}")
+            print("sf:", sf)
+        return sf
+
+    def get_sfs_for_etas(self, pt, etas, data_only, inputtype=None):
         sfs = []
         # leave of the last eta bin, which is the overflow bin
         for eta in etas[:-1]:
@@ -250,8 +283,9 @@ class pt_eta_correction(Correction):
             sfs.append(sf)
             if self.verbose:
                 print("pt:", pt, "eta:", eta)
-
-                print("input:", self.inputobjects[0])
+                print(f"input Data: {self.inputobjects['Data']}")
+                if not data_only:
+                    print(f"input {inputtype}: {self.inputobjects[inputtype]}")
                 print("sf:", sf)
         return sfs
 
@@ -261,6 +295,7 @@ class pt_eta_correction(Correction):
         self.correctionset["data"] = self.generate_sfs()
         output_corr = schema.Correction.parse_obj(self.correctionset)
         self.correction = output_corr
+        # print(JSONEncoder.dumps(self.correction))
 
     def write_scheme(self):
         if self.verbose >= 2:

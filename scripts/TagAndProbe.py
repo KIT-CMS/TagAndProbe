@@ -99,13 +99,10 @@ def process_trees(
         "RECREATE",
     )
     outfile.cd()
-
+    print(f"{sample} - Bins per histogram: {number_of_bins}")
+    print(f"{sample} - Total number of histograms: {len(drawlist)}")
     hists = tree.Draw(drawlist, compiled=True)
 
-    # if we are using crown, we have to add identical histograms together
-    total_hists = len(hists)
-    print("Total number of histograms: {}".format(total_hists))
-    print("Bins per histogram: {}".format(number_of_bins))
     cleaned_hists = []
     counter = 0
     for nbins in number_of_bins:
@@ -134,10 +131,10 @@ def process_trees(
     i = 0
 
     for key, cfg in bin_cfgs.items():
-        print("Writing histogram {}".format(key))
+        print(f"{sample} - Writing histogram {key}")
         wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
         var = wsp.factory("m_vis[100,50,150]")
-        wsp.Silence(True)
+        ROOT.RooFit.Silence(True)
 
         outfile.cd()
         outfile.mkdir(cfg["name"])
@@ -168,6 +165,7 @@ def process_trees(
         # outfile.Close()
         # wsp.Delete()
     outfile.Close()
+    print(f"{sample} - Done")
 
 
 def main(channel, era, output):
