@@ -263,22 +263,28 @@ class pt_eta_correction(Correction):
             else:
                 sf = 1.0 / efficiency["Data"]
         else:
-            sf = efficiency["Data"] / efficiency[inputtype]
-            # set scalefactor to 1.0 if the efficiencies are the same within a given epsilon
-            if abs(efficiency["Data"] - efficiency[inputtype]) < epsilon:
-                # print("Sanitizing sf for pt: ", pt, " eta: ", eta)
-                # print("Efficiency Data: ", efficiency["Data"])
-                # print("Efficiency Input: ", efficiency[inputtype])
-                # print("Scalefactor before: ", sf)
-                # print("Scalefactor after: ", 1.0)
-                sf = 1.0
-            if efficiency["Data"] < 0.01 and efficiency[inputtype] < 0.01:
-                sf = 1.0
-            if sf > 3:
-                print("SF is greater than 3: ", sf)
+            if efficiency[inputtype] == 0.:
+                print("Sanitizing sf for pt: ", pt, " eta: ", eta, " type: ", inputtype)
                 print("Efficiency Data: ", efficiency["Data"])
                 print("Efficiency Input: ", efficiency[inputtype])
-                print("Scalefactor before: ", sf)
+                sf = 1.0
+            else:
+                sf = efficiency["Data"] / efficiency[inputtype]
+                # set scalefactor to 1.0 if the efficiencies are the same within a given epsilon
+                if abs(efficiency["Data"] - efficiency[inputtype]) < epsilon:
+                    # print("Sanitizing sf for pt: ", pt, " eta: ", eta)
+                    # print("Efficiency Data: ", efficiency["Data"])
+                    # print("Efficiency Input: ", efficiency[inputtype])
+                    # print("Scalefactor before: ", sf)
+                    # print("Scalefactor after: ", 1.0)
+                    sf = 1.0
+                if efficiency["Data"] < 0.01 and efficiency[inputtype] < 0.01:
+                    sf = 1.0
+                if sf > 3:
+                    print("SF is greater than 3: ", sf)
+                    print("Efficiency Data: ", efficiency["Data"])
+                    print("Efficiency Input: ", efficiency[inputtype])
+                    print("Scalefactor before: ", sf)
         if self.verbose:
             print("pt:", pt, "eta:", eta)
             print(f"input Data: {self.inputobjects['Data']}")

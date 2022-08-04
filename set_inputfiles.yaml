@@ -79,16 +79,16 @@
 "2018UL":
   embeddingselection:
     folder: "ntuple"
-    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_DoubleMuon_UL2018.root"
+    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_DoubleMuon_UL2018.root"
 
   muon:
     folder: "ntuple"
-    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_SingleMuon_UL2018.root"
-    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_MuEmbedding_UL2018.root"
-    DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_DYJets_mm_UL2018.root"
+    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_SingleMuon_UL2018.root"
+    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_MuEmbedding_UL2018.root"
+    DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_DYJets_mm_UL2018.root"
 
   electron:
     folder: "ntuple"
-    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_EGamma_UL2018.root"
-    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_ElEmbedding_UL2018.root"
-    DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v2/ntuple_DYJets_ee_UL2018.root"
+    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_EGamma_UL2018.root"
+    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_ElEmbedding_UL2018.root"
+    DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_DYJets_ee_UL2018.root"
