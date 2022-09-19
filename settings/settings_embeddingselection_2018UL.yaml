@@ -114,7 +114,7 @@ EmbID_pt_bins_inc_eta:
   BKG: "CMSShape"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Embedding ID"
+  TITLE: "isLoose Muon Identification"
   y_range: [0.8, 1.0]
   ratio_y_range: [0.8, 1.2]
 

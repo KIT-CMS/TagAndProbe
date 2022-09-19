@@ -119,9 +119,9 @@ ID_pt_eta_bins:
   BKG: "CMSShape"
   SIG: "DoubleVUncorr"
   # Settings for plotting
-  TITLE: "Medium ID"
-  y_range: [0.9, 1.0]
-  ratio_y_range: [0.9, 1.1]
+  TITLE: "Medium Muon ID"
+  y_range: [0.7, 1.05]
+  ratio_y_range: [0.7, 1.1]
   info: "Scale factor for the medium muon ID (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
   header: "Scale factor for the medium muon ID (binned in eta)"
 
@@ -160,7 +160,7 @@ Iso_pt_bins_inc_eta:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Iso_{rel} < 0.15"
+  TITLE: "Iso_{#mu,rel} < 0.15"
   y_range: [0.6, 1.0]
   ratio_y_range: [0.8, 1.2]
   info: "Scale factor for the muon isolation iso_mu < 0.15 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
@@ -201,7 +201,7 @@ Iso_pt_eta_bins:
   BKG: "Exponential"
   SIG: "DoubleVCorr"
   # Settings for plotting
-  TITLE: "Iso_{rel} < 0.15"
+  TITLE: "Iso_{#mu,rel} < 0.15"
   y_range: [0.6, 1.0]
   ratio_y_range: [0.8, 1.2]
   info: "Scale factor for the muon isolation iso_mu < 0.15 (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
@@ -414,7 +414,7 @@ Trg_IsoMu27_pt_eta_bins:
   BKG: "CMSShape"
   SIG: "DoubleVPartcorr"
   # Settings for plotting
-  TITLE: "Trg IsoMu27"
+  TITLE: "Single Muon Trigger"
   y_range: [0.0, 1.1]
   ratio_y_range: [0.8, 1.2]
   info: "Scale factor for the muon trigger IsoMu27 in isolated region mu_iso < 0.15 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"

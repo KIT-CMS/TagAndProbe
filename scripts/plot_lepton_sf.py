@@ -121,7 +121,7 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     elif "electron" in type:
         plot.subplot(1).setXlabel("p_{T}^{e} (GeV)")
     plot.subplot(0).setYlabel("Efficiency")
-    plot.subplot(1).setYlabel("Scalefactor")
+    plot.subplot(1).setYlabel("Correction")
 
     plot.scaleXTitleSize(0.8)
     plot.scaleXLabelSize(0.8)
@@ -131,7 +131,7 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     plot.scaleYTitleOffset(1.1)
     logger.debug(
         "plotting {} - #eta [{}]".format(
-            plotoptions["TITLE"], plotoptions["etarange"].replace("-", ",")
+            plotoptions["TITLE"], plotoptions["etarange"]
         )
     )
     # draw subplots. Argument contains names of objects to be drawn in corresponding order.
@@ -155,12 +155,13 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     elif "2018" in era:
         plot.DrawLumi("59.83 fb^{-1} (2018, 13 TeV)")
 
+    plot.DrawCMS(own_work=True)
     # take plot label from the .yaml settings file
     plot.DrawChannelCategoryLabel(
         "{} - #eta [{}]".format(
-            plotoptions["TITLE"], plotoptions["etarange"].replace("-", ",")
+            plotoptions["TITLE"], plotoptions["etarange"]
         ),
-        textsize=0.03,
+        textsize=0.028,
     )
     # save plot
 
@@ -254,12 +255,14 @@ def plot_efficiency(folder, variable, era, type, etabin, plotoptions):
     elif "2017" in era:
         plot.DrawLumi("41.48 fb^{-1} (2017, 13 TeV)")
     elif "2018" in era:
-        plot.DrawLumi("59.83 fb^{-1} (2018, 13 TeV)")
-
+        plot.DrawLumi("59.83 fb^{-1} (2018, 13 TeV)", textsize=0.45)
+    plot.DrawCMS(position=1)
     # take plot label from the .yaml settings file
+    etalabel = "-" + plotoptions["etarange"].replace("-", ",")[1:]
+
     plot.DrawChannelCategoryLabel(
         "{} - #eta [{}]".format(
-            plotoptions["TITLE"], plotoptions["etarange"].replace("-", ",")
+            plotoptions["TITLE"], etalabel
         ),
         textsize=0.03,
     )
