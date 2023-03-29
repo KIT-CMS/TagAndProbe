@@ -27,7 +27,7 @@ def parse_arguments():
 def get_outputfiles(channel, era, out_dir):
     # small function to get the path for all expected output files
     # this is used to check if the output files exist
-    bin_cfgs = yaml.safe_load(open("settings/settings_{}_{}.yaml".format(channel, era)))
+    bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
     outputfiles = []
     if channel == "embeddingselection":
         samples = ["Data"]
@@ -172,7 +172,7 @@ def main(channel, era, output):
     # if "crosselectron" in channel and era=="2016":
     #     print "No cross trigger settings available for 2016 yet."
     #     sys.exit()
-    bin_cfgs = yaml.safe_load(open("settings/settings_{}_{}.yaml".format(channel, era)))
+    bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
     input_files = yaml.safe_load(open("set_inputfiles.yaml"))
 
     drawlist = []
