@@ -2,22 +2,19 @@
 Muon and electron tag and probe measurements and plotting
 
 **Setting up the code**
+Either use the checkout script provided under `scripts/checkout.sh` or do the following:
 ```bash
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 source $VO_CMS_SW_DIR/cmsset_default.sh
-cmsrel CMSSW_8_0_26_patch1
-cd CMSSW_8_0_26_patch1/src
+cmsrel CMSSW_12_3_2
+cd CMSSW_12_3_2/src
 cmsenv
 
-mkdir UserCode 
-cd UserCode
-git clone https://github.com/KIT-CMS/TagAndProbe
+git clone --recursive git@github.com:KIT-CMS/TagAndProbe.git -b crown UserCode/TagAndProbe
 
-cd -
-scramv1 b 
-
-cd UserCode/TagAndProbe
+scramv1 b
 ```
+
 **First step**
 
 Create the input files using KIT-Higgs (https://github.com/KIT-CMS/KITHiggsToTauTau):
@@ -25,7 +22,7 @@ Create the input files using KIT-Higgs (https://github.com/KIT-CMS/KITHiggsToTau
 `HiggsToTauTauAnalysis.py -a tagandprobe -i path_to_skimmed_filelist.txt`
 
 
-**Running tag and probe for electrons and muon**
+## Running tag and probe for electrons and muon
 
 
 1. Set the path to the inputfiles in 
@@ -42,7 +39,7 @@ Create the input files using KIT-Higgs (https://github.com/KIT-CMS/KITHiggsToTau
 
 
 
-**Running tag and probe for hadronic taus**
+## Running tag and probe for hadronic taus (Outdated - use GP fit from Tau POG now)
 
 
 1. Get a clean shell environment (no CMSSW can be sourced yet) and do
