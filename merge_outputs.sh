@@ -21,9 +21,9 @@ case ${CHANNEL} in
 esac
 
 
-basedir=/store/user/mburkart/CROWN/ntuples/${NTUPLETAG}/CROWNRun/${ERA}/
+basedir=/store/user/${USER}/CROWN/ntuples/${NTUPLETAG}/CROWNRun/${ERA}/
 gridpath=root://cmsxrootd-kit.gridka.de:1094/
-output_dir=/storage/9/mburkart/Run2UltraLegacy/scalefactors/${NTUPLETAG}/${ERA}UL
+output_dir=/ceph/${USER}/Run2UltraLegacy/scalefactors/${NTUPLETAG}/${ERA}UL
 [[ ! -d ${output_dir} ]] && mkdir -p ${output_dir}
 
 # Write out the merge commands for all sample types
