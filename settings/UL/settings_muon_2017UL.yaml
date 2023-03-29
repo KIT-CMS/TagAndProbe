@@ -1,0 +1,812 @@
+ID_pt_bins_inc_eta:
+  # Settings for histogram creation
+  name: "ID_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28"
+  probe: "id_medium_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVUncorr"
+  # Settings for plotting
+  TITLE: "Medium ID"
+  y_range: [0.9, 1.0]
+  ratio_y_range: [0.9, 1.1]
+  info: "Scale factor for the medium muon ID (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the medium muon ID (inclusive in eta)"
+
+# Inclusive_fsr:
+#   # Settings for histogram creation
+#   name: "Inclusive_fsr"
+#   var: "m_vis(100,50,150)"
+#   tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28"
+#   probe: " pt_tag == pt_tag"
+#   binvar_x: "pt_probe"
+#   bins_x:
+#     [
+#       10.,
+#       1000.,
+#     ]
+#   binvar_y: "eta_probe"
+#   bins_y: [-2.4, 2.4]
+#   # Settings for fits
+#   BKG: "CMSShape"
+#   SIG: "DoubleVUncorr"
+#   # Settings for plotting
+#   TITLE: "Inclusive_fsr"
+#   y_range: [0.9, 1.0]
+#   ratio_y_range: [0.9, 1.1]
+
+# Inclusive_no_fsr:
+#   # Settings for histogram creation
+#   name: "Inclusive_no_fsr"
+#   var: "m_vis(100,50,150)"
+#   tag: " iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28"
+#   probe: " pt_tag == pt_tag"
+#   binvar_x: "pt_probe"
+#   bins_x:
+#     [
+#       10.,
+#       1000.,
+#     ]
+#   binvar_y: "eta_probe"
+#   bins_y: [-2.4, 2.4]
+#   # Settings for fits
+#   BKG: "CMSShape"
+#   SIG: "DoubleVUncorr"
+#   # Settings for plotting
+#   TITLE: "Inclusive_no_fsr"
+#   y_range: [0.9, 1.0]
+#   ratio_y_range: [0.9, 1.1]
+
+ID_pt_eta_bins:
+  name: "ID_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28"
+  probe: "id_medium_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVUncorr"
+  # Settings for plotting
+  TITLE: "Medium Muon ID"
+  y_range: [0.7, 1.05]
+  ratio_y_range: [0.7, 1.1]
+  info: "Scale factor for the medium muon ID (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the medium muon ID (binned in eta)"
+
+Iso_pt_bins_inc_eta:
+  name: "Iso_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
+  probe: "iso_probe < 0.15"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{#mu,rel} < 0.15"
+  y_range: [0.6, 1.0]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon isolation iso_mu < 0.15 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation iso_mu < 0.15 (inclusive in eta)"
+
+Iso_pt_eta_bins:
+  name: "Iso_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
+  probe: "iso_probe < 0.15"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{#mu,rel} < 0.15"
+  y_range: [0.6, 1.0]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon isolation iso_mu < 0.15 (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation iso_mu < 0.15 (binned in eta)"
+
+AIso1_pt_bins_inc_eta:
+  name: "AIso1_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
+  probe: "iso_probe >= 0.15 && iso_probe < 0.25"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.6, 1.4]
+  info: "Scale factor for the muon isolation 0.15 < iso_mu < 0.25 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation 0.15 < iso_mu < 0.25 (inclusive in eta)"
+
+AIso1_pt_eta_bins:
+  name: "AIso1_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
+  probe: "iso_probe >= 0.15 && iso_probe < 0.25"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.6, 1.4]
+  info: "Scale factor for the muon isolation 0.15 < iso_mu < 0.25 (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation 0.15 < iso_mu < 0.25 (binned in eta)"
+
+AIso2_pt_bins_inc_eta:
+  name: "AIso2_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
+  probe: "iso_probe >= 0.25 && iso_probe < 0.50"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} #in [0.25,0.50]"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.6, 1.4]
+  info: "Scale factor for the muon isolation 0.25 < iso_mu < 0.5 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation 0.25 < iso_mu < 0.5 (inclusive in eta)"
+
+AIso2_pt_eta_bins:
+  name: "AIso2_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
+  probe: "iso_probe >= 0.25 && iso_probe < 0.50"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} #in [0.25,0.50]"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.6, 1.4]
+  info: "Scale factor for the muon isolation 0.25 < iso_mu < 0.2 (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation 0.25 < iso_mu < 0.2 (binned in eta)"
+
+Trg_IsoMu27_pt_eta_bins:
+  name: "Trg_IsoMu27_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe < 0.15 && id_medium_probe"
+  probe: "trg_IsoMu27_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Single Muon Trigger"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger IsoMu27 in isolated region mu_iso < 0.15 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger IsoMu27 in isolated region mu_iso < 0.15 (inclusive in eta)"
+
+Trg_IsoMu27_AIso1_pt_bins_inc_eta:
+  name: "Trg_IsoMu27_AIso1_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.15 && iso_probe < 0.25 && id_medium_probe"
+  probe: "trg_IsoMu27_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu27, Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger IsoMu27 in antiisolated region 0.15 < mu_iso < 0.25 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger IsoMu27 in antiisolated region 0.15 < mu_iso < 0.25 (inclusive in eta)"
+
+Trg_IsoMu27_AIso2_pt_bins_inc_eta:
+  name: "Trg_IsoMu27_AIso2_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.25 && iso_probe < 0.50 && id_medium_probe"
+  probe: "trg_IsoMu27_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu27, Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger IsoMu27 in antiisolated region 0.25 < mu_iso < 0.5 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger IsoMu27 in antiisolated region 0.25 < mu_iso < 0.5 (inclusive in eta)"
+
+Trg_IsoMu24_pt_eta_bins:
+  name: "Trg_IsoMu24_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe < 0.15 && id_medium_probe"
+  probe: "trg_IsoMu24_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu24"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger IsoMu24 in isolated region mu_iso < 0.15 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger IsoMu24 in isolated region mu_iso < 0.15 (inclusive in eta)"
+
+Trg_IsoMu24_AIso1_pt_bins_inc_eta:
+  name: "Trg_IsoMu24_AIso1_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.15 && iso_probe < 0.25 && id_medium_probe"
+  probe: "trg_IsoMu24_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu24, Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger IsoMu24 in antiisolated region 0.15 < mu_iso < 0.25 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger IsoMu24 in antiisolated region 0.15 < mu_iso < 0.25 (inclusive in eta)"
+
+Trg_IsoMu24_AIso2_pt_bins_inc_eta:
+  name: "Trg_IsoMu24_AIso2_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.25 && iso_probe < 0.50 && id_medium_probe"
+  probe: "trg_IsoMu24_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu24, Iso_{rel} #in [0.25,0.5]"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger IsoMu24 in antiisolated region 0.25 < mu_iso < 0.5 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger IsoMu24 in antiisolated region 0.25 < mu_iso < 0.5 (inclusive in eta)"
+
+Trg_IsoMu27_or_IsoMu24_pt_eta_bins:
+  name: "Trg_IsoMu27_or_IsoMu24_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe < 0.15 && id_medium_probe"
+  probe: "(trg_IsoMu27_probe|| trg_IsoMu24_probe)"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu(24||27)"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger (IsoMu24|IsoMu27) (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger (IsoMu24|IsoMu27) (binned in eta)"
+
+Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta:
+  name: "Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.15 && iso_probe < 0.25 && id_medium_probe"
+  probe: "(trg_IsoMu27_probe|| trg_IsoMu24_probe)"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu(24||27), Iso_{rel} #in [0.15,0.25]"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger (IsoMu24|IsoMu27) in antiisolated region 0.15 < mu_iso < 0.25 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger (IsoMu24|IsoMu27) in antiisolated region 0.15 < mu_iso < 0.25 (inclusive in eta)"
+
+Trg_IsoMu27_or_IsoMu24_AIso2_pt_bins_inc_eta:
+  name: "Trg_IsoMu27_or_IsoMu24_AIso2_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.25 && iso_probe < 0.50 && id_medium_probe"
+  probe: "(trg_IsoMu27_probe|| trg_IsoMu24_probe)"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      21.,
+      22.,
+      23.,
+      24.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg IsoMu(24||27), Iso_{rel} #in [0.25,0.5]"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.8, 1.2]
+  info: "Scale factor for the muon trigger (IsoMu24|IsoMu27) in antiisolated region 0.25 < mu_iso < 0.5 (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon trigger (IsoMu24|IsoMu27) in antiisolated region 0.25 < mu_iso < 0.5 (inclusive in eta)"
