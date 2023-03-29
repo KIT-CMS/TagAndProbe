@@ -1,15 +1,15 @@
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 source $VO_CMS_SW_DIR/cmsset_default.sh
-cmsrel CMSSW_8_0_26_patch1
-cd CMSSW_8_0_26_patch1/src
+cmsrel CMSSW_12_3_2
+cd CMSSW_12_3_2/src
 cmsenv
 
 mkdir UserCode 
 cd UserCode
 
-git clone https://github.com/KIT-CMS/TagAndProbe
+git clone --recursive git@github.com:KIT-CMS/TagAndProbe.git -b crown
 
 cd -
 
-scramv1 b 
+scramv1 b
 

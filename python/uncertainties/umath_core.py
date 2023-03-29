@@ -6,7 +6,7 @@ Implementation of umath.py, with internals.
 # which functions are visible to the user in umath.py through from
 # umath import * and Python shell completion.
 
-from __future__ import division  # Many analytical derivatives depend on this
+  # Many analytical derivatives depend on this
 
 # Standard modules
 import math
@@ -220,11 +220,11 @@ def wrap_locally_cst_func(func):
     here, constant).
     '''
     def wrapped_func(*args, **kwargs):
-        args_float = map(uncert_core.nominal_value, args)
+        args_float = list(map(uncert_core.nominal_value, args))
         # !! In Python 2.7+, dictionary comprehension: {argname:...}
         kwargs_float = dict(
             (arg_name, uncert_core.nominal_value(value))
-            for (arg_name, value) in kwargs.iteritems())
+            for (arg_name, value) in kwargs.items())
         return func(*args_float, **kwargs_float)
     return wrapped_func
 
@@ -250,7 +250,7 @@ for name in dir(math):
         # that cannot be calculated indicates a non-defined derivative
         # (the derivatives in fixed_derivatives must be written this way):
         wrapped_func = uncert_core.wrap(
-            func, map(uncert_core.nan_if_exception, derivatives))
+            func, list(map(uncert_core.nan_if_exception, derivatives)))
 
     setattr(this_module, name, wraps(wrapped_func, func))
 
@@ -351,7 +351,7 @@ def ldexp(x, y):
             math.ldexp(aff_func.nominal_value, y),
             # Chain rule:
             dict([(var, factor*deriv)
-                  for (var, deriv) in aff_func.derivatives.iteritems()]))
+                  for (var, deriv) in aff_func.derivatives.items()]))
     else:
         # This function was not called with an AffineScalarFunc
         # argument: there is no need to return numbers with uncertainties:
@@ -387,7 +387,7 @@ def frexp(x):
                 result[0],
                 # Chain rule:
                 dict([(var, factor*deriv)
-                      for (var, deriv) in aff_func.derivatives.iteritems()])),
+                      for (var, deriv) in aff_func.derivatives.items()])),
             # The exponent is an integer and is supposed to be
             # continuous (small errors):
             result[1])

@@ -1,0 +1,316 @@
+ID_pt_bins_inc_eta:
+  # Settings for histogram creation
+  name: "ID_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag"
+  probe: "id_medium_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Medium ID"
+  y_range: [0.95, 1.02]
+  ratio_y_range: [0.8, 1.2]
+  ptrange: [10.0, 1000.0]
+
+ID_pt_eta_bins:
+  name: "ID_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag"
+  probe: "id_medium_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.1, 0.3, 0.8, 1.0, 1.2, 1.6, 1.8, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Medium ID"
+  y_range: [0.8, 1.0]
+  ratio_y_range: [0.8, 1.2]
+
+EmbID_pt_bins_inc_eta:
+  # Settings for histogram creation
+  name: "EmbID_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag"
+  probe: "is_global_probe && id_loose_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "isLoose Muon Identification"
+  y_range: [0.8, 1.0]
+  ratio_y_range: [0.8, 1.2]
+
+EmbID_pt_eta_bins:
+  name: "EmbID_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag"
+  probe: "is_global_probe && id_loose_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.1, 0.3, 0.8, 1.0, 1.2, 1.6, 1.8, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Embedding ID"
+  y_range: [0.8, 1.0]
+  ratio_y_range: [0.8, 1.2]
+  info: "Data efficiency of the muon ID used during the Embedding selection"
+  header: "Data efficiency of the muon ID used during the Embedding selection"
+
+Trg8_pt_eta_bins:
+  name: "Trg8_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && id_loose_probe && is_global_probe && pt_probe > 8.0"
+  probe: "trg_Mu17TrkMu8_DZ_Mu8_probe || trg_Mu17TrkMu8_DZMass8_Mu8_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.1, 0.3, 0.8, 1.0, 1.2, 1.6, 1.8, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg Mu8"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.8, 1.2]
+
+Trg8_pt_bins_inc_eta:
+  name: "Trg8_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && id_loose_probe && is_global_probe && pt_probe > 8.0"
+  probe: "trg_Mu17TrkMu8_DZ_Mu8_probe || trg_Mu17TrkMu8_DZMass8_Mu8_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg Mu8"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.8, 1.2]
+
+Trg17_pt_eta_bins:
+  name: "Trg17_pt_eta_bins"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && id_loose_probe && is_global_probe && pt_probe > 17.0"
+  probe: "trg_Mu17TrkMu8_DZ_Mu17_probe || trg_Mu17TrkMu8_DZMass8_Mu17_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.1, 0.3, 0.8, 1.0, 1.2, 1.6, 1.8, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg Mu17"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.8, 1.2]
+
+Trg17_pt_bins_inc_eta:
+  name: "Trg17_pt_bins_inc_eta"
+  var: "m_vis(100,50,150)"
+  tag: "trg_IsoMu24_tag && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 25 && id_loose_probe && is_global_probe && pt_probe > 17.0"
+  probe: "trg_Mu17TrkMu8_DZ_Mu17_probe || trg_Mu17TrkMu8_DZMass8_Mu17_probe"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.4, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "Trg Mu17"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.8, 1.2]
