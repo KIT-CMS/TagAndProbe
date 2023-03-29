@@ -2,6 +2,7 @@
 Muon and electron tag and probe measurements and plotting
 
 **Setting up the code**
+
 Either use the checkout script provided under `scripts/checkout.sh` or do the following:
 ```bash
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
