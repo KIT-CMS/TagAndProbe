@@ -1,0 +1,28 @@
+m_sel_trg_kit_ratio:
+  name: "EmbID_pt_eta_bins"
+  bins_x:
+    [
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      31,
+      34,
+      37,
+      40,
+      45,
+      50,
+      60,
+      70,
+      100,
+      1000,
+    ]
+  bins_y: [0, 0.1, 0.3, 0.8, 1.0, 1.2, 1.6, 1.8, 2.1, 2.4]
+  info: "Scale Factor to be applied for the Trigger Selection used during the Selection step of Tau-Embedding. Calcualates as 1 / Efficiency of the DoubleMuon Trigger used for the selection."
+  header: "DoubleMuon HLT Trigger Efficency"
