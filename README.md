@@ -11,7 +11,7 @@ cmsrel CMSSW_12_3_2
 cd CMSSW_12_3_2/src
 cmsenv
 
-git clone --recursive git@github.com:KIT-CMS/TagAndProbe.git -b crown UserCode/TagAndProbe
+git clone --recursive git@github.com:KIT-CMS/TagAndProbe.git UserCode/TagAndProbe
 
 scramv1 b
 ```
