@@ -114,8 +114,8 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     )
     plot.subplot(0).setXlims(plotoptions["ptrange"][0], int(plotoptions["ptrange"][1]))
     plot.subplot(1).setXlims(plotoptions["ptrange"][0], int(plotoptions["ptrange"][1]))
-    plot.subplot(0).setLogX()
-    plot.subplot(1).setLogX()
+    # plot.subplot(0).setLogX()
+    # plot.subplot(1).setLogX()
     if "muon" in type:
         plot.subplot(1).setXlabel("p_{T}^{#mu} (GeV)")
     elif "electron" in type:
@@ -148,8 +148,10 @@ def build_plot(folder, variable, era, type, etabin, plotoptions):
     plot.legend(1).Draw()
 
     # plot.DrawCMS()
-    if "2016" in era:
-        plot.DrawLumi("36.33 fb^{-1} (2016, 13 TeV)")
+    if "2016preVFP" in era:
+        plot.DrawLumi("19.5 fb^{-1} (2016preVFP, 13 TeV)")
+    if "2016postVFP" in era:
+        plot.DrawLumi("16.8 fb^{-1} (2016postVFP, 13 TeV)")
     elif "2017" in era:
         plot.DrawLumi("41.48 fb^{-1} (2017, 13 TeV)")
     elif "2018" in era:
@@ -220,7 +222,7 @@ def plot_efficiency(folder, variable, era, type, etabin, plotoptions):
     # take ranges from the .yaml settings file
     plot.subplot(0).setYlims(plotoptions["y_range"][0], plotoptions["y_range"][1])
     plot.subplot(0).setXlims(plotoptions["ptrange"][0], int(plotoptions["ptrange"][1]))
-    plot.subplot(0).setLogX()
+    # plot.subplot(0).setLogX()
     if "muon" in type:
         plot.subplot(0).setXlabel("p_{T}^{#mu} (GeV)")
     elif "electron" in type:
