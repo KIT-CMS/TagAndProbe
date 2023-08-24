@@ -50,7 +50,7 @@ source checkout.sh
 The configuration used for the TagAndProbe NTuples is located in the collection of Tau Configurations for CROWN. They can be found in the https://github.com/KIT-CMS/TauAnalysis-CROWN repository. For the creation of the TagAndProbe ntuples, the [`tauembedding_tagandprobe.py`](https://github.com/KIT-CMS/TauAnalysis-CROWN/blob/main/tauembedding_tagandprobe.py) configuration is used. Additional information on how CROWN configurations work and how they are used can be found in the [CROWN documentation](https://crown.readthedocs.io/en/latest/py_configuration.html). Adapt the configuration according to your needs.
 
 
-After the configuration is setup, the user has to define the samples, he wants to process. The most convenient way to do so is to use the `sample_manager` from KingMaker. First make sure, that the KingMaker environment is setup correctly in your shell (The setup is done using `source setup.sh KingMaker`), then run the Manager using
+After the configuration is setup, the user has to define the samples to be processed. The most convenient way to do so is to use the `sample_manager` from KingMaker. First make sure, that the KingMaker environment is setup correctly in your shell (The setup is done using `source setup.sh KingMaker`), then run the Manager using
 
 ```bash
 sample_manager
