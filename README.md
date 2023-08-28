@@ -158,13 +158,23 @@ The different required settings are:
 * `info`: A short description of the scale factor. This is used for the correctionlib file.
 * `header`: A short description of the scale factor. This is used for the correctionlib file.
 
+Quantities, which not requiere leg-switching procedure are stored in `<file>_double_object_quantities.yaml` files and are currently used for e.g. the efficience of the `DZ` filter of `trg_Mu17TrkMu8_DZ_Mu17` trigger.
+
 ## 4. Running the fits
 
 Finally, the scale factors are calculated using
 
 ```bash
-python3 scripts/TagAndProbe.py --channel (embeddingselection|muon|electron) --era your_era
-python3 scripts/runTagAndProbeFits.py --channel  (embeddingselection|muon|electron) --era your_era --fit --plot
+channel="embeddingselection"  # "muon" or "electron"
+era="2016postVFPUL"  # "2016preVFPUL", "2017UL", ...
+
+python3 scripts/TagAndProbe.py --channel $channel --era $era
+# In case of embeddingselection only: Addition of measured dz quantity of trg_Mu17TrkMu8_DZ_Mu17
+if [[ "$channel" == embeddingselection ]]
+  then
+    python3 scripts/TagAndProbe.py --channel $channel --era $era --no-leg-switching --mode="UPDATE"
+  fi
+python3 scripts/runTagAndProbeFits.py --channel  $channel --era $era --fit --plot
 ```
 the resulting fits and efficiency plots are all stored in the `output` folder. They should be checked carefully, to and all previous steps should be repeated if necessary.
 
@@ -178,5 +188,3 @@ python3 scripts/translate_to_crosspog_json.py -e your_era -c (embeddingselection
 ```
 
 Congratulations, you have created the scale factors for the UL Run2 Legacy analysis!
-
-

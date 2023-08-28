@@ -1,0 +1,23 @@
+DZ_eta_bins_inc_pt:
+  name: "DZ_eta_bins_inc_pt"
+  var: "m_vis(100,50,150)"
+  tag: "((trg_Mu17TrkMu8_DZ_bit_12_Mu17_1 && trg_Mu17TrkMu8_DZ_bit_12_Mu8_2 ) || (trg_Mu17TrkMu8_DZ_bit_12_Mu17_2 &&  trg_Mu17TrkMu8_DZ_bit_12_Mu8_1)) && (fsr_photon_veto_1 < 0.5 && fsr_photon_veto_2 < 0.5) && (id_medium_1 && id_medium_2) && (is_global_1 && is_global_2) && ((pt_1 > 17.0 && pt_2 > 8.0) || (pt_2 > 17.0 && pt_1 > 8.0))"
+  probe: "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ"
+  binvar_x: "abs(eta_1)"
+  bins_x:
+    [
+      0,
+      0.9,
+      1.2,
+      2.1,
+      2.4,
+    ]
+  binvar_y: "abs(eta_2)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVPartcorr"
+  # Settings for plotting
+  TITLE: "DZ filter"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.8, 1.2]
