@@ -84,6 +84,24 @@ def translate_from_crown(tag, probe, binvar_x, binvar_y):
     return converted_cfg
 
 
+def pass_trough_from_crown(tag, probe, binvar_x, binvar_y):
+    converted_cfg = {
+        "tag": [],
+        "probe": [],
+        "binvar_x": [],
+        "binvar_y": [],
+    }
+    converted_cfg["tag"].append(tag)
+    converted_cfg["probe"].append(probe)
+    converted_cfg["binvar_x"].append(binvar_x)
+    converted_cfg["binvar_y"].append(binvar_y)
+    converted_cfg["tag"].append(tag)
+    converted_cfg["probe"].append(probe)
+    converted_cfg["binvar_x"].append(binvar_x)
+    converted_cfg["binvar_y"].append(binvar_y)
+    return converted_cfg
+
+
 def process_trees(
     sample, output, channel, era, tree, drawlist, bin_cfgs, number_of_bins
 ):
@@ -181,8 +199,12 @@ def main(channel, era, output):
 
     for key, cfg_dict in bin_cfgs.items():
         cfg = cfg_dict
+
+        is_double_quantity = "double_quantity" in cfg and cfg["double_quantity"]
+        cfg_update_function = pass_trough_from_crown if is_double_quantity else translate_from_crown
+
         cfg.update(
-            translate_from_crown(
+            cfg_update_function(
                 cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"]
             )
         )
