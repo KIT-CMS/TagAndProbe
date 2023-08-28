@@ -110,24 +110,6 @@
     Embedding: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/29_08_23_tagandprobe_ch_ee/2016postVFPUL/ElectronEmbedding_2016postVFPUL.root"
     DY: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/29_08_23_tagandprobe_ch_ee/2016postVFPUL/DYJetsToLL_2016postVFPUL_ee.root"
 
-# "2016postVFPUL":
-#   embeddingselection:
-#     folder: "ntuple"
-#     Data: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_postVFP_tagandprobe_June28_v3/2016postVFPUL/DoubleMuon_2016postVFPUL.root"
-
-
-#   muon:
-#     folder: "ntuple"
-#     Data: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_postVFP_tagandprobe_June28_v3/2016postVFPUL/DoubleMuon_2016postVFPUL.root"
-#     Embedding: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_postVFP_tagandprobe_June28_v3/2016postVFPUL/MuonEmbedding_2016postVFPUL.root"
-#     DY: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_postVFP_tagandprobe_June28_v3/2016postVFPUL/DYJetsToLL_2016postVFPUL_mm.root"
-
-#   electron:
-#     folder: "ntuple"
-#     Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/SingleElectron_2016postVFPUL.root"
-#     # Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_ElEmbedding_UL2018.root"
-#     DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/DYJetsToLL_2016postVFPUL_ee.root"
-
 "2017UL":
   embeddingselection:
     folder: "ntuple"

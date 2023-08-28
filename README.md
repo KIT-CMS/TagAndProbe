@@ -188,3 +188,19 @@ python3 scripts/translate_to_crosspog_json.py -e your_era -c (embeddingselection
 ```
 
 Congratulations, you have created the scale factors for the UL Run2 Legacy analysis!
+
+## Retrieving scale factors from the workspace
+
+One can extract scale factors from the ROOT workspace and write it to the correction lib format. The code is based on KIT  [Tag and Probe](https://github.com/KIT-CMS/TagAndProbe) repoditory
+
+Before the execution, one should activate CROWN's tau environment, e.g
+
+```bash
+source /work/${USER}/CROWN/init.sh tau
+```
+
+Execution:
+
+```bash
+python3 create_crosspog_json_workspace.py -e your_era -c muon -o output
+```
