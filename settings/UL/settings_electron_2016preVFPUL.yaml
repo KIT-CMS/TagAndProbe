@@ -496,7 +496,7 @@ Trg25_Iso_pt_eta_bins:
   header: "Scale factor for the electron trigger HLT_Ele25_eta2p1_WPTight_Gsf in isolated region ele_iso < 0.15"
 
 Trg25_AIso_pt_bins_inc_eta:
-  name: "Trg32_AIso_pt_bins_inc_eta"
+  name: "Trg25_AIso_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
   tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
   probe: "(trg_single_ele25_probe)"
