@@ -5,6 +5,7 @@ import ROOT
 import json
 import os
 import yaml
+import math
 
 # set epsilon value to avoid giant scale factors
 epsilon = 0.0001
@@ -91,6 +92,22 @@ class Correction(object):
     def generate_scheme(self):
         pass
 
+    def GetFromTFile(self, inputfile, object):
+        print("Getting ", object, "from ", inputfile)
+        f = ROOT.TFile(inputfile)
+        obj = f.Get(object).Clone()
+        f.Close()
+        return obj
+
+    def write_scheme(self):
+        if self.verbose >= 2:
+            print(JSONEncoder.dumps(self.correction))
+        elif self.verbose >= 1:
+            print(self.correction)
+        if self.fname:
+            print(f">>> Writing {self.fname}...")
+        JSONEncoder.write(self.correction, self.fname)
+
 
 class pt_eta_correction(Correction):
     def __init__(
@@ -123,13 +140,13 @@ class pt_eta_correction(Correction):
         self.etabinning = config[self.name]["bins_y"]
         basename = str(os.path.basename(self.configfile)).split("_")[1]
         self.inputfiles = {}
-        for type in self.types:
-            self.inputfiles[type] = {
+        for _type in self.types:
+            self.inputfiles[_type] = {
                 "name": self.name,
                 "file": os.path.join(
                     "output",
-                    "{basename}_TP_{type}_{era}_Fits_{name}.root".format(
-                        basename=basename, type=type, era=self.era, name=self.name
+                    "{basename}_TP_{_type}_{era}_Fits_{name}.root".format(
+                        basename=basename, _type=_type, era=self.era, name=self.name
                     ),
                 ),
             }
@@ -141,13 +158,6 @@ class pt_eta_correction(Correction):
             self.inputobjects[_input]["object"] = histogram
         self.info = config[self.name]["info"]
         self.header = config[self.name]["header"]
-
-    def GetFromTFile(self, inputfile, object):
-        print("Getting ", object, "from ", inputfile)
-        f = ROOT.TFile(inputfile)
-        obj = f.Get(object).Clone()
-        f.Close()
-        return obj
 
     def setup_scheme(self):
         self.correctionset = {
@@ -252,10 +262,10 @@ class pt_eta_correction(Correction):
     def get_single_sf(self, pt, eta, data_only, inputtype=None):
         # leave of the last eta bin, which is the overflow bin
         efficiency = {}
-        for type in self.types:
-            efficiency[type] = self.inputobjects[type]["object"].GetBinContent(
-                self.inputobjects[type]["object"].GetXaxis().FindBin(pt),
-                self.inputobjects[type]["object"].GetYaxis().FindBin(eta),
+        for _type in self.types:
+            efficiency[_type] = self.inputobjects[_type]["object"].GetBinContent(
+                self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
+                self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
             )
         if data_only:
             if efficiency["Data"] < epsilon:
@@ -298,10 +308,10 @@ class pt_eta_correction(Correction):
         # leave of the last eta bin, which is the overflow bin
         for eta in etas[:-1]:
             efficiency = {}
-            for type in self.types:
-                efficiency[type] = self.inputobjects[type]["object"].GetBinContent(
-                    self.inputobjects[type]["object"].GetXaxis().FindBin(pt),
-                    self.inputobjects[type]["object"].GetYaxis().FindBin(eta),
+            for _type in self.types:
+                efficiency[_type] = self.inputobjects[_type]["object"].GetBinContent(
+                    self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
+                    self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
                 )
             if data_only:
                 if efficiency["Data"] < epsilon:
@@ -330,15 +340,6 @@ class pt_eta_correction(Correction):
         self.correction = output_corr
         # print(JSONEncoder.dumps(self.correction))
 
-    def write_scheme(self):
-        if self.verbose >= 2:
-            print(JSONEncoder.dumps(self.correction))
-        elif self.verbose >= 1:
-            print(self.correction)
-        if self.fname:
-            print(f">>> Writing {self.fname}...")
-        JSONEncoder.write(self.correction, self.fname)
-
 
 class emb_doublemuon_correction(Correction):
     def __init__(
@@ -352,6 +353,7 @@ class emb_doublemuon_correction(Correction):
         fname="",
         data_only=True,
         verbose=False,
+        double_object_quantities_configfile=None,
     ):
         super(emb_doublemuon_correction, self).__init__(
             tag,
@@ -366,6 +368,34 @@ class emb_doublemuon_correction(Correction):
         self.types = ["Data"]
         self.names = triggernames
 
+        self.double_object_quantities_configfile = double_object_quantities_configfile
+        self.double_object_quantities = None
+        self.parse_double_object_quantities_config()
+
+    def parse_double_object_quantities_config(self):
+        if self.double_object_quantities_configfile is not None:
+            config = yaml.safe_load(open(self.double_object_quantities_configfile))
+            basename = os.path.basename(
+                self.double_object_quantities_configfile,
+            ).split("_")[1].replace("_double_object_quantities", "").replace("settings_", "")
+            self.double_object_quantities = {
+                name: {
+                    "name": name,
+                    "file": os.path.join(
+                        "output",
+                        f"{basename}_TP_{_type}_{self.era}_Fits_{name}.root",
+                    ),
+                }
+                for name in config.keys() for _type in self.types
+            }
+            for name in self.double_object_quantities:
+                self.double_object_quantities[name]["object"] = self.GetFromTFile(
+                    self.double_object_quantities[name]["file"],
+                    self.double_object_quantities[name]["name"],
+                )
+                self.double_object_quantities[name]["config"] = config[name]
+            return self.double_object_quantities
+
     def parse_config(self):
         config = yaml.safe_load(open(self.configfile))
         self.ptbinning = config[self.name]["bins_x"]
@@ -374,14 +404,14 @@ class emb_doublemuon_correction(Correction):
             str(os.path.basename(self.configfile)).split("_")[1].replace(".yaml", "")
         )
         self.inputfiles = {}
-        for type in self.types:
+        for _type in self.types:
             for name in self.names:
                 self.inputfiles[name] = {
                     "name": name,
                     "file": os.path.join(
                         "output",
-                        "{basename}_TP_{type}_{era}_Fits_{name}.root".format(
-                            basename=basename, type=type, era=self.era, name=name
+                        "{basename}_TP_{_type}_{era}_Fits_{name}.root".format(
+                            basename=basename, _type=_type, era=self.era, name=name
                         ),
                     ),
                 }
@@ -393,13 +423,6 @@ class emb_doublemuon_correction(Correction):
             self.inputobjects[_input]["object"] = histogram
         self.info = config[self.name]["info"]
         self.header = config[self.name]["header"]
-
-    def GetFromTFile(self, inputfile, object):
-        print("Getting ", object, "from ", inputfile)
-        f = ROOT.TFile(inputfile)
-        obj = f.Get(object).Clone()
-        f.Close()
-        return obj
 
     def setup_scheme(self):
         self.correctionset = {
@@ -497,6 +520,7 @@ class emb_doublemuon_correction(Correction):
         # leave of the last eta bin, which is the overflow bin
         for eta_2 in eta_binning[:-1]:
             efficiency = {}
+            double_quantities_efficiency = {}
             for lepton in [1, 2]:
                 for trigger in self.names:
                     shortname = "17" if "17" in trigger else "8"
@@ -512,20 +536,25 @@ class emb_doublemuon_correction(Correction):
                         self.inputobjects[trigger]["object"].GetXaxis().FindBin(pt_),
                         self.inputobjects[trigger]["object"].GetYaxis().FindBin(eta_),
                     )
-            sf = 1.0 / (
-                efficiency["8_1"] * efficiency["17_2"]
-                + efficiency["8_2"] * efficiency["17_1"]
-                - efficiency["17_1"] * efficiency["17_2"]
-            )
+
+            if self.double_object_quantities is not None:
+                for name in self.double_object_quantities:
+                    double_quantities_efficiency[name] = self.double_object_quantities[name]["object"].GetBinContent(
+                        self.double_object_quantities[name]["object"].GetXaxis().FindBin(
+                            eval(self.double_object_quantities[name]["config"]["binvar_x"])
+                        ),
+                        self.double_object_quantities[name]["object"].GetYaxis().FindBin(
+                            eval(self.double_object_quantities[name]["config"]["binvar_y"])
+                        ),
+                    )
+
+            combined_double_quantities_efficiency = 1.0 if self.double_object_quantities is None else math.prod(double_quantities_efficiency.values())
+            combined_leg_efficiency = efficiency["8_1"] * efficiency["17_2"] + efficiency["8_2"] * efficiency["17_1"] - efficiency["17_1"] * efficiency["17_2"]
+            combined_efficiency = combined_leg_efficiency * combined_double_quantities_efficiency
+
+            sf = 1.0 / combined_efficiency
             # sanitize if all efficiencies are close to zero
-            if (
-                abs(
-                    efficiency["8_1"] * efficiency["17_2"]
-                    + efficiency["8_2"] * efficiency["17_1"]
-                    - efficiency["17_1"] * efficiency["17_2"]
-                )
-                < epsilon
-            ):
+            if (abs(combined_efficiency) < epsilon):
                 print(
                     "Sanitizing SF for pt_1 = {}, eta_1 = {}, pt_2 = {}, eta_2 = {}".format(
                         pt_1, eta_1, pt_2, eta_2

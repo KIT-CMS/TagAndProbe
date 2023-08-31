@@ -43,6 +43,17 @@ parameters = yaml.safe_load(
     open(f"settings/UL/settings_{args.channel}_{args.era}.yaml")
 )
 
+print("Adding double object quantities...")
+try:
+    parameters.update(
+        yaml.safe_load(
+            open(f"settings/UL/settings_{args.channel}_{args.era}_double_object_quantities.yaml")
+        )
+    )
+    print(f"Double object quantities of {args.channel}, {args.era} added")
+except FileNotFoundError:
+    print(f"Double object quantities of {args.channel}, {args.era} not found or not present, continue without...")
+
 if args.fit:
     particle = "m" if ("muon" in args.channel or "embedding" in args.channel) else "e"
     expression_list = []
