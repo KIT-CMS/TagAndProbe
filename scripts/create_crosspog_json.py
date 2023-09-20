@@ -394,7 +394,6 @@ class emb_doublemuon_correction(Correction):
                     self.double_object_quantities[name]["name"],
                 )
                 self.double_object_quantities[name]["config"] = config[name]
-            return self.double_object_quantities
 
     def parse_config(self):
         config = yaml.safe_load(open(self.configfile))
