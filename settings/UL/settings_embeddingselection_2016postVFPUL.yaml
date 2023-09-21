@@ -163,7 +163,7 @@ Trg8_pt_eta_bins:
   name: "Trg8_pt_eta_bins"
   var: "m_vis(100,50,150)"
   tag: "(trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 23 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && id_medium_probe && is_global_probe && pt_probe > 8.0"
-  probe: "trg_Mu17TrkMu8_DZ_Mu8_probe"
+  probe: "trg_Mu17TrkMu8_DZ_bit_12_Mu8_probe"
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -202,7 +202,7 @@ Trg8_pt_bins_inc_eta:
   name: "Trg8_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
   tag: "(trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 23 && iso_tag < 0.15 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && id_medium_probe && is_global_probe && pt_probe > 8.0"
-  probe: "trg_Mu17TrkMu8_DZ_Mu8_probe"
+  probe: "trg_Mu17TrkMu8_DZ_bit_12_Mu8_probe"
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -241,7 +241,7 @@ Trg17_pt_eta_bins:
   name: "Trg17_pt_eta_bins"
   var: "m_vis(100,50,150)"
   tag: "(trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 23 && id_medium_probe && is_global_probe && pt_probe > 17.0"
-  probe: "trg_Mu17TrkMu8_DZ_Mu17_probe"
+  probe: "trg_Mu17TrkMu8_DZ_bit_12_Mu17_probe"
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -280,7 +280,7 @@ Trg17_pt_bins_inc_eta:
   name: "Trg17_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
   tag: "(trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && pt_tag > 23 && id_medium_probe && is_global_probe && pt_probe > 17.0"
-  probe: "trg_Mu17TrkMu8_DZ_Mu17_probe"
+  probe: "trg_Mu17TrkMu8_DZ_bit_12_Mu17_probe"
   binvar_x: "pt_probe"
   bins_x:
     [

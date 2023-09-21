@@ -22,6 +22,7 @@ def parse_args():
     parser.add_argument(
         "-o", "--output",
         type=str,
+        default="output/jsons",
         help="Folder where the merged output json will be written to"
     )
     return parser.parse_args()
@@ -38,7 +39,7 @@ if __name__ == "__main__":
         json_b = json.load(json_file)
 
     json_a["corrections"].extend(json_b["corrections"])
-    new_path = os.path.join(args.output, "jsons_merged", args.output_json)
+    new_path = os.path.join(args.output, args.json_output)
     with open(new_path, "w") as json_file:
         json.dump(json_a, json_file, indent=4)
     os.system(f"gzip < {new_path} > {new_path}.gz")
