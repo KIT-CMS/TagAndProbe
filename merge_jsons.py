@@ -7,12 +7,12 @@ def parse_args():
     parser.add_argument(
         "-ja", "--json-a",
         type=str,
-        help="First json to be merged with the second"
+        help="First json"
     )
     parser.add_argument(
         "-jb", "--json-b",
         type=str,
-        help="Second json to be merged with the first"
+        help="Second json to be merged into the first (and overwriting existing entries)"
     )
     parser.add_argument(
         "-jo", "--json-output",
@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument(
         "-o", "--output",
         type=str,
-        default="output/jsons",
+        default="output/jsons/merged",
         help="Folder where the merged output json will be written to"
     )
     return parser.parse_args()
@@ -30,8 +30,8 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
 
-    if not os.path.exists(os.path.join(args.output, "jsons_merged")):
-        os.makedirs(os.path.join(args.output, "jsons_merged"))
+    if not os.path.exists(os.path.join(args.output)):
+        os.makedirs(os.path.join(args.output))
 
     with open(args.json_a) as json_file:
         json_a = json.load(json_file)
