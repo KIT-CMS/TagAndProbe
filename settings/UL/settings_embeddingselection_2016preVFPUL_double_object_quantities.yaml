@@ -21,7 +21,7 @@ DZ_eta_bins_inc_pt:
   bins_y: [0.0, 0.1, 0.3, 0.8, 1.0, 1.2, 1.6, 1.8, 2.1, 2.4]
   # Settings for fits
   BKG: "CMSShape"
-  SIG: "DoubleVPartcorr"
+  SIG: "BWDoubleCBConvCorr"
   # Settings for plotting
   TITLE: "DZ filter"
   y_range: [0.0, 1.0]

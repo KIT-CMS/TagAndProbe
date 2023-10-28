@@ -8,7 +8,7 @@ import yaml
 import math
 
 # set epsilon value to avoid giant scale factors
-epsilon = 0.0001
+epsilon = 0.001
 
 
 class CorrectionSet(object):
@@ -551,7 +551,10 @@ class emb_doublemuon_correction(Correction):
             combined_leg_efficiency = efficiency["8_1"] * efficiency["17_2"] + efficiency["8_2"] * efficiency["17_1"] - efficiency["17_1"] * efficiency["17_2"]
             combined_efficiency = combined_leg_efficiency * combined_double_quantities_efficiency
 
-            sf = 1.0 / combined_efficiency
+            try:
+                sf = 1.0 / combined_efficiency
+            except ZeroDivisionError:
+                sf = 0.0
             # sanitize if all efficiencies are close to zero
             if (abs(combined_efficiency) < epsilon):
                 print(
@@ -560,7 +563,7 @@ class emb_doublemuon_correction(Correction):
                     )
                 )
                 print("calefactor before: {}".format(sf))
-                print("Scalefactor after: ", 1.0)
+                print("Scalefactor after: ", 0.0)
                 sf = 0.0
             sfs.append(sf)
             if self.verbose:
