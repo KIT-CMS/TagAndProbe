@@ -538,7 +538,7 @@ class emb_doublemuon_correction(Correction):
 
             if self.double_object_quantities is not None:
                 for name in self.double_object_quantities:
-                    double_quantities_efficiency[name] = self.double_object_quantities[name]["object"].GetBinContent(
+                    _efficiency_12 = self.double_object_quantities[name]["object"].GetBinContent(
                         self.double_object_quantities[name]["object"].GetXaxis().FindBin(
                             eval(self.double_object_quantities[name]["config"]["binvar_x"])
                         ),
@@ -546,10 +546,20 @@ class emb_doublemuon_correction(Correction):
                             eval(self.double_object_quantities[name]["config"]["binvar_y"])
                         ),
                     )
+                    _efficiency_21 = self.double_object_quantities[name]["object"].GetBinContent(
+                        self.double_object_quantities[name]["object"].GetXaxis().FindBin(
+                            eval(self.double_object_quantities[name]["config"]["binvar_y"])
+                        ),
+                        self.double_object_quantities[name]["object"].GetYaxis().FindBin(
+                            eval(self.double_object_quantities[name]["config"]["binvar_x"])
+                        ),
+                    )
+                    double_quantities_efficiency[name] = (_efficiency_12 + _efficiency_21) / 2.0
 
-            combined_double_quantities_efficiency = 1.0 if self.double_object_quantities is None else math.prod(double_quantities_efficiency.values())
-            combined_leg_efficiency = efficiency["8_1"] * efficiency["17_2"] + efficiency["8_2"] * efficiency["17_1"] - efficiency["17_1"] * efficiency["17_2"]
-            combined_efficiency = combined_leg_efficiency * combined_double_quantities_efficiency
+            combined_efficiency = efficiency["8_1"] * efficiency["17_2"] + efficiency["8_2"] * efficiency["17_1"] - efficiency["17_1"] * efficiency["17_2"]
+
+            if self.double_object_quantities is not None and double_quantities_efficiency:
+                combined_efficiency *= math.prod(double_quantities_efficiency.values())
 
             try:
                 sf = 1.0 / combined_efficiency
