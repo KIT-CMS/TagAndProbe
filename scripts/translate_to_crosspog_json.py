@@ -58,8 +58,11 @@ def main(args):
         os.makedirs(f"{outdir}/jsons")
     # Create the container to hold all corrections
     correctionset = CorrectionSet(f"Embedding{args.era}")
-    add_corrections(f"settings/UL/settings_{args.channel}_{args.era}.yaml", correctionset, args.era, outdir)
-    if args.channel == "muon":
+    if args.channel == "embeddingselection":
+        double_object_quantities_configfile = f"settings/UL/settings_embeddingselection_{args.era}_double_object_quantities.yaml"
+        if not os.path.exists(double_object_quantities_configfile):
+            print(f"{double_object_quantities_configfile} does not exist. Double object quantities will not be considered.")
+            double_object_quantities_configfile = None
         EmbSelEff = emb_doublemuon_correction(
             tag="EmbSelEff",
             name="m_sel_trg_kit_ratio",
@@ -68,8 +71,10 @@ def main(args):
             era=args.era,
             outdir=f"{outdir}/jsons",
             data_only=True,
+            double_object_quantities_configfile=double_object_quantities_configfile
         )
         EmbSelEff.generate_scheme()
+        correctionset.add_correction(EmbSelEff)
         EmbSelEffID = pt_eta_correction(
                     tag="EmbSelEffID",
                     name="EmbID_pt_eta_bins",
@@ -79,8 +84,9 @@ def main(args):
                     data_only=True,
                 )
         EmbSelEffID.generate_scheme()
-        correctionset.add_correction(EmbSelEff)
         correctionset.add_correction(EmbSelEffID)
+    else:
+        add_corrections(f"settings/UL/settings_{args.channel}_{args.era}.yaml", correctionset, args.era, outdir)
     correctionset.write_json(f"{outdir}/jsons/{args.channel}_{args.era}.json")
     return
 

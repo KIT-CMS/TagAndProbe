@@ -1,5 +1,7 @@
 # folders
 output/
+output.*/
+.vscode/
 # plots
 *.png
 *.pdf

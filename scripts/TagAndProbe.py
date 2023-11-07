@@ -21,6 +21,8 @@ def parse_arguments():
     parser.add_argument("--era", required=True)
     parser.add_argument("--channel", required=True)
     parser.add_argument("--output", default="output", required=False)
+    parser.add_argument("--mode", default="RECREATE", required=False)
+    parser.add_argument("--no-leg-switching", default=False, required=False, action='store_true')
     return parser.parse_args()
 
 
@@ -84,19 +86,42 @@ def translate_from_crown(tag, probe, binvar_x, binvar_y):
     return converted_cfg
 
 
+def pass_trough_from_crown(tag, probe, binvar_x, binvar_y):
+    converted_cfg = {
+        "tag": [],
+        "probe": [],
+        "binvar_x": [],
+        "binvar_y": [],
+    }
+    converted_cfg["tag"].append(tag)
+    converted_cfg["probe"].append(probe)
+    converted_cfg["binvar_x"].append(binvar_x)
+    converted_cfg["binvar_y"].append(binvar_y)
+    return converted_cfg
+
+
 def process_trees(
-    sample, output, channel, era, tree, drawlist, bin_cfgs, number_of_bins
+    sample,
+    output,
+    channel,
+    era,
+    tree,
+    drawlist,
+    bin_cfgs,
+    number_of_bins,
+    leg_switching=True,
+    mode="RECREATE",
 ):
     print("Processing {}".format(sample))
     out_dir = output
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)
     outputfilepath = "{}/{}_TP_{}_{}.root".format(out_dir, channel, sample, era)
-    if os.path.exists(outputfilepath):
+    if os.path.exists(outputfilepath) and mode == "RECREATE":
         os.remove(outputfilepath)
     outfile = ROOT.TFile(
         outputfilepath,
-        "RECREATE",
+        mode,
     )
     outfile.cd()
     print(f"{sample} - Bins per histogram: {number_of_bins}")
@@ -107,27 +132,33 @@ def process_trees(
     counter = 0
     for nbins in number_of_bins:
         nentries = 0
-        for bin in range(int(nbins / 2)):
-            cleaned_hists.append(
-                hists[int(counter) + int(bin)]
-                + hists[int(counter) + int(bin) + int(nbins / 2)]
-            )
-            # print(
-            #     "Ading histogram with {} Entries to {} existing Entries ".format(
-            #         hists[int(counter) + int(bin) + int(nbins / 2)].Integral(),
-            #         hists[int(counter) + int(bin)].Integral(),
+        if leg_switching:
+            for bin in range(int(nbins / 2)):
+                cleaned_hists.append(
+                    hists[int(counter) + int(bin)]
+                    + hists[int(counter) + int(bin) + int(nbins / 2)]
+                )
+                # print(
+                #     "Ading histogram with {} Entries to {} existing Entries ".format(
+                #         hists[int(counter) + int(bin) + int(nbins / 2)].Integral(),
+                #         hists[int(counter) + int(bin)].Integral(),
+                #     )
+                # )
+                nentries += cleaned_hists[-1].Integral()
+                cleaned_hists[-1].SetName(convert_hist_label(cleaned_hists[-1].GetName()))
+            #     print(
+            #         "Combined histogram {} has {} entries ".format(
+            #             cleaned_hists[-1].GetName(), cleaned_hists[-1].Integral()
+            #         )
             #     )
-            # )
-            nentries += cleaned_hists[-1].Integral()
-            cleaned_hists[-1].SetName(convert_hist_label(cleaned_hists[-1].GetName()))
-        #     print(
-        #         "Combined histogram {} has {} entries ".format(
-        #             cleaned_hists[-1].GetName(), cleaned_hists[-1].Integral()
-        #         )
-        #     )
-        # print("Total number of entries: {}".format(nentries))
-        counter += nbins
-
+            # print("Total number of entries: {}".format(nentries))
+            counter += nbins
+        else:
+            for bin in range(int(nbins)):
+                cleaned_hists.append(
+                    hists[int(counter) + int(bin)]
+                )
+            counter += nbins
     i = 0
 
     for key, cfg in bin_cfgs.items():
@@ -135,7 +166,6 @@ def process_trees(
         wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
         var = wsp.factory("m_vis[100,50,150]")
         ROOT.RooFit.Silence(True)
-
         outfile.cd()
         outfile.mkdir(cfg["name"])
         ROOT.gDirectory.cd(cfg["name"])
@@ -168,11 +198,14 @@ def process_trees(
     print(f"{sample} - Done")
 
 
-def main(channel, era, output):
+def main(channel, era, output, leg_switching=True, mode="RECREATE"):
     # if "crosselectron" in channel and era=="2016":
     #     print "No cross trigger settings available for 2016 yet."
     #     sys.exit()
-    bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
+    if leg_switching:
+        bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
+    else:
+        bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}_double_object_quantities.yaml"))
     input_files = yaml.safe_load(open("set_inputfiles.yaml"))
 
     drawlist = []
@@ -181,16 +214,22 @@ def main(channel, era, output):
 
     for key, cfg_dict in bin_cfgs.items():
         cfg = cfg_dict
+        # if no_leg_switching is set to true, we do not switch the tag and probe legs, so we do not have to consider the flipped event
+        cfg_update_function = translate_from_crown if leg_switching else pass_trough_from_crown
+        # this means we have only two histograms per bin, one for pass and one for fail and not four (two legs)
+        number_of_bins_factor = 4 if leg_switching else 2
+
         cfg.update(
-            translate_from_crown(
+            cfg_update_function(
                 cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"]
             )
         )
         # pp.pprint(cfg)
         cfg["hist"] = []
         cfg["bins"] = []
-        # number of bins multiplied by four because of pass / fail and the switching of tag and probe
-        number_of_bins.append(4 * ((len(cfg["bins_x"]) - 1) * (len(cfg["bins_y"]) - 1)))
+
+        number_of_bins.append(number_of_bins_factor * ((len(cfg["bins_x"]) - 1) * (len(cfg["bins_y"]) - 1)))
+
         for n in range(len(cfg["tag"])):
             hist = ROOT.TH2D(
                 cfg["name"],
@@ -291,6 +330,8 @@ def main(channel, era, output):
                     drawlist,
                     bin_cfgs,
                     number_of_bins,
+                    leg_switching,  # set for all quantities of provided bin_cfgs
+                    mode,  # RECREATE or UPDATE, set globally
                 ]
                 for key in trees
             ],
@@ -314,5 +355,5 @@ def validate_inputfiles(era, channel):
 if __name__ == "__main__":
     args = parse_arguments()
     validate_inputfiles(era=args.era, channel=args.channel)
-    main(era=args.era, channel=args.channel, output=args.output)
+    main(era=args.era, channel=args.channel, output=args.output, leg_switching=not args.no_leg_switching, mode=args.mode)
     exit()

@@ -79,19 +79,13 @@
 "2016preVFPUL":
   embeddingselection:
     folder: "ntuple"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_2016preVFPUL.root"
-    # DataB-ver1: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_Run2016B-ver1_2016preVFPUL.root"
-    # DataB-ver2: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_Run2016B-ver2_2016preVFPUL.root"
-    # DataC: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_Run2016C-HIPM_2016preVFPUL.root"
-    # DataD: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_Run2016D-HIPM_2016preVFPUL.root"
-    # DataE: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_Run2016E-HIPM_2016preVFPUL.root"
-    # DataF: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DoubleMuon_Run2016F-HIPM_2016preVFPUL.root"
+    Data: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/DoubleMuon_2016preVFPUL.root"
 
   muon:
     folder: "ntuple"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/SingleMuon_2016preVFPUL.root"
-    # Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_MuEmbedding_UL2018.root"
-    DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016preVFPUL/DYJetsToLL_2016preVFPUL_mm.root"
+    Data: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/SingleMuon_2016preVFPUL.root"
+    Embedding: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/MuonEmbedding_2016preVFPUL.root"
+    DY: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/DYJetsToLL_2016preVFPUL_mm.root"
 
   electron:
     folder: "ntuple"
@@ -102,10 +96,7 @@
 "2016postVFPUL":
   embeddingselection:
     folder: "ntuple"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/DoubleMuon_2016postVFPUL.root"
-    # DataF: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/DoubleMuon_Run2016F_2016postVFPUL.root"
-    # DataG: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/DoubleMuon_Run2016G_2016postVFPUL.root"
-    # DataH: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/DoubleMuon_Run2016H_2016postVFPUL.root"
+    Data: "/ceph/olavoryk/dz_filter/DoubleMuon_2016postVFPUL.root"
 
   muon:
     folder: "ntuple"
