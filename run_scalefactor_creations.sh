@@ -13,7 +13,7 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 			(
 				channel=${channels[$channel_idx]}
 				python3 scripts/TagAndProbe.py --channel $channel --era $era
-				if [[ "$channel" == embeddingselection ]]; then # Additional dz quantity of trg_Mu17TrkMu8_DZ_Mu17
+				if [[ "$channel" == "embeddingselection" ]] && ([[ "$era" == "2016preVFPUL" ]] || [[ "$era" == "2016postVFPUL" ]]); then # Additional dz quantity of trg_Mu17TrkMu8_DZ_Mu17
 					python3 scripts/TagAndProbe.py --channel $channel --era $era --no-leg-switching --mode="UPDATE"
 				fi
 				python3 scripts/runTagAndProbeFits.py --channel $channel --era $era --fit --plot

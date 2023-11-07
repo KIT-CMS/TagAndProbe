@@ -166,7 +166,6 @@ def process_trees(
         wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
         var = wsp.factory("m_vis[100,50,150]")
         ROOT.RooFit.Silence(True)
-        pp.pprint(cfg)
         outfile.cd()
         outfile.mkdir(cfg["name"])
         ROOT.gDirectory.cd(cfg["name"])
