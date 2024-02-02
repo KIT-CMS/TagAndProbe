@@ -16,20 +16,24 @@ ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, "import")
 ROOT.TH1.AddDirectory(0)
 
 
+settings_folder = None
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--era", required=True)
     parser.add_argument("--channel", required=True)
     parser.add_argument("--output", default="output", required=False)
     parser.add_argument("--mode", default="RECREATE", required=False)
-    parser.add_argument("--no-leg-switching", default=False, required=False, action='store_true')
+    parser.add_argument("--no-leg-switching", default=False, required=False, action="store_true")
+    parser.add_argument("--settings-folder", default="settings", required=False)
     return parser.parse_args()
 
 
 def get_outputfiles(channel, era, out_dir):
     # small function to get the path for all expected output files
     # this is used to check if the output files exist
-    bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
+    bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml"))
     outputfiles = []
     if channel == "embeddingselection":
         samples = ["Data"]
@@ -38,9 +42,7 @@ def get_outputfiles(channel, era, out_dir):
     for sample in samples:
         outputfiles.append("{}/{}_TP_{}_{}.root".format(out_dir, channel, sample, era))
         for key in bin_cfgs:
-            outputfiles.append(
-                "{}/{}_TP_{}_{}_{}.root".format(out_dir, channel, sample, era, key)
-            )
+            outputfiles.append("{}/{}_TP_{}_{}_{}.root".format(out_dir, channel, sample, era, key))
     return outputfiles
 
 
@@ -134,10 +136,7 @@ def process_trees(
         nentries = 0
         if leg_switching:
             for bin in range(int(nbins / 2)):
-                cleaned_hists.append(
-                    hists[int(counter) + int(bin)]
-                    + hists[int(counter) + int(bin) + int(nbins / 2)]
-                )
+                cleaned_hists.append(hists[int(counter) + int(bin)] + hists[int(counter) + int(bin) + int(nbins / 2)])
                 # print(
                 #     "Ading histogram with {} Entries to {} existing Entries ".format(
                 #         hists[int(counter) + int(bin) + int(nbins / 2)].Integral(),
@@ -155,9 +154,7 @@ def process_trees(
             counter += nbins
         else:
             for bin in range(int(nbins)):
-                cleaned_hists.append(
-                    hists[int(counter) + int(bin)]
-                )
+                cleaned_hists.append(hists[int(counter) + int(bin)])
             counter += nbins
     i = 0
 
@@ -203,9 +200,9 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
     #     print "No cross trigger settings available for 2016 yet."
     #     sys.exit()
     if leg_switching:
-        bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
+        bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml"))
     else:
-        bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}_double_object_quantities.yaml"))
+        bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}_double_object_quantities.yaml"))
     input_files = yaml.safe_load(open("set_inputfiles.yaml"))
 
     drawlist = []
@@ -219,11 +216,7 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
         # this means we have only two histograms per bin, one for pass and one for fail and not four (two legs)
         number_of_bins_factor = 4 if leg_switching else 2
 
-        cfg.update(
-            cfg_update_function(
-                cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"]
-            )
-        )
+        cfg.update(cfg_update_function(cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"]))
         # pp.pprint(cfg)
         cfg["hist"] = []
         cfg["bins"] = []
@@ -260,22 +253,10 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
                             hist.GetYaxis().GetBinUpEdge(j),
                         )
                     )
-                    andable.add(
-                        "%s >= %g"
-                        % (cfg["binvar_x"][n], hist.GetXaxis().GetBinLowEdge(i))
-                    )
-                    andable.add(
-                        "%s < %g"
-                        % (cfg["binvar_x"][n], hist.GetXaxis().GetBinUpEdge(i))
-                    )
-                    andable.add(
-                        "%s >= %g"
-                        % (cfg["binvar_y"][n], hist.GetYaxis().GetBinLowEdge(j))
-                    )
-                    andable.add(
-                        "%s < %g"
-                        % (cfg["binvar_y"][n], hist.GetYaxis().GetBinUpEdge(j))
-                    )
+                    andable.add("%s >= %g" % (cfg["binvar_x"][n], hist.GetXaxis().GetBinLowEdge(i)))
+                    andable.add("%s < %g" % (cfg["binvar_x"][n], hist.GetXaxis().GetBinUpEdge(i)))
+                    andable.add("%s >= %g" % (cfg["binvar_y"][n], hist.GetYaxis().GetBinLowEdge(j)))
+                    andable.add("%s < %g" % (cfg["binvar_y"][n], hist.GetYaxis().GetBinUpEdge(j)))
 
             for b in cfg["bins"][n]:
                 drawlist.append(
@@ -354,6 +335,7 @@ def validate_inputfiles(era, channel):
 
 if __name__ == "__main__":
     args = parse_arguments()
+    settings_folder = args.settings_folder
     validate_inputfiles(era=args.era, channel=args.channel)
     main(era=args.era, channel=args.channel, output=args.output, leg_switching=not args.no_leg_switching, mode=args.mode)
     exit()

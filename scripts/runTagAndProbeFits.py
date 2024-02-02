@@ -17,6 +17,7 @@ parser.add_argument("--fit", action="store_true")
 parser.add_argument("--plot", action="store_true")
 parser.add_argument("--era", required=True)
 parser.add_argument("--output", default="output", required=False)
+parser.add_argument("--settings-folder", default="settings", required=False)
 
 args = parser.parse_args()
 
@@ -40,14 +41,14 @@ Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
 setup_logging("{}/fits_plots.log".format(out_dir), logging.INFO)
 
 parameters = yaml.safe_load(
-    open(f"settings/UL/settings_{args.channel}_{args.era}.yaml")
+    open(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}.yaml")
 )
 
 print("Adding double object quantities...")
 try:
     parameters.update(
         yaml.safe_load(
-            open(f"settings/UL/settings_{args.channel}_{args.era}_double_object_quantities.yaml")
+            open(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}_double_object_quantities.yaml")
         )
     )
     print(f"Double object quantities of {args.channel}, {args.era} added")
