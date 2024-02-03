@@ -18,7 +18,7 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 				python3 scripts/TagAndProbe.py \
 					--channel $channel \
 					--era $era \
-					--settings-folder $output_dir/settings \
+					--settings-folder $output_dir/used_settings \
 					--output $output_dir
 				if [[ "$channel" == "embeddingselection" ]]; then # Additional dz quantity of trg_Mu17TrkMu8_DZ_Mu17
 					python3 scripts/TagAndProbe.py \
@@ -26,7 +26,7 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 						--era $era \
 						--no-leg-switching \
 						--mode="UPDATE" \
-						--settings-folder $output_dir/settings \
+						--settings-folder $output_dir/used_settings \
 						--output $output_dir
 				fi
 				python3 scripts/runTagAndProbeFits.py \
@@ -34,13 +34,13 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 					--era $era \
 					--fit \
 					--plot \
-					--settings-folder $output_dir/settings \
+					--settings-folder $output_dir/used_settings \
 					--output $output_dir
 				python3 scripts/translate_to_crosspog_json.py \
 					--era $era \
 					--channel $channel \
 					--output $output_dir \
-					--settings-folder $output_dir/settings
+					--settings-folder $output_dir/used_settings
 			) &
 			pids[${channel_idx}]=$!
 		done
