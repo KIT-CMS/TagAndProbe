@@ -77,13 +77,13 @@ def main(args):
         EmbSelEff.generate_scheme()
         correctionset.add_correction(EmbSelEff)
         EmbSelEffID = pt_eta_correction(
-                    tag="EmbSelEffID",
-                    name="EmbID_pt_eta_bins",
-                    configfile=f"{args.settings_folder}/UL/settings_embeddingselection_{args.era}.yaml",
-                    era=args.era,
-                    outdir=f"{outdir}/jsons",
-                    data_only=True,
-                )
+            tag="EmbSelEffID",
+            name="EmbID_pt_eta_bins",
+            configfile=f"{args.settings_folder}/UL/settings_embeddingselection_{args.era}.yaml",
+            era=args.era,
+            outdir=f"{outdir}/jsons",
+            data_only=True,
+        )
         EmbSelEffID.generate_scheme()
         correctionset.add_correction(EmbSelEffID)
     else:

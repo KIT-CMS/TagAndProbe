@@ -57,7 +57,8 @@ ID_pt_eta_bins:
           (dxy_tag < 0.045) &&
           id_medium_tag &&
           trg_IsoMu27_tag &&
-          (pt_tag > 28.0)
+          (pt_tag > 28.0) &&
+          (is_global_tag  && is_global_probe)
         )
   probe: "id_medium_probe"
   binvar_x: "pt_probe"
@@ -152,7 +153,8 @@ EmbID_pt_eta_bins:
           (dxy_tag < 0.045) &&
           id_medium_tag &&
           trg_IsoMu27_tag &&
-          (pt_tag > 28.0)
+          (pt_tag > 28.0) &&
+          is_global_tag
         )
   probe: "is_global_probe && id_loose_probe"
   binvar_x: "pt_probe"
@@ -201,10 +203,10 @@ Trg8_pt_eta_bins:
           (dxy_tag < 0.045) &&
           (id_medium_tag && id_loose_probe) &&
           trg_IsoMu27_tag &&
-          (pt_tag > 28.0&& pt_probe > 8.0) &&
+          (pt_tag > 28.0 && pt_probe > 8.0) &&
           (is_global_probe && is_global_tag)
         )
-  probe:  trg_Mu17TrkMu8_DZ_bit_12_Mu17_probe
+  probe:  trg_Mu17TrkMu8_DZ_bit_12_Mu17_with_trg_ptcut_probe
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -300,7 +302,7 @@ Trg17_pt_eta_bins:
           (pt_tag > 28.0 && pt_probe > 17.0) &&
           (is_global_probe && is_global_tag)
         )
-  probe:  trg_Mu17TrkMu8_DZ_bit_12_Mu17_probe
+  probe:  trg_Mu17TrkMu8_DZ_bit_12_Mu17_with_trg_ptcut_probe
   binvar_x: "pt_probe"
   bins_x:
     [

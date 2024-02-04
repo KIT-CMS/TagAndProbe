@@ -144,7 +144,7 @@ class pt_eta_correction(Correction):
             self.inputfiles[_type] = {
                 "name": self.name,
                 "file": os.path.join(
-                    "output",
+                    self.outdir.replace("/jsons", ""),
                     "{basename}_TP_{_type}_{era}_Fits_{name}.root".format(
                         basename=basename, _type=_type, era=self.era, name=self.name
                     ),
@@ -382,7 +382,7 @@ class emb_doublemuon_correction(Correction):
                 name: {
                     "name": name,
                     "file": os.path.join(
-                        "output",
+                        self.outdir.replace("/jsons", ""),
                         f"{basename}_TP_{_type}_{self.era}_Fits_{name}.root",
                     ),
                 }
@@ -408,7 +408,7 @@ class emb_doublemuon_correction(Correction):
                 self.inputfiles[name] = {
                     "name": name,
                     "file": os.path.join(
-                        "output",
+                        self.outdir.replace("/jsons", ""),
                         "{basename}_TP_{_type}_{era}_Fits_{name}.root".format(
                             basename=basename, _type=_type, era=self.era, name=name
                         ),
@@ -599,19 +599,19 @@ class emb_doublemuon_correction(Correction):
 
 
 if __name__ == "__main__":
-
-    ROOT.PyConfig.IgnoreCommandLineOptions = True
-    ROOT.gROOT.SetBatch(ROOT.kTRUE)
-    # for keeping the histograms in memory
-    ROOT.TH1.AddDirectory(0)
-    test = pt_eta_correction(
-        tag="test",
-        name="EmbID_pt_eta_bins",
-        outdir="output/jsons",
-        configfile="settings/settings_embeddingselection_2018UL.yaml",
-        era="2018UL",
-        fname="{}/{}.json".format("output/jsons", "test"),
-        data_only=True,
-        verbose=False,
-    )
-    test.generate_scheme()
+    pass
+    # ROOT.PyConfig.IgnoreCommandLineOptions = True
+    # ROOT.gROOT.SetBatch(ROOT.kTRUE)
+    # # for keeping the histograms in memory
+    # ROOT.TH1.AddDirectory(0)
+    # test = pt_eta_correction(
+    #     tag="test",
+    #     name="EmbID_pt_eta_bins",
+    #     outdir="output/jsons",
+    #     configfile="settings/settings_embeddingselection_2018UL.yaml",
+    #     era="2018UL",
+    #     fname="{}/{}.json".format("output/jsons", "test"),
+    #     data_only=True,
+    #     verbose=False,
+    # )
+    # test.generate_scheme()

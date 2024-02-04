@@ -3,6 +3,7 @@ output/
 output.*/
 output_*/
 .vscode/
+tmp/
 # plots
 *.png
 *.pdf

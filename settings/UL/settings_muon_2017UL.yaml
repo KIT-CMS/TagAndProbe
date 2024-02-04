@@ -58,7 +58,7 @@ ID_pt_eta_bins:
           (dxy_tag < 0.045) &&
           id_medium_tag &&
           trg_IsoMu27_tag &&
-          (pt_tag >28.0)
+          (pt_tag > 28.0)
         )
   probe: "id_medium_probe"
   binvar_x: "pt_probe"
@@ -401,7 +401,8 @@ Trg_IsoMu27_pt_eta_bins:
           (dxy_tag < 0.045) &&
           (id_medium_tag && id_medium_probe) &&
           trg_IsoMu27_tag &&
-          (pt_tag >28.0)
+          (pt_tag >28.0) &&
+          (is_global_tag && is_global_probe)
         )
   probe: "trg_IsoMu27_probe"
   binvar_x: "pt_probe"

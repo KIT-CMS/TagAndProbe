@@ -49,9 +49,10 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 			wait $pid
 		done
 		python3 merge_jsons.py \
-			-ja $output_dir/jsons/muon_${era}.json \
-			-jb $output_dir/jsons/embeddingselection_${era}.json \
-			-jo muon_${era}.json
+			--json-a $output_dir/jsons/muon_${era}.json \
+			--json-b $output_dir/jsons/embeddingselection_${era}.json \
+			--json-output muon_${era}.json \
+			--output $output_dir/jsons/merged
 	) &
 	pids_eras[${era_idx}]=$!
 done

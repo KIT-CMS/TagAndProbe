@@ -118,22 +118,22 @@ AIso2_pt_bins_inc_eta:
   y_range: [0.0,1.0]
   ratio_y_range: [0.6,1.4]
 
-# AIso2_pt_eta_bins:
-#   name: 'AIso2_pt_eta_bins'
-#   var: 'm_ll(50,65,115)'
-#   tag: 'trg_t_IsoMu27 && pt_t > 28 && id_p'
-#   probe: 'iso_p >= 0.25 && iso_p < 0.50'
-#   binvar_x: 'pt_p'
-#   bins_x: [10., 15., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 60., 80., 100., 200., 1000.]
-#   binvar_y: 'abs(eta_p)'
-#   bins_y: [0, 0.9, 1.2, 2.1, 2.4]
-#   # Settings for fits
-#   BKG: "Exponential"
-#   SIG: "DoubleVCorr"
-#   # Settings for plotting
-#   TITLE: "Iso_{rel} #in [0.25,0.50]"
-#   y_range: [0.0,1.0]
-#   ratio_y_range: [0.6,1.4]
+AIso2_pt_eta_bins:
+  name: 'AIso2_pt_eta_bins'
+  var: 'm_ll(50,65,115)'
+  tag: 'trg_t_IsoMu27 && pt_t > 28 && id_p'
+  probe: 'iso_p >= 0.25 && iso_p < 0.50'
+  binvar_x: 'pt_p'
+  bins_x: [10., 15., 20., 22., 24., 26., 28., 30., 32., 34., 36., 38., 40., 45., 50., 60., 80., 100., 200., 1000.]
+  binvar_y: 'abs(eta_p)'
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} #in [0.25,0.50]"
+  y_range: [0.0,1.0]
+  ratio_y_range: [0.6,1.4]
 
 Trg_IsoMu27_pt_eta_bins:
   name: 'Trg_IsoMu27_pt_eta_bins'

@@ -35,10 +35,9 @@ def setup_logging(output_file, level=logging.DEBUG):
     logger.addHandler(file_handler)
 
 
-out_dir = args.output
-Dir = "{}/tag_and_probe_{}_{}/".format(out_dir, args.channel, args.era)
+Dir = "{}/tag_and_probe_{}_{}/".format(args.output, args.channel, args.era)
 
-setup_logging("{}/fits_plots.log".format(out_dir), logging.INFO)
+setup_logging("{}/fits_plots.log".format(args.output), logging.INFO)
 
 parameters = yaml.safe_load(
     open(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}.yaml")
@@ -60,13 +59,13 @@ if args.fit:
     expression_list = []
     for label in parameters:
         if args.channel == "embeddingselection":
-            filename = ["{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era)]
+            filename = ["{}/{}_TP_Data_{}.root".format(args.output, args.channel, args.era)]
             Dir_ext = ["/data"]
         else:
             filename = [
-                "{}/{}_TP_Embedding_{}.root".format(out_dir, args.channel, args.era),
-                "{}/{}_TP_Data_{}.root".format(out_dir, args.channel, args.era),
-                "{}/{}_TP_DY_{}.root".format(out_dir, args.channel, args.era),
+                "{}/{}_TP_Embedding_{}.root".format(args.output, args.channel, args.era),
+                "{}/{}_TP_Data_{}.root".format(args.output, args.channel, args.era),
+                "{}/{}_TP_DY_{}.root".format(args.output, args.channel, args.era),
             ]
             Dir_ext = ["/embedding", "/data", "/DY"]
         for i, file_ in enumerate(filename):
@@ -118,9 +117,9 @@ if args.plot:
             if args.channel == "embeddingselection":
                 plotoptions["dataonly"] = True
                 plot_lepton_sf.plot_efficiency(
-                    out_dir, label, args.era, args.channel, i, plotoptions
+                    args.output, label, args.era, args.channel, i, plotoptions
                 )
             else:
                 plot_lepton_sf.build_plot(
-                    out_dir, label, args.era, args.channel, i, plotoptions
+                    args.output, label, args.era, args.channel, i, plotoptions
                 )
