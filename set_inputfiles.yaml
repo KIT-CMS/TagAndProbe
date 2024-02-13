@@ -1,156 +1,32 @@
-# "2016":
-#   muon:
-#     folder: "mm_singlemuon_nominal/ntuple"
-#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/data/SingleMuon_2016.root"
-#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/emb/MuonEmbedding_2016.root"
-#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/mc/DYJets_2016.root"
+2017UL:
+  embeddingselection:
+    folder: "ntuple"
+    Data: "/ceph/amonsch/HiggsToTauTau/scalefactors/tap_2017UL_mm_2024-02-01_v1/2017UL/DoubleMuon_2017UL.root"
 
-#   electron:
-#     folder: "ee_singleelectron_nominal/ntuple"
-#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/data/SingleElectron_2016.root"
-#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/emb/ElectronEmbedding_2016.root"
-#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/mc/DYJets_2016.root"
-
-#   embeddingselection:
-#     folder: "mm_embeddingselection_nominal/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/DoubleMuon/DoubleMuon_Run2016.root"
-#   crossmuon:
-#     folder: "mm_crossmuon/ntuple"
-#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/data/SingleMuon_2016.root"
-#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/emb/MuonEmbedding_2016.root"
-#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/mc/DYJets_2016.root"
-
-#   crosselectron:
-#     folder: "ee_crosselectron/ntuple"
-#     Data: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/data/SingleElectron_2016.root"
-#     Embedding: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/emb/ElectronEmbedding_2016.root"
-#     DY: "/ceph/sbrommer/artus_ntuple/tagandprobe/2016/lepton_legs_v2/mc/DYJets_2016.root"
-
-# "2017":
-#   muon:
-#     folder: "mm_singlemuon_nominal/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root"
-
-#   electron:
-#     folder: "ee_singleelectron_nominal/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/SingleElectron_Run2017.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/Embedding2017_ElectronEmbedding.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/DYJetsToLLM50_RunIIFall17.root"
-
-#   crossmuon:
-#     folder: "mm_crossmuon/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD/SingleMuon_Run2017C_31Mar2018v1_13TeV_MINIAOD.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2/Embedding2017C_MuonEmbedding_inputDoubleMu94XminiAODv2_13TeV_USER_v2.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIFall17MiniAODv2_PU2017RECOSIMstep_13TeV_MINIAOD_madgraph-pythia8_v1.root"
-
-#   crosselectron:
-#     folder: "ee_crosselectron/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/SingleElectron_Run2017.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/Embedding2017_ElectronEmbedding.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/legacy/electron/crosselectron/merged/DYJetsToLLM50_RunIIFall17.root"
-
-# "2018":
-#   muon:
-#     folder: "mm_singlemuon_nominal/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
-
-#   electron:
-#     folder: "ee_singleelectron_nominal/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
-
-#   crossmuon:
-#     folder: "mm_crossmuon/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/SingleMuon_Run2018.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_MuonEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
-
-#   crosselectron:
-#     folder: "ee_crosselectron/ntuple"
-#     Data: "/ceph/jbechtel/artus_outputs/TagAndProbe/EGamma_Run2018.root"
-#     Embedding: "/ceph/jbechtel/artus_outputs/TagAndProbe/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1/Embedding2018C_ElectronEmbedding_inputDoubleMu102XminiAODv1_13TeV_USER_v1.root"
-#     DY: "/ceph/jbechtel/artus_outputs/TagAndProbe/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1/DYJetsToLLM50_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_madgraph-pythia8_v1.root"
+  muon:
+    folder: "ntuple"
+    Data: "/ceph/amonsch/HiggsToTauTau/scalefactors/tap_2017UL_mm_2024-02-01_v1/2017UL/SingleMuon_2017UL.root"
+    Embedding: "/ceph/amonsch/HiggsToTauTau/scalefactors/tap_2017UL_mm_2024-02-01_v1/2017UL/MuonEmbedding_2017UL.root"
+    DY: "/ceph/amonsch/HiggsToTauTau/scalefactors/tap_2017UL_mm_2024-02-01_v1/2017UL/DYJetsToLL_2017UL_mm.root"
 
 "2016preVFPUL":
   embeddingselection:
     folder: "ntuple"
-    Data: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/DoubleMuon_2016preVFPUL.root"
+    Data: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016preVFP_tauembedding_tagandprobe_and_DZ_only_doublemuons_2023-09-21/2016preVFPUL/DoubleMuon_2016preVFPUL.root"
 
   muon:
     folder: "ntuple"
-    Data: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/SingleMuon_2016preVFPUL.root"
-    Embedding: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/MuonEmbedding_2016preVFPUL.root"
-    DY: "/ceph/olavoryk/Run2UltraLegacy/scalefactors/2016UL_preVFP_tagnandprobe_v1/2016preVFPUL/DYJetsToLL_2016preVFPUL_mm.root"
-
-  electron:
-    folder: "ntuple"
-    Data: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/30_08_23_tagandprobe_ch_ee_preVFP/2016preVFPUL/SingleElectron_2016preVFPUL.root"
-    Embedding: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/30_08_23_tagandprobe_ch_ee_preVFP/2016preVFPUL/ElectronEmbedding_2016preVFPUL.root"
-    DY: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/30_08_23_tagandprobe_ch_ee_preVFP/2016preVFPUL/DYJetsToLL_2016preVFPUL_ee.root"
+    Data: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016preVFP_tauembedding_tagandprobe_and_DZ_2023-09-18/2016preVFPUL/SingleMuon_2016preVFPUL.root"
+    Embedding: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016preVFP_tauembedding_tagandprobe_and_DZ_2023-09-18/2016preVFPUL/MuonEmbedding_2016preVFPUL.root"
+    DY: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016preVFP_tauembedding_tagandprobe_and_DZ_2023-09-18/2016preVFPUL/DYJetsToLL_2016preVFPUL_mm.root"
 
 "2016postVFPUL":
   embeddingselection:
     folder: "ntuple"
-    Data: "/ceph/olavoryk/dz_filter/DoubleMuon_2016postVFPUL.root"
+    Data: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016postVFP_tauembedding_tagandprobe_and_DZ_only_doublemuons_2023-09-21/2016postVFPUL/DoubleMuon_2016postVFPUL.root"
 
   muon:
     folder: "ntuple"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/SingleMuon_2016postVFPUL.root"
-    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_MuEmbedding_UL2018.root"
-    DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2016postVFPUL/DYJetsToLL_2016postVFPUL_mm.root"
-
-  electron:
-    folder: "ntuple"
-    Data: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/29_08_23_tagandprobe_ch_ee/2016postVFPUL/SingleElectron_2016postVFPUL.root"
-    Embedding: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/29_08_23_tagandprobe_ch_ee/2016postVFPUL/ElectronEmbedding_2016postVFPUL.root"
-    DY: "/ceph/rschmieder/Run2UltraLegacy/scalefactors/29_08_23_tagandprobe_ch_ee/2016postVFPUL/DYJetsToLL_2016postVFPUL_ee.root"
-
-"2017UL":
-  embeddingselection:
-    folder: "ntuple"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/DoubleMuon_2017UL.root"
-    # DataB: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DoubleMuon_Run2017B_2017UL.root"
-    # DataC: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DoubleMuon_Run2017C_2017UL.root"
-    # DataD: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DoubleMuon_Run2017D_2017UL.root"
-    # DataE: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DoubleMuon_Run2017E_2017UL.root"
-    # DataF: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DoubleMuon_Run2017F_2017UL.root"
-
-  muon:
-    folder: "ntuple"
-    # Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/SingleMuon_2017UL.root"
-    # Embedding: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/MuonEmbedding_2017UL.root"
-    # DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DYJetsToLL_2017UL_mm.root"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/SingleMuon_2017UL.root"
-    Embedding: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/MuonEmbedding_2017UL.root"
-    DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/DYJetsToLL_2017UL_mm.root"
-
-  electron:
-    folder: "ntuple"
-    # Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/SingleElectron_2017UL.root"
-    # Embedding: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/ElectronEmbedding_2017UL.root"
-    # DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2022_02_13_TandP/2017UL/DYJetsToLL_2017UL_ee.root"
-    Data: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/SingleElectron_2017UL.root"
-    Embedding: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/ElectronEmbedding_2017UL.root"
-    DY: "/storage/9/mburkart/Run2UltraLegacy/scalefactors/2023_03_17_TandP/2017UL/DYJetsToLL_2017UL_ee.root"
-
-"2018UL":
-  embeddingselection:
-    folder: "ntuple"
-    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_DoubleMuon_UL2018.root"
-
-  muon:
-    folder: "ntuple"
-    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_SingleMuon_UL2018.root"
-    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_MuEmbedding_UL2018.root"
-    DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_DYJets_mm_UL2018.root"
-
-  electron:
-    folder: "ntuple"
-    Data: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_EGamma_UL2018.root"
-    Embedding: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_ElEmbedding_UL2018.root"
-    DY: "/ceph/sbrommer/embedding_ul/scalefactors/inputfiles/2018_v6/ntuple_DYJets_ee_UL2018.root"
+    Data: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016postVFP_tauembedding_tagandprobe_and_DZ_2023-09-18/2016postVFPUL/SingleMuon_2016postVFPUL.root"
+    Embedding: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016postVFP_tauembedding_tagandprobe_and_DZ_2023-09-18/2016postVFPUL/MuonEmbedding_2016postVFPUL.root"
+    DY: "/ceph/amonsch/HiggsToTauTau/scalefactors/_2016postVFP_tauembedding_tagandprobe_and_DZ_2023-09-18/2016postVFPUL/DYJetsToLL_2016postVFPUL_mm.root"
