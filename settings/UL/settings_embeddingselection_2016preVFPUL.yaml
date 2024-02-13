@@ -7,7 +7,7 @@ ID_pt_bins_inc_eta:
           (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
           (abs(dz_tag) < 0.2) && 
           (abs(dxy_tag) < 0.045) && 
-          id_medium_tag
+          id_medium_tag &&
           (trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && 
           (pt_tag > 23.0)
         )
@@ -57,7 +57,7 @@ ID_pt_eta_bins:
           (abs(dxy_tag) < 0.045) && 
           id_medium_tag &&
           (trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && 
-          (pt_tag > 23.0) && 
+          (pt_tag > 23.0)
         )
   probe: "id_medium_probe"
   binvar_x: "pt_probe"

@@ -458,7 +458,7 @@ Trg_AIso1_pt_bins_inc_eta:
           (abs(dxy_tag) < 0.045) && 
           (id_medium_tag && id_medium_probe) && 
           (trg_IsoMu22_tag || trg_IsoTkMu22_tag || trg_IsoMu22_eta2p1_tag || trg_IsoTkMu22_eta2p1_tag) && 
-          (pt_tag > 232.0)
+          (pt_tag > 23.0)
         )
   probe: "(trg_IsoMu22_probe || trg_IsoTkMu22_probe || trg_IsoMu22_eta2p1_probe || trg_IsoTkMu22_eta2p1_probe)"
   binvar_x: "pt_probe"

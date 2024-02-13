@@ -1,11 +1,10 @@
 DZ_eta_bins_inc_pt:
   name: "DZ_eta_bins_inc_pt"
   var: "m_vis(100,50,150)"
-  tag: m_vis(100,50,150)"
   tag:  (
           (
             (trg_Mu17TrkMu8_DZ_bit_12_Mu17_1 && trg_Mu17TrkMu8_DZ_bit_12_Mu8_2 ) || 
-            (trg_Mu17TrkMu8_DZ_bit_12_Mu17_2 &&  trg_Mu17TrkMu8_DZ_bit_12_Mu8_1)
+            (trg_Mu17TrkMu8_DZ_bit_12_Mu17_2 && trg_Mu17TrkMu8_DZ_bit_12_Mu8_1)
           ) &&
           (
             (pt_1 > 17.0 && pt_2 > 8.0) ||
