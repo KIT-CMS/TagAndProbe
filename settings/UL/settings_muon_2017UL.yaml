@@ -2,15 +2,7 @@ ID_pt_bins_inc_eta:
   # Settings for histogram creation
   name: "ID_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          id_medium_tag &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28"
   probe: "id_medium_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -51,15 +43,7 @@ ID_pt_bins_inc_eta:
 ID_pt_eta_bins:
   name: "ID_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          id_medium_tag &&
-          trg_IsoMu27_tag &&
-          (pt_tag > 28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28"
   probe: "id_medium_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -100,15 +84,7 @@ ID_pt_eta_bins:
 Iso_pt_bins_inc_eta:
   name: "Iso_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
   probe: "iso_probe < 0.15"
   binvar_x: "pt_probe"
   bins_x:
@@ -149,15 +125,7 @@ Iso_pt_bins_inc_eta:
 Iso_pt_eta_bins:
   name: "Iso_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
   probe: "iso_probe < 0.15"
   binvar_x: "pt_probe"
   bins_x:
@@ -198,15 +166,7 @@ Iso_pt_eta_bins:
 AIso1_pt_bins_inc_eta:
   name: "AIso1_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
   probe: "iso_probe >= 0.15 && iso_probe < 0.25"
   binvar_x: "pt_probe"
   bins_x:
@@ -247,15 +207,7 @@ AIso1_pt_bins_inc_eta:
 AIso1_pt_eta_bins:
   name: "AIso1_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
   probe: "iso_probe >= 0.15 && iso_probe < 0.25"
   binvar_x: "pt_probe"
   bins_x:
@@ -296,15 +248,7 @@ AIso1_pt_eta_bins:
 AIso2_pt_bins_inc_eta:
   name: "AIso2_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
   probe: "iso_probe >= 0.25 && iso_probe < 0.50"
   binvar_x: "pt_probe"
   bins_x:
@@ -345,15 +289,7 @@ AIso2_pt_bins_inc_eta:
 AIso2_pt_eta_bins:
   name: "AIso2_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && id_medium_probe"
   probe: "iso_probe >= 0.25 && iso_probe < 0.50"
   binvar_x: "pt_probe"
   bins_x:
@@ -394,16 +330,7 @@ AIso2_pt_eta_bins:
 Trg_IsoMu27_pt_eta_bins:
   name: "Trg_IsoMu27_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0) &&
-          (is_global_tag && is_global_probe)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe < 0.15 && id_medium_probe"
   probe: "trg_IsoMu27_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -452,15 +379,7 @@ Trg_IsoMu27_pt_eta_bins:
 Trg_IsoMu27_AIso1_pt_bins_inc_eta:
   name: "Trg_IsoMu27_AIso1_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe < 0.25 && iso_probe >= 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.15 && iso_probe < 0.25 && id_medium_probe"
   probe: "trg_IsoMu27_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -509,15 +428,7 @@ Trg_IsoMu27_AIso1_pt_bins_inc_eta:
 Trg_IsoMu27_AIso2_pt_bins_inc_eta:
   name: "Trg_IsoMu27_AIso2_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe >= 0.25 && iso_probe < 0.50) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.25 && iso_probe < 0.50 && id_medium_probe"
   probe: "trg_IsoMu27_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -566,15 +477,7 @@ Trg_IsoMu27_AIso2_pt_bins_inc_eta:
 Trg_IsoMu24_pt_eta_bins:
   name: "Trg_IsoMu24_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe < 0.15 && id_medium_probe"
   probe: "trg_IsoMu24_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -623,15 +526,7 @@ Trg_IsoMu24_pt_eta_bins:
 Trg_IsoMu24_AIso1_pt_bins_inc_eta:
   name: "Trg_IsoMu24_AIso1_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe >= 0.15 && iso_probe < 0.25) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.15 && iso_probe < 0.25 && id_medium_probe"
   probe: "trg_IsoMu24_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -680,15 +575,7 @@ Trg_IsoMu24_AIso1_pt_bins_inc_eta:
 Trg_IsoMu24_AIso2_pt_bins_inc_eta:
   name: "Trg_IsoMu24_AIso2_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe >= 0.25 && iso_probe < 0.50) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.25 && iso_probe < 0.50 && id_medium_probe"
   probe: "trg_IsoMu24_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -737,15 +624,7 @@ Trg_IsoMu24_AIso2_pt_bins_inc_eta:
 Trg_IsoMu27_or_IsoMu24_pt_eta_bins:
   name: "Trg_IsoMu27_or_IsoMu24_pt_eta_bins"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe < 0.15 && id_medium_probe"
   probe: "(trg_IsoMu27_probe|| trg_IsoMu24_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -793,15 +672,7 @@ Trg_IsoMu27_or_IsoMu24_pt_eta_bins:
 Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta:
   name: "Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe >= 0.15 && iso_probe < 0.25) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.15 && iso_probe < 0.25 && id_medium_probe"
   probe: "(trg_IsoMu27_probe|| trg_IsoMu24_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -850,15 +721,7 @@ Trg_IsoMu27_or_IsoMu24_AIso1_pt_bins_inc_eta:
 Trg_IsoMu27_or_IsoMu24_AIso2_pt_bins_inc_eta:
   name: "Trg_IsoMu27_or_IsoMu24_AIso2_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
-  tag:  (
-          (iso_tag < 0.15 && iso_probe >= 0.25 && iso_probe < 0.50) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) &&
-          (dz_tag < 0.2) &&
-          (dxy_tag < 0.045) &&
-          (id_medium_tag && id_medium_probe) &&
-          trg_IsoMu27_tag &&
-          (pt_tag >28.0)
-        )
+  tag: " iso_tag < 0.15 && fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5 && dz_tag < 0.2 && dxy_tag < 0.045 && id_medium_tag && trg_IsoMu27_tag && pt_tag > 28 && iso_probe >= 0.25 && iso_probe < 0.50 && id_medium_probe"
   probe: "(trg_IsoMu27_probe|| trg_IsoMu24_probe)"
   binvar_x: "pt_probe"
   bins_x:
