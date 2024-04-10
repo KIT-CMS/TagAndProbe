@@ -100,21 +100,12 @@ if [[ ${STEP} == "all" || ${STEP} == "filelist" ]]; then
         if [[ ${CHANNEL} == "muon" ]]; then
             [[ -f merge_Double${sample}_files_${ERA}_${scope}.log ]] && rm merge_Double${sample}_files_${ERA}_${scope}.log
             for period in {B..F}; do
-                xrdfs ${gridpath} ls ${basedir}/Double${sample}_Run${ERA}${period}-UL_DZ/${scope}/
+                xrdfs ${gridpath} ls ${basedir}/Double${sample}_Run${ERA}${period}-UL${ERA}/${scope}/
             done >>merge_Double${sample}_files_${ERA}_${scope}.log
             # Modify the written file by appending the redirector to get the full path
             sed -i "s#^#${gridpath}#" merge_Double${sample}_files_${ERA}_${scope}.log
             # remove lines containing .json files
             sed -i '/\.json/d' merge_Double${sample}_files_${ERA}_${scope}.log
-            # ---
-            [[ -f merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log ]] && rm merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log
-            for period in {B..F}; do
-                xrdfs ${gridpath} ls ${basedir}/Double${sample}_Run${ERA}${period}-UL${ERA}/${scope}/
-            done >>merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log
-            # Modify the written file by appending the redirector to get the full path
-            sed -i "s#^#${gridpath}#" merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log
-            # remove lines containing .json files
-            sed -i '/\.json/d' merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log
         fi
         # Embedding
         echo "[INFO] Gathering embedding file list..."
@@ -208,7 +199,7 @@ if [[ ${STEP} == "all" || ${STEP} == "filelist" ]]; then
 
         if [[ ${CHANNEL} == "muon" ]]; then
             [[ -f merge_Double${sample}_files_${ERA}_${scope}.log ]] && rm merge_Double${sample}_files_${ERA}_${scope}.log
-            declare -a data_period_with_dz=("B-ver1-HIPM-UL_DZ" "B-ver2-HIMP-UL_DZ" "C-HIMP-UL_DZ" "D-HIMP-UL_DZ" "E-HIMP-UL_DZ" "F-HIMP-UL_DZ")
+            declare -a data_period_with_dz=("B-ver1-HIPM-UL_DZ" "B-ver2-HIPM-UL_DZ" "C-HIPM-UL_DZ" "D-HIPM-UL_DZ" "E-HIPM-UL_DZ" "F-HIPM-UL_DZ")
             for period in ${data_period_with_dz[@]}; do
                 xrdfs ${gridpath} ls ${basedir}/Double${sample}_Run${ERA_SAMPLENAME}${period}/${scope}/
             done >>merge_Double${sample}_files_${ERA}_${scope}.log
@@ -248,7 +239,9 @@ if [[ ${STEP} == "all" || ${STEP} == "hadd" ]]; then
     hadd -f ${output_dir}/Single${sample}_${ERA}UL.root $(cat merge_Single${sample}_files_${ERA}_${scope}.log | tr '\n' ' ') &
     if [[ ${CHANNEL} == "muon" ]]; then
         hadd -f ${output_dir}/Double${sample}_${ERA}UL.root $(cat merge_Double${sample}_files_${ERA}_${scope}.log | tr '\n' ' ') &
-        hadd -f ${output_dir}/Double${sample}_${ERA}UL_wo_DZ.root $(cat merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log | tr '\n' ' ') &
+        if [[ ${ERA} == "2016preVFP" ]] || [[ ${ERA} == "2016postVFP" ]]; then
+            hadd -f ${output_dir}/Double${sample}_${ERA}UL_wo_DZ.root $(cat merge_Double${sample}_files_${ERA}_${scope}_wo_DZ.log | tr '\n' ' ') &
+        fi
     fi
     hadd -f ${output_dir}/${sample}Embedding_${ERA}UL.root $(cat merge_${sample}Embedding_files_${ERA}_${scope}.log | tr '\n' ' ') &
     wait

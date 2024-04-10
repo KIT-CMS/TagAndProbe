@@ -1,17 +1,20 @@
 ID_pt_bins_inc_eta:
-  # Settings for histogram creation
   name: "ID_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
   tag:  (
-          (iso_tag < 0.15) && 
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          id_medium_tag &&
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0) 
+          (iso_tag < 0.15) &&
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
+          (id_medium_tag) &&
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) &&
+          (pt_tag > 28.0) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045)
         )
-  probe: "id_medium_probe"
+  probe:  (id_medium_probe)
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -51,15 +54,19 @@ ID_pt_eta_bins:
   name: "ID_pt_eta_bins"
   var: "m_vis(100,50,150)"
   tag:  (
-          (iso_tag < 0.15) && 
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          id_medium_tag &&
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0) 
+          (iso_tag < 0.15) &&
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
+          (id_medium_tag) &&
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) &&
+          (pt_tag > 28.0) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045)
         )
-  probe: "id_medium_probe"
+  probe:  (id_medium_probe)
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -95,19 +102,25 @@ ID_pt_eta_bins:
   ratio_y_range: [0.8, 1.2]
 
 EmbID_pt_bins_inc_eta:
-  # Settings for histogram creation
   name: "EmbID_pt_bins_inc_eta"
   var: "m_vis(100,50,150)"
   tag:  (
-          (iso_tag < 0.15) && 
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          id_medium_tag &&
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0) 
+          (iso_tag < 0.15) &&
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
+          (id_medium_tag) &&
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) &&
+          (pt_tag > 28.0) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045)
         )
-  probe: "is_global_probe && id_loose_probe"
+  probe:  (
+            (is_global_probe) && 
+            (id_loose_probe)
+          )
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -146,15 +159,22 @@ EmbID_pt_eta_bins:
   name: "EmbID_pt_eta_bins"
   var: "m_vis(100,50,150)"
   tag:  (
-          (iso_tag < 0.15) && 
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          id_medium_tag &&
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0) 
+          (iso_tag < 0.15) &&
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
+          (id_medium_tag) &&
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) &&
+          (pt_tag > 28.0) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045)
         )
-  probe: is_global_probe && id_loose_probe
+  probe:  (
+            (is_global_probe) && 
+            (id_loose_probe)
+          )
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -195,16 +215,23 @@ Trg8_pt_eta_bins:
   name: "Trg8_pt_eta_bins"
   var: "m_vis(100,50,150)"
   tag:  (
-          (iso_tag < 0.15) && 
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          (id_medium_tag && id_loose_probe) && 
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0 && pt_probe > 8.0) &&
-          is_global_probe
+          (iso_tag < 0.15) &&
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
+          ((id_medium_tag) && (id_loose_probe)) &&
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) &&
+          ((pt_tag > 28.0) && (pt_probe > 8.0)) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045) &&
+          (is_global_probe)
         )
-  probe: trg_Mu17TrkMu8_DZ_bit_12_Mu8_with_trg_ptcut_probe
+  probe:  (
+            (trg_Mu17TrkMu8_DZMass8_Mu8__no_filterbit_probe) ||
+            (trg_Mu17TrkMu8_DZ_Mu8__no_filterbit_probe)
+          )
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -244,15 +271,22 @@ Trg8_pt_bins_inc_eta:
   var: "m_vis(100,50,150)"
   tag:  (
           (iso_tag < 0.15) && 
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          (id_medium_tag && id_loose_probe) && 
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0 && pt_probe > 8.0) &&
-          is_global_probe
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) && 
+          ((pt_tag > 28.0) && (pt_probe > 8.0)) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045) &&
+          (is_global_probe)
         )
-  probe: "trg_Mu17TrkMu8_DZ_Mu8_probe || trg_Mu17TrkMu8_DZMass8_Mu8_probe"
+  probe:  (
+            (trg_Mu17TrkMu8_DZMass8_Mu8__no_filterbit_probe) ||
+            (trg_Mu17TrkMu8_DZ_Mu8__no_filterbit_probe)
+          )
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -292,15 +326,22 @@ Trg17_pt_eta_bins:
   var: "m_vis(100,50,150)"
   tag:  (
           (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          (id_medium_tag && id_loose_probe) && 
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0 && pt_probe > 17.0) &&
-          is_global_probe
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) && 
+          ((pt_tag > 28.0) && (pt_probe > 17.0)) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045) &&
+          (is_global_probe)
         )
-  probe: trg_Mu17TrkMu8_DZ_bit_12_Mu17_with_trg_ptcut_probe
+  probe:  (
+            (trg_Mu17TrkMu8_DZMass8_Mu17__no_filterbit_probe) ||
+            (trg_Mu17TrkMu8_DZ_Mu17__no_filterbit_probe)
+          )
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -340,15 +381,22 @@ Trg17_pt_bins_inc_eta:
   var: "m_vis(100,50,150)"
   tag:  (
           (iso_tag < 0.15) &&
-          (fsr_photon_veto_tag < 0.5 && fsr_photon_veto_probe < 0.5) && 
-          (abs(dz_tag) < 0.2) && 
-          (abs(dxy_tag) < 0.045) && 
-          (id_medium_tag && id_loose_probe) && 
-          trg_IsoMu27_tag && 
-          (pt_tag > 28.0 && pt_probe > 17.0) &&
-          is_global_probe
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
+          (
+            (trg_IsoMu27__no_filterbit_tag) ||
+            (trg_IsoMu24__no_filterbit_tag)
+          ) && 
+          ((pt_tag > 28.0) && (pt_probe > 17.0)) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045) &&
+          (is_global_probe)
         )
-  probe: "trg_Mu17TrkMu8_DZ_Mu17_probe || trg_Mu17TrkMu8_DZMass8_Mu17_probe"
+  probe:  (
+            (trg_Mu17TrkMu8_DZMass8_Mu17__no_filterbit_probe) ||
+            (trg_Mu17TrkMu8_DZ_Mu17__no_filterbit_probe)
+          )
   binvar_x: "pt_probe"
   bins_x:
     [

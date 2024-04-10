@@ -3,15 +3,30 @@ DZ_eta_bins_inc_pt:
   var: "m_vis(100,50,150)"
   tag:  (
           (
-            (trg_Mu17TrkMu8_DZ_bit_12_Mu17_1 && trg_Mu17TrkMu8_DZ_bit_12_Mu8_2 ) || 
-            (trg_Mu17TrkMu8_DZ_bit_12_Mu17_2 && trg_Mu17TrkMu8_DZ_bit_12_Mu8_1)
+            (
+              (trg_Mu17TrkMu8_DZ_bit_12_Mu17__no_ptcut__no_triggerobject_ptcut_1) && 
+              (trg_Mu17TrkMu8_DZ_bit_12_Mu8__no_ptcut__no_triggerobject_ptcut_2)
+            ) || 
+            (
+              (trg_Mu17TrkMu8_DZ_bit_12_Mu17__no_ptcut__no_triggerobject_ptcut_2) && 
+              (trg_Mu17TrkMu8_DZ_bit_12_Mu8__no_ptcut__no_triggerobject_ptcut_1)
+            )
           ) &&
           (
-            (pt_1 > 17.0 && pt_2 > 8.0) ||
-            (pt_2 > 17.0 && pt_1 > 8.0)
+            ((pt_1 > 17.0) && (pt_2 > 8.0)) ||
+            ((pt_2 > 17.0) && (pt_1 > 8.0))
           )
         )
-  probe: "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ"
+  probe:  (
+            (
+              (trg_Mu17TrkMu8_DZ_bit_13_Mu17__no_ptcut__no_triggerobject_ptcut_1) && 
+              (trg_Mu17TrkMu8_DZ_bit_13_Mu8__no_ptcut__no_triggerobject_ptcut_2)
+            ) || 
+            (
+              (trg_Mu17TrkMu8_DZ_bit_13_Mu17__no_ptcut__no_triggerobject_ptcut_2) && 
+              (trg_Mu17TrkMu8_DZ_bit_13_Mu8__no_ptcut__no_triggerobject_ptcut_1)
+            )
+          )
   binvar_x: "abs(eta_1)"
   bins_x:
     [

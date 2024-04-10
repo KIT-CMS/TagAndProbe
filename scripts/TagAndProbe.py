@@ -199,10 +199,18 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
     # if "crosselectron" in channel and era=="2016":
     #     print "No cross trigger settings available for 2016 yet."
     #     sys.exit()
+
     if leg_switching:
-        bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml"))
+        config_filename = f"{settings_folder}/UL/settings_{channel}_{era}.yaml"
     else:
-        bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}_double_object_quantities.yaml"))
+        config_filename = f"{settings_folder}/UL/settings_{channel}_{era}_double_object_quantities.yaml"
+
+    try:
+        bin_cfgs = yaml.safe_load(open(config_filename))
+    except FileNotFoundError:
+        print(f"Setting file: {config_filename} not found, exit")
+        exit()
+
     input_files = yaml.safe_load(open("set_inputfiles.yaml"))
 
     drawlist = []
@@ -243,12 +251,16 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
                     cfg["bins"][n].append(
                         "%s>=%g && %s<%g && %s>=%g && %s<%g"
                         % (
+                            # pt lower bin edge
                             cfg["binvar_x"][n],
                             hist.GetXaxis().GetBinLowEdge(i),
+                            # pt upper bin edge
                             cfg["binvar_x"][n],
                             hist.GetXaxis().GetBinUpEdge(i),
+                            # eta lower bin edge
                             cfg["binvar_y"][n],
                             hist.GetYaxis().GetBinLowEdge(j),
+                            # eta upper bin edge
                             cfg["binvar_y"][n],
                             hist.GetYaxis().GetBinUpEdge(j),
                         )

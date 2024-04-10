@@ -79,11 +79,11 @@ def main(
         nparams = 6
         pdf_args.extend(
             [
-                "Voigtian::signal1Pass(m_vis, mean[91.2,85,95], width[2.495], sigma[2,1,4])",
-                "Voigtian::signal2Pass(m_vis, meanp[91.2,85,95], width[2.495], sigmap[2,1,10])",
+                "Voigtian::signal1Pass(m_vis, mean[90,85,95], width[2.495], sigma[2,0.2,4])",
+                "Voigtian::signal2Pass(m_vis, meanp[90,85,95], width[2.495], sigmap[2,1,10])",
                 "SUM::signalPass(vFracp[0.01,0,1]*signal1Pass, signal2Pass)",
-                "Voigtian::signal1Fail(m_vis, mean[91.2,85,95], width[2.495], sigma[2,1,4])",
-                "Voigtian::signal2Fail(m_vis, meanf[91.2,85,95], width[2.495], sigmaf[2,1,10])",
+                "Voigtian::signal1Fail(m_vis, mean[90,85,95], width[2.495], sigma[2,0.2,4])",
+                "Voigtian::signal2Fail(m_vis, meanf[90,85,95], width[2.495], sigmaf[2,1,10])",
                 "SUM::signalFail(vFracf[0.01,0,1]*signal1Fail, signal2Fail)",
             ]
         )
@@ -135,7 +135,7 @@ def main(
     for arg in pdf_args:
         wsp.factory(arg)
         model_args = [
-            "expr::nSignalPass('efficiency*fSigAll*numTot',efficiency[0.9,0,1], fSigAll[0.9,0,1],numTot[1,0,1e10])",
+            "expr::nSignalPass('efficiency*fSigAll*numTot',efficiency[0,1], fSigAll[0.9,0,1],numTot[1,0,1e12])",
             "expr::nSignalFail('(1-efficiency)*fSigAll*numTot',efficiency,fSigAll,numTot)",
             "expr::nBkgPass('effBkg*(1-fSigAll)*numTot',effBkg[0.9,0,1],fSigAll,numTot)",
             "expr::nBkgFail('(1-effBkg)*(1-fSigAll)*numTot',effBkg,fSigAll,numTot)",
