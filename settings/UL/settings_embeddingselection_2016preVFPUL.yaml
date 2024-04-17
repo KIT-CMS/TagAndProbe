@@ -125,7 +125,7 @@ EmbID_pt_bins_inc_eta:
         )
   probe:  (
             (is_global_probe) && 
-            (id_medium_probe)
+            (id_loose_probe)
           )
   binvar_x: "pt_probe"
   bins_x:
@@ -181,7 +181,7 @@ EmbID_pt_eta_bins:
         )
   probe:  (
             (is_global_probe) && 
-            (id_medium_probe)
+            (id_loose_probe)
           )
   binvar_x: "pt_probe"
   bins_x:
@@ -225,7 +225,7 @@ Trg8_pt_eta_bins:
   tag:  (
           (iso_tag < 0.15) && 
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
-          ((id_medium_tag) && (id_medium_probe)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
           (
             (trg_IsoMu22_tag) || 
             (trg_IsoTkMu22_tag) || 
@@ -279,7 +279,7 @@ Trg8_pt_bins_inc_eta:
   tag:  (
           (iso_tag < 0.15) && 
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
-          ((id_medium_tag) && (id_medium_probe)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
           (
             (trg_IsoMu22_tag) || 
             (trg_IsoTkMu22_tag) || 
@@ -333,7 +333,7 @@ Trg17_pt_eta_bins:
   tag:  (
           (iso_tag < 0.15) && 
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
-          ((id_medium_tag) && (id_medium_probe)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
           (
             (trg_IsoMu22_tag) || 
             (trg_IsoTkMu22_tag) || 
@@ -387,7 +387,7 @@ Trg17_pt_bins_inc_eta:
   tag:  (
           (iso_tag < 0.15) && 
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && 
-          ((id_medium_tag) && (id_medium_probe)) && 
+          ((id_medium_tag) && (id_loose_probe)) && 
           (
             (trg_IsoMu22_tag) || 
             (trg_IsoTkMu22_tag) || 

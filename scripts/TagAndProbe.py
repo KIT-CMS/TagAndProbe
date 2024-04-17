@@ -16,21 +16,23 @@ ROOT.RooWorkspace.imp = getattr(ROOT.RooWorkspace, "import")
 ROOT.TH1.AddDirectory(0)
 
 
-settings_folder = None
-
-
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("--era", required=True)
     parser.add_argument("--channel", required=True)
     parser.add_argument("--output", default="output", required=False)
     parser.add_argument("--mode", default="RECREATE", required=False)
-    parser.add_argument("--no-leg-switching", default=False, required=False, action="store_true")
+    parser.add_argument(
+        "--no-leg-switching",
+        default=False,
+        required=False,
+        action="store_true",
+    )
     parser.add_argument("--settings-folder", default="settings", required=False)
     return parser.parse_args()
 
 
-def get_outputfiles(channel, era, out_dir):
+def get_outputfiles(channel, era, out_dir, settings_folder):
     # small function to get the path for all expected output files
     # this is used to check if the output files exist
     bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml"))
@@ -136,7 +138,10 @@ def process_trees(
         nentries = 0
         if leg_switching:
             for bin in range(int(nbins / 2)):
-                cleaned_hists.append(hists[int(counter) + int(bin)] + hists[int(counter) + int(bin) + int(nbins / 2)])
+                cleaned_hists.append(
+                    hists[int(counter) + int(bin)]
+                    + hists[int(counter) + int(bin) + int(nbins / 2)]
+                )
                 # print(
                 #     "Ading histogram with {} Entries to {} existing Entries ".format(
                 #         hists[int(counter) + int(bin) + int(nbins / 2)].Integral(),
@@ -144,7 +149,9 @@ def process_trees(
                 #     )
                 # )
                 nentries += cleaned_hists[-1].Integral()
-                cleaned_hists[-1].SetName(convert_hist_label(cleaned_hists[-1].GetName()))
+                cleaned_hists[-1].SetName(
+                    convert_hist_label(cleaned_hists[-1].GetName())
+                )
             #     print(
             #         "Combined histogram {} has {} entries ".format(
             #             cleaned_hists[-1].GetName(), cleaned_hists[-1].Integral()
@@ -195,7 +202,14 @@ def process_trees(
     print(f"{sample} - Done")
 
 
-def main(channel, era, output, leg_switching=True, mode="RECREATE"):
+def main(
+    channel,
+    era,
+    output,
+    leg_switching=True,
+    mode="RECREATE",
+    settings_folder="settings",
+):
     # if "crosselectron" in channel and era=="2016":
     #     print "No cross trigger settings available for 2016 yet."
     #     sys.exit()
@@ -220,16 +234,25 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
     for key, cfg_dict in bin_cfgs.items():
         cfg = cfg_dict
         # if no_leg_switching is set to true, we do not switch the tag and probe legs, so we do not have to consider the flipped event
-        cfg_update_function = translate_from_crown if leg_switching else pass_trough_from_crown
+        cfg_update_function = (
+            translate_from_crown if leg_switching else pass_trough_from_crown
+        )
         # this means we have only two histograms per bin, one for pass and one for fail and not four (two legs)
         number_of_bins_factor = 4 if leg_switching else 2
 
-        cfg.update(cfg_update_function(cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"]))
+        cfg.update(
+            cfg_update_function(
+                cfg["tag"], cfg["probe"], cfg["binvar_x"], cfg["binvar_y"]
+            )
+        )
         # pp.pprint(cfg)
         cfg["hist"] = []
         cfg["bins"] = []
 
-        number_of_bins.append(number_of_bins_factor * ((len(cfg["bins_x"]) - 1) * (len(cfg["bins_y"]) - 1)))
+        number_of_bins.append(
+            number_of_bins_factor
+            * ((len(cfg["bins_x"]) - 1) * (len(cfg["bins_y"]) - 1))
+        )
 
         for n in range(len(cfg["tag"])):
             hist = ROOT.TH2D(
@@ -265,10 +288,22 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
                             hist.GetYaxis().GetBinUpEdge(j),
                         )
                     )
-                    andable.add("%s >= %g" % (cfg["binvar_x"][n], hist.GetXaxis().GetBinLowEdge(i)))
-                    andable.add("%s < %g" % (cfg["binvar_x"][n], hist.GetXaxis().GetBinUpEdge(i)))
-                    andable.add("%s >= %g" % (cfg["binvar_y"][n], hist.GetYaxis().GetBinLowEdge(j)))
-                    andable.add("%s < %g" % (cfg["binvar_y"][n], hist.GetYaxis().GetBinUpEdge(j)))
+                    andable.add(
+                        "%s >= %g"
+                        % (cfg["binvar_x"][n], hist.GetXaxis().GetBinLowEdge(i))
+                    )
+                    andable.add(
+                        "%s < %g"
+                        % (cfg["binvar_x"][n], hist.GetXaxis().GetBinUpEdge(i))
+                    )
+                    andable.add(
+                        "%s >= %g"
+                        % (cfg["binvar_y"][n], hist.GetYaxis().GetBinLowEdge(j))
+                    )
+                    andable.add(
+                        "%s < %g"
+                        % (cfg["binvar_y"][n], hist.GetYaxis().GetBinUpEdge(j))
+                    )
 
             for b in cfg["bins"][n]:
                 drawlist.append(
@@ -347,7 +382,13 @@ def validate_inputfiles(era, channel):
 
 if __name__ == "__main__":
     args = parse_arguments()
-    settings_folder = args.settings_folder
     validate_inputfiles(era=args.era, channel=args.channel)
-    main(era=args.era, channel=args.channel, output=args.output, leg_switching=not args.no_leg_switching, mode=args.mode)
+    main(
+        era=args.era,
+        channel=args.channel,
+        output=args.output,
+        leg_switching=not args.no_leg_switching,
+        mode=args.mode,
+        settings_folder=args.settings_folder,
+    )
     exit()
