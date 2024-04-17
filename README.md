@@ -178,6 +178,8 @@ python3 scripts/runTagAndProbeFits.py --channel  $channel --era $era --fit --plo
 ```
 the resulting fits and efficiency plots are all stored in the `output` folder. They should be checked carefully, to and all previous steps should be repeated if necessary.
 
+It is also possible to run multiple eras and channels in parallel, by modifying `channels`, `eras`, `output_dir` in `run_scalefactor_creation.sh` 
+
 
 ## Creating the correctionlib files
 
@@ -204,3 +206,202 @@ Execution:
 ```bash
 python3 create_crosspog_json_workspace.py -e your_era -c muon -o output
 ```
+
+## Custom NanoAODs for 2016preVFPUL, 2016postVFPUL
+
+Due to the drop in DZ efficiency of the used double muon trigger (`HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ`) that was not accounted for, an additional measurement of this efficiency is required. Unfortunately, the information of this efficiency is not available at NanoAOD level, requiring to create a custom NanoAOD (discussed here) or a FriendTree (to be updated) containing this filter information as a qualitybit.
+
+For the NanoAOD creation, you require `CMSSW_10_6_35` with `PhysicsTools` package (`git cms-addpkg PhysicsTools/NanoAOD`). [grid-control](https://github.com/KIT-CMS/grid-control) is advisable, if the production should be performed non locally.
+
+Modify the 2016 muon trigger table in `CMSSW_10_6_35/src/PhysicsTools/NanoAOD/python/triggerObjects_cff.py` with the following two lines:
+
+```
+"4096*filter('hltDiMuonGlb17Glb8RelTrkIsoFiltered0p4') + " \  # -> "bit 12"
+"8192*filter('hltDiMuonGlb17Glb8RelTrkIsoFiltered0p4DzFiltered0p2')"  # -> "bit 13"
+```
+
+Compile and execute the according run config. Starting from [here](https://pdmv-pages.web.cern.ch/rereco_ul/?input_dataset=DoubleMuon%2FRun2016): MiniAODNanoAOD->ReReco-Run2016 link of your choice ->ReqMgr->ConfigCacheID. Ther you need to modify the execution string according to your needs to
+
+
+```
+RECO --conditions 106X_dataRun2_v35 --customise Configuration/DataProcessing/Utils.addMonitoring --datatier NANOAOD --era Run2_2016,run2_nanoAOD_106Xv2 --eventcontent NANOAOD --filein _placeholder_.root --fileout file:ReReco-Run2016G-DoubleMuon-UL2016_MiniAODv2_NanoAODv9-00002.root --nThreads 2 --no_exec --python_filename ReReco-Run2016G-DoubleMuon-UL2016_MiniAODv2_NanoAODv9-00002_0_cfg.py --scenario pp --step NANO --data -n 10000
+```
+
+If grid-control is used the generated `.py` file needs to be extended with
+
+<details>
+ <summary>This</summary>
+
+```python
+####@FILE_NAMES@, @SKIP_EVENTS@, @MAX_EVENTS@
+from IOMC.RandomEngine.RandomServiceHelper import RandomNumberServiceHelper
+
+randSvc = RandomNumberServiceHelper(process.RandomNumberGeneratorService)
+randSvc.populate()
+print(
+    "Generator random seed: %s"
+    % process.RandomNumberGeneratorService.generator.initialSeed
+)
+
+
+def customise_for_gc(process):
+    import FWCore.ParameterSet.Config as cms
+    from IOMC.RandomEngine.RandomServiceHelper import RandomNumberServiceHelper
+
+    try:
+        maxevents = int(__MAX_EVENTS__)
+        process.maxEvents = cms.untracked.PSet(
+            input=cms.untracked.int32(max(-1, maxevents))
+        )
+    except Exception:
+        pass
+
+    # Dataset related setup
+    try:
+        primaryFiles = [__FILE_NAMES__]
+        if not hasattr(process, "source"):
+            print("creating input source for grid-control")
+            process.source = cms.Source(
+                "PoolSource",
+                skipEvents=cms.untracked.uint32(__SKIP_EVENTS__),
+                fileNames=cms.untracked.vstring(primaryFiles),
+            )
+        else:
+            print("input source already exists, adapting it for grid-control")
+            process.source.skipEvents = cms.untracked.uint32(__SKIP_EVENTS__)
+            process.source.fileNames = cms.untracked.vstring(primaryFiles)
+        try:
+            secondaryFiles = [__FILE_NAMES2__]
+            process.source.secondaryFileNames = cms.untracked.vstring(secondaryFiles)
+        except Exception:
+            pass
+        try:
+            lumirange = [__LUMI_RANGE__]
+            if len(lumirange) > 0:
+                process.source.lumisToProcess = cms.untracked.VLuminosityBlockRange(
+                    lumirange
+                )
+                process.maxEvents = cms.untracked.PSet(input=cms.untracked.int32(-1))
+        except Exception:
+            pass
+    except Exception:
+        pass
+    if hasattr(process, "RandomNumberGeneratorService"):
+        randSvc = RandomNumberServiceHelper(process.RandomNumberGeneratorService)
+        randSvc.populate()
+        print(
+            "Generator random seed: %s"
+            % process.RandomNumberGeneratorService.generator.initialSeed
+        )
+
+    process.AdaptorConfig = cms.Service(
+        "AdaptorConfig",
+        enable=cms.untracked.bool(True),
+        stats=cms.untracked.bool(True),
+    )
+
+    # Generator related setup
+    try:
+        if hasattr(process, "generator") and process.source.type_() != "PoolSource":
+            process.source.firstLuminosityBlock = cms.untracked.uint32(
+                1 + __GC_JOB_ID__
+            )
+            print(
+                "Generator random seed: %s"
+                % process.RandomNumberGeneratorService.generator.initialSeed
+            )
+    except Exception:
+        pass
+
+    # Print GlobalTag for DBS3 registration - output is taken from edmConfigHash
+    try:
+        print("globaltag:%s" % process.GlobalTag.globaltag.value())
+    except Exception:
+        pass
+    return process
+
+
+process = customise_for_gc(process)
+```
+
+An possible grid-control config-file might look like this:
+```
+[global]
+task = CMSSW
+backend = condor
+;;backend = cream
+;;cmdargs = -G -c -m 0
+workdir create = True
+
+;; ADAPT
+workdir = /work/${USER}/GridControlNanoAODProduction/DoubleMuon_Run2016G-UL/workdir
+
+[jobs]
+in flight = 1000
+wall time = 05:00:00
+memory = 3500
+max retry = 1
+
+[CMSSW]
+dataset refresh = 4:00:00
+project area = $CMSSW_BASE/
+
+;; ADAPT
+config file = ReReco-Run2016G-DoubleMuon-UL2016_MiniAODv2_NanoAODv9-00002_0_cfg.py
+instrumentation = False
+dataset splitter = EventBoundarySplitter
+events per job   = 100000
+
+;; ADAPT
+dataset = DoubleMuon_Run2016G-UL : list:/work/${USER}/GridControlNanoAODProduction/DoubleMuon_Run2016G-UL/filelist-DoubleMuon_Run2016G-UL.txt  # filelist via i.e. dasgoclient
+
+
+
+se runtime = True
+partition lfn modifier = <xrootd>
+depends = glite
+
+parameter factory = ModularParameterFactory
+
+partition lfn modifier dict =
+   <xrootd>    => root://cms-xrd-global.cern.ch//
+   <xrootd:eu> => root://xrootd-cms.infn.it//
+   <xrootd:us> => root://cmsxrootd.fnal.gov//
+   <xrootd:desy> => root://dcache-cms-xrootd.desy.de:1094/
+   <srm:nrg> => srm://cmssrm-kit.gridka.de:8443/srm/managerv2?SFN=/pnfs/gridka.de/cms/disk-only/
+   <dcap:nrg> => dcap://dcnrgdcap.gridka.de:22125//pnfs/gridka.de/dcms/disk-only/
+   <xrootd:nrg> => root://cmsxrootd-redirectors.gridka.de/
+   <dcap:gridka> => dcap://dccmsdcap.gridka.de:22125//pnfs/gridka.de/cms/disk-only/
+   <xrootd:gridka> => root://cmsxrootd.gridka.de//
+   <dcap:aachen> => dcap://grid-dcap-extern.physik.rwth-aachen.de/pnfs/physik.rwth-aachen.de/cms/
+
+
+[storage]
+
+;; ADAPT
+se output files = ReReco-Run2016G-DoubleMuon-UL2016_MiniAODv2_NanoAODv9-00002.root
+
+;; ADAPT
+se output pattern = ReReco-Run2016G-DoubleMuon-UL2016_MiniAODv2_NanoAODv9-00002/@FOLDER@/@XBASE@_@GC_JOB_ID@.@XEXT@
+
+;; ADAPT
+se path = srm://cmssrm-kit.gridka.de:8443/srm/managerv2?SFN=/pnfs/gridka.de/cms/disk-only/store/user/${USER}/gc_storage/PrivateNanoAODProduction/ReReco-Run2016G-DoubleMuon-UL2016_MiniAODv2_NanoAODv9-00002
+
+scratch space used = 7500
+[condor]
+JDLData = Requirements=(TARGET.ProvidesCPU==True)&&(TARGET.ProvidesIO==True) +REMOTEJOB=True accounting_group=cms.higgs request_disk=8000 universe=docker docker_image=mschnepf/slc7-condocker
+proxy = VomsProxy
+
+
+[constants]
+GC_GLITE_LOCATION  = /cvmfs/grid.cern.ch/umd-c7ui-latest/etc/profile.d/setup-c7-ui-example.sh
+
+[parameters]
+parameters = transform('FOLDER', 'GC_JOB_ID % 100 + 1')
+
+```
+
+Adjust at least the `;;Adapt` marked lines according to your needs. For details on how to set up and execute grid-control please refer to grid-control documentation and examples
+
+</details>
+
