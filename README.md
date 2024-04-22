@@ -211,6 +211,8 @@ python3 create_crosspog_json_workspace.py -e your_era -c muon -o output
 
 Due to the drop in DZ efficiency of the used double muon trigger (`HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ`) that was not accounted for, an additional measurement of this efficiency is required. Unfortunately, the information of this efficiency is not available at NanoAOD level, requiring to create a custom NanoAOD (discussed here) or a FriendTree (to be updated) containing this filter information as a qualitybit.
 
+Since the unfolding correction is applied only on data, a MC production is herefore not necessary.
+
 For the NanoAOD creation, you require `CMSSW_10_6_35` with `PhysicsTools` package (`git cms-addpkg PhysicsTools/NanoAOD`). [grid-control](https://github.com/KIT-CMS/grid-control) is advisable, if the production should be performed non locally.
 
 Modify the 2016 muon trigger table in `CMSSW_10_6_35/src/PhysicsTools/NanoAOD/python/triggerObjects_cff.py` with the following two lines:
@@ -220,7 +222,7 @@ Modify the 2016 muon trigger table in `CMSSW_10_6_35/src/PhysicsTools/NanoAOD/py
 "8192*filter('hltDiMuonGlb17Glb8RelTrkIsoFiltered0p4DzFiltered0p2')"  # -> "bit 13"
 ```
 
-Compile and execute the according run config. Starting from [here](https://pdmv-pages.web.cern.ch/rereco_ul/?input_dataset=DoubleMuon%2FRun2016): MiniAODNanoAOD->ReReco-Run2016 link of your choice ->ReqMgr->ConfigCacheID. Ther you need to modify the execution string according to your needs to
+Compile and execute the according run config. Starting from [here](https://pdmv-pages.web.cern.ch/rereco_ul/?input_dataset=DoubleMuon%2FRun2016): MiniAODNanoAOD->ReReco-Run2016 link of your choice ->ReqMgr->ConfigCacheID. There you need to modify the execution string according to your needs to
 
 
 ```
