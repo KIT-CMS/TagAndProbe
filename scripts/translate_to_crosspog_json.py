@@ -29,6 +29,7 @@ def parse_args():
         type=str,
         help="Folder where the outputs will be written and inputs read from"
     )
+    parser.add_argument("--settings-folder", default="settings", required=False)
     return parser.parse_args()
 
 
@@ -59,14 +60,14 @@ def main(args):
     # Create the container to hold all corrections
     correctionset = CorrectionSet(f"Embedding{args.era}")
     if args.channel == "embeddingselection":
-        double_object_quantities_configfile = f"settings/UL/settings_embeddingselection_{args.era}_double_object_quantities.yaml"
+        double_object_quantities_configfile = f"{args.settings_folder}/UL/settings_embeddingselection_{args.era}_double_object_quantities.yaml"
         if not os.path.exists(double_object_quantities_configfile):
             print(f"{double_object_quantities_configfile} does not exist. Double object quantities will not be considered.")
             double_object_quantities_configfile = None
         EmbSelEff = emb_doublemuon_correction(
             tag="EmbSelEff",
             name="m_sel_trg_kit_ratio",
-            configfile=f"settings/UL/settings_embeddingselection_{args.era}_xpog.yaml",
+            configfile=f"{args.settings_folder}/UL/settings_embeddingselection_{args.era}_xpog.yaml",
             triggernames=["Trg17_pt_eta_bins", "Trg8_pt_eta_bins"],
             era=args.era,
             outdir=f"{outdir}/jsons",
@@ -76,17 +77,17 @@ def main(args):
         EmbSelEff.generate_scheme()
         correctionset.add_correction(EmbSelEff)
         EmbSelEffID = pt_eta_correction(
-                    tag="EmbSelEffID",
-                    name="EmbID_pt_eta_bins",
-                    configfile=f"settings/UL/settings_embeddingselection_{args.era}.yaml",
-                    era=args.era,
-                    outdir=f"{outdir}/jsons",
-                    data_only=True,
-                )
+            tag="EmbSelEffID",
+            name="EmbID_pt_eta_bins",
+            configfile=f"{args.settings_folder}/UL/settings_embeddingselection_{args.era}.yaml",
+            era=args.era,
+            outdir=f"{outdir}/jsons",
+            data_only=True,
+        )
         EmbSelEffID.generate_scheme()
         correctionset.add_correction(EmbSelEffID)
     else:
-        add_corrections(f"settings/UL/settings_{args.channel}_{args.era}.yaml", correctionset, args.era, outdir)
+        add_corrections(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}.yaml", correctionset, args.era, outdir)
     correctionset.write_json(f"{outdir}/jsons/{args.channel}_{args.era}.json")
     return
 

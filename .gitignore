@@ -1,7 +1,11 @@
 # folders
 output/
 output.*/
+output_*/
+settings.*/
+settings_*/
 .vscode/
+tmp/
 # plots
 *.png
 *.pdf

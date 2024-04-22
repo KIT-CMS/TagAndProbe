@@ -399,19 +399,4 @@ class emb_doublemuon_correction(Correction):
 
 
 if __name__ == "__main__":
-
-    ROOT.PyConfig.IgnoreCommandLineOptions = True
-    ROOT.gROOT.SetBatch(ROOT.kTRUE)
-    # for keeping the histograms in memory
-    ROOT.TH1.AddDirectory(0)
-    test = pt_eta_correction(
-        tag="test",
-        name="EmbID_pt_eta_bins",
-        outdir="output/jsons",
-        configfile="settings/settings_embeddingselection_2018UL.yaml",
-        era="2018UL",
-        fname="{}/{}.json".format("output/jsons", "test"),
-        data_only=True,
-        verbose=False,
-    )
-    test.generate_scheme()
+    pass

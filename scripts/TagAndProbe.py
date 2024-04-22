@@ -22,14 +22,20 @@ def parse_arguments():
     parser.add_argument("--channel", required=True)
     parser.add_argument("--output", default="output", required=False)
     parser.add_argument("--mode", default="RECREATE", required=False)
-    parser.add_argument("--no-leg-switching", default=False, required=False, action='store_true')
+    parser.add_argument(
+        "--no-leg-switching",
+        default=False,
+        required=False,
+        action="store_true",
+    )
+    parser.add_argument("--settings-folder", default="settings", required=False)
     return parser.parse_args()
 
 
-def get_outputfiles(channel, era, out_dir):
+def get_outputfiles(channel, era, out_dir, settings_folder):
     # small function to get the path for all expected output files
     # this is used to check if the output files exist
-    bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
+    bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml"))
     outputfiles = []
     if channel == "embeddingselection":
         samples = ["Data"]
@@ -38,9 +44,7 @@ def get_outputfiles(channel, era, out_dir):
     for sample in samples:
         outputfiles.append("{}/{}_TP_{}_{}.root".format(out_dir, channel, sample, era))
         for key in bin_cfgs:
-            outputfiles.append(
-                "{}/{}_TP_{}_{}_{}.root".format(out_dir, channel, sample, era, key)
-            )
+            outputfiles.append("{}/{}_TP_{}_{}_{}.root".format(out_dir, channel, sample, era, key))
     return outputfiles
 
 
@@ -145,7 +149,9 @@ def process_trees(
                 #     )
                 # )
                 nentries += cleaned_hists[-1].Integral()
-                cleaned_hists[-1].SetName(convert_hist_label(cleaned_hists[-1].GetName()))
+                cleaned_hists[-1].SetName(
+                    convert_hist_label(cleaned_hists[-1].GetName())
+                )
             #     print(
             #         "Combined histogram {} has {} entries ".format(
             #             cleaned_hists[-1].GetName(), cleaned_hists[-1].Integral()
@@ -155,9 +161,7 @@ def process_trees(
             counter += nbins
         else:
             for bin in range(int(nbins)):
-                cleaned_hists.append(
-                    hists[int(counter) + int(bin)]
-                )
+                cleaned_hists.append(hists[int(counter) + int(bin)])
             counter += nbins
     i = 0
 
@@ -198,14 +202,29 @@ def process_trees(
     print(f"{sample} - Done")
 
 
-def main(channel, era, output, leg_switching=True, mode="RECREATE"):
+def main(
+    channel,
+    era,
+    output,
+    leg_switching=True,
+    mode="RECREATE",
+    settings_folder="settings",
+):
     # if "crosselectron" in channel and era=="2016":
     #     print "No cross trigger settings available for 2016 yet."
     #     sys.exit()
+
     if leg_switching:
-        bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}.yaml"))
+        config_filename = f"{settings_folder}/UL/settings_{channel}_{era}.yaml"
     else:
-        bin_cfgs = yaml.safe_load(open(f"settings/UL/settings_{channel}_{era}_double_object_quantities.yaml"))
+        config_filename = f"{settings_folder}/UL/settings_{channel}_{era}_double_object_quantities.yaml"
+
+    try:
+        bin_cfgs = yaml.safe_load(open(config_filename))
+    except FileNotFoundError:
+        print(f"Setting file: {config_filename} not found, exit")
+        exit()
+
     input_files = yaml.safe_load(open("set_inputfiles.yaml"))
 
     drawlist = []
@@ -215,7 +234,9 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
     for key, cfg_dict in bin_cfgs.items():
         cfg = cfg_dict
         # if no_leg_switching is set to true, we do not switch the tag and probe legs, so we do not have to consider the flipped event
-        cfg_update_function = translate_from_crown if leg_switching else pass_trough_from_crown
+        cfg_update_function = (
+            translate_from_crown if leg_switching else pass_trough_from_crown
+        )
         # this means we have only two histograms per bin, one for pass and one for fail and not four (two legs)
         number_of_bins_factor = 4 if leg_switching else 2
 
@@ -228,7 +249,10 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
         cfg["hist"] = []
         cfg["bins"] = []
 
-        number_of_bins.append(number_of_bins_factor * ((len(cfg["bins_x"]) - 1) * (len(cfg["bins_y"]) - 1)))
+        number_of_bins.append(
+            number_of_bins_factor
+            * ((len(cfg["bins_x"]) - 1) * (len(cfg["bins_y"]) - 1))
+        )
 
         for n in range(len(cfg["tag"])):
             hist = ROOT.TH2D(
@@ -250,12 +274,16 @@ def main(channel, era, output, leg_switching=True, mode="RECREATE"):
                     cfg["bins"][n].append(
                         "%s>=%g && %s<%g && %s>=%g && %s<%g"
                         % (
+                            # pt lower bin edge
                             cfg["binvar_x"][n],
                             hist.GetXaxis().GetBinLowEdge(i),
+                            # pt upper bin edge
                             cfg["binvar_x"][n],
                             hist.GetXaxis().GetBinUpEdge(i),
+                            # eta lower bin edge
                             cfg["binvar_y"][n],
                             hist.GetYaxis().GetBinLowEdge(j),
+                            # eta upper bin edge
                             cfg["binvar_y"][n],
                             hist.GetYaxis().GetBinUpEdge(j),
                         )
@@ -355,5 +383,12 @@ def validate_inputfiles(era, channel):
 if __name__ == "__main__":
     args = parse_arguments()
     validate_inputfiles(era=args.era, channel=args.channel)
-    main(era=args.era, channel=args.channel, output=args.output, leg_switching=not args.no_leg_switching, mode=args.mode)
+    main(
+        era=args.era,
+        channel=args.channel,
+        output=args.output,
+        leg_switching=not args.no_leg_switching,
+        mode=args.mode,
+        settings_folder=args.settings_folder,
+    )
     exit()
