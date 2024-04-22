@@ -211,11 +211,11 @@ python3 create_crosspog_json_workspace.py -e your_era -c muon -o output
 
 Due to the drop in DZ efficiency of the used double muon trigger (`HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ`) that was not accounted for, an additional measurement of this efficiency is required. Unfortunately, the information of this efficiency is not available at NanoAOD level, requiring to create a custom NanoAOD (discussed here) or a FriendTree (to be updated) containing this filter information as a qualitybit.
 
-Since the unfolding correction is applied only on data, a MC production is herefore not necessary.
+This unfolding correction is applied only on data, a MC production is not needed.
 
 For the NanoAOD creation, you require `CMSSW_10_6_35` with `PhysicsTools` package (`git cms-addpkg PhysicsTools/NanoAOD`). [grid-control](https://github.com/KIT-CMS/grid-control) is advisable, if the production should be performed non locally.
 
-Modify the 2016 muon trigger table in `CMSSW_10_6_35/src/PhysicsTools/NanoAOD/python/triggerObjects_cff.py` with the following two lines:
+Modify the 2016 muon trigger table in `CMSSW_10_6_35/src/PhysicsTools/NanoAOD/python/triggerObjects_cff.py` by adding the two lines:
 
 ```
 "4096*filter('hltDiMuonGlb17Glb8RelTrkIsoFiltered0p4') + " \  # -> "bit 12"
