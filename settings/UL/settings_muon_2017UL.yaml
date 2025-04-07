@@ -1,6 +1,6 @@
 ID_pt_eta_bins:
   name: "ID_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           (iso_tag < 0.15) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -34,13 +34,12 @@ ID_pt_eta_bins:
       80.,
       100.,
       200.,
-      1000.,
     ]
   binvar_y: "abs(eta_probe)"
   bins_y: [0, 0.9, 1.2, 2.1, 2.4]
   # Settings for fits
   BKG: "CMSShape"
-  SIG: "DoubleVUncorr"
+  SIG: "DoubleVCorr"
   # Settings for plotting
   TITLE: "Medium Muon ID"
   y_range: [0.7, 1.05]
@@ -50,7 +49,7 @@ ID_pt_eta_bins:
 
 Iso_pt_eta_bins:
   name: "Iso_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           (iso_tag < 0.15) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -84,7 +83,6 @@ Iso_pt_eta_bins:
       80.,
       100.,
       200.,
-      1000.,
     ]
   binvar_y: "abs(eta_probe)"
   bins_y: [0, 0.9, 1.2, 2.1, 2.4]
@@ -100,7 +98,7 @@ Iso_pt_eta_bins:
 
 AIso1_pt_eta_bins:
   name: "AIso1_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           (iso_tag < 0.15) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -150,7 +148,7 @@ AIso1_pt_eta_bins:
 
 AIso2_pt_eta_bins:
   name: "AIso2_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           (iso_tag < 0.15) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -198,9 +196,60 @@ AIso2_pt_eta_bins:
   info: "Scale factor for the muon isolation 0.25 < iso_mu < 0.2 (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
   header: "Scale factor for the muon isolation 0.25 < iso_mu < 0.2 (binned in eta)"
 
+
+AIso3_pt_eta_bins:
+  name: "AIso3_pt_eta_bins"
+  var: "m_vis(50,65,115)"
+  tag:  (
+          (iso_tag < 0.15) &&
+          ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
+          ((id_medium_tag) && (id_medium_probe)) &&
+          (trg_IsoMu27__no_filterbit_tag) &&
+          (pt_tag > 28.0) &&
+          ((q_1 + q_2) == 0) &&
+          (abs(dz_tag) < 0.2) &&
+          (abs(dxy_tag) < 0.045)
+        )
+  probe:  ((iso_probe >= 0.15) && (iso_probe < 0.50))
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      22.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      60.,
+      80.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Iso_{rel} #in [0.15,0.50]"
+  y_range: [0.0, 1.0]
+  ratio_y_range: [0.6, 1.4]
+  info: "Scale factor for the muon isolation 0.15 < iso_mu < 0.5 (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the muon isolation 0.15 < iso_mu < 0.5 (binned in eta)"
+
 Trg_IsoMu27_pt_eta_bins:
   name: "Trg_IsoMu27_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           ((iso_tag < 0.15) && (iso_probe < 0.15)) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -258,7 +307,7 @@ Trg_IsoMu27_pt_eta_bins:
 
 Trg_IsoMu24_pt_eta_bins:
   name: "Trg_IsoMu24_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           ((iso_tag < 0.15) && (iso_probe < 0.15)) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -316,7 +365,7 @@ Trg_IsoMu24_pt_eta_bins:
 
 Trg_IsoMu27_or_IsoMu24_pt_eta_bins:
   name: "Trg_IsoMu27_or_IsoMu24_pt_eta_bins"
-  var: "m_vis(100,50,150)"
+  var: "m_vis(50,65,115)"
   tag:  (
           ((iso_tag < 0.15) && (iso_probe < 0.15)) &&
           ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) &&
@@ -364,7 +413,6 @@ Trg_IsoMu27_or_IsoMu24_pt_eta_bins:
       80.,
       100.,
       200.,
-      1000.,
     ]
   binvar_y: "abs(eta_probe)"
   bins_y: [0, 0.9, 1.2, 2.1, 2.4]

@@ -57,10 +57,10 @@ def main(
             [
                 "Voigtian::signal1Pass(m_vis, mean1[91.2,85,95], width[2.495], sigma1[2,0.2,4])",
                 "Voigtian::signal2Pass(m_vis, mean2[91.2,85,95], width,        sigma2[4,2,10])",
-                "SUM::signalPass(vFrac[0.8,0,1]*signal1Pass, signal2Pass)",
+                "SUM::signalPass(vFrac[0.8,0.6,1]*signal1Pass, signal2Pass)",
                 "Voigtian::signal1Fail(m_vis, mean1[91.2,85,95], width[2.495], sigma1[2,0.2,4])",
                 "Voigtian::signal2Fail(m_vis, mean2[91.2,85,95], width,        sigma2[4,2,10])",
-                "SUM::signalFail(vFrac[0.8,0,1]*signal1Fail, signal2Fail)",
+                "SUM::signalFail(vFrac[0.8,0.6,1]*signal1Fail, signal2Fail)",
             ]
         )
     elif sig_model == "DoubleVUncorr":
@@ -117,8 +117,8 @@ def main(
         nparams += 4
         pdf_args.extend(
             [
-                "RooCMSShape::backgroundPass(m_vis, alphaPass[70,60,200], betaPass[0.001,0,0.1], gammaPass[0.001,0,1], peak[90])",
-                "RooCMSShape::backgroundFail(m_vis, alphaFail[70,60,200], betaFail[0.001,0,0.1], gammaFail[0.001,0,1], peak[90])",
+                "RooCMSShape::backgroundPass(m_vis, alphaPass[60.,50.,85.], betaPass[0.001,0,0.1], gammaPass[0.001,0,1], peak[90])",
+                "RooCMSShape::backgroundFail(m_vis, alphaFail[60.,50.,85.], betaFail[0.001,0,0.1], gammaFail[0.001,0,1], peak[90])",
             ]
         )
     elif bkg_model == "Chebychev":
@@ -326,7 +326,7 @@ def main(
         latex.DrawLatex(
             0.63,
             0.75,
-            "#chi^{2} = %.2f" % (xframe.chiSquare("AllPass", "DataPass", nparams)),
+            "#chi^{2}/ndf = %.2f" % (xframe.chiSquare("AllPass", "DataPass", nparams)),
         )
         latex.DrawLatex(
             0.63,
@@ -377,7 +377,7 @@ def main(
         latex.DrawLatex(
             0.63,
             0.75,
-            "#chi^{2} = %.2f" % (xframe2.chiSquare("AllFail", "DataFail", nparams)),
+            "#chi^{2}/ndf = %.2f" % (xframe2.chiSquare("AllFail", "DataFail", nparams)),
         )
         latex.SetTextFont(font)
         latex.DrawLatex(0.2, 0.9, "fail region")

@@ -1,7 +1,7 @@
 ID90_pt_bins_inc_eta:
   name: "ID90_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 38 && id_wp90_tag"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 38 && id_wp90_tag"
   probe: "id_wp90_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -36,52 +36,52 @@ ID90_pt_bins_inc_eta:
   info: "Scale factor for the WP90 electron ID (inclusive in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
   header: "Scale factor for the WP90 electron ID (inclusive in eta)"
   
-# Inclusive_no_fsr:
-#   name: "Inclusive_no_fsr"
-#   var: "m_vis(100,50,150)"
-#   tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele35_tag && pt_tag >= 36 && id_wp90_tag"
-#   probe: " pt_tag == pt_tag"
-#   binvar_x: "pt_probe"
-#   bins_x:
-#     [
-#       10.,
-#       1000.,
-#     ]
-#   binvar_y: "abs(eta_probe)"
-#   bins_y: [0, 2.5]
-#   # Settings for fits
-#   BKG: "CMSShape"
-#   SIG: "DoubleVCorr"
-#   # Settings for plotting
-#   TITLE: "Inclusive_no_fsr"
-#   y_range: [0.0, 1.05]
-#   ratio_y_range: [0.5, 1.5]
+Inclusive_no_fsr:
+  name: "Inclusive_no_fsr"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 && id_wp90_tag"
+  probe: " pt_tag == pt_tag"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 2.5]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Inclusive_no_fsr"
+  y_range: [0.0, 1.05]
+  ratio_y_range: [0.5, 1.5]
 
-# Inclusive_fsr:
-#   name: "Inclusive_fsr"
-#   var: "m_vis(100,50,150)"
-#   tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele35_tag && pt_tag >= 36 && id_wp90_tag"
-#   probe: " pt_tag == pt_tag"
-#   binvar_x: "pt_probe"
-#   bins_x:
-#     [
-#       10.,
-#       1000.,
-#     ]
-#   binvar_y: "abs(eta_probe)"
-#   bins_y: [0, 2.5]
-#   # Settings for fits
-#   BKG: "CMSShape"
-#   SIG: "DoubleVCorr"
-#   # Settings for plotting
-#   TITLE: "Inclusive_fsr"
-#   y_range: [0.0, 1.05]
-#   ratio_y_range: [0.5, 1.5]
+Inclusive_fsr:
+  name: "Inclusive_fsr"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 && id_wp90_tag"
+  probe: " pt_tag == pt_tag"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 2.5]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Inclusive_fsr"
+  y_range: [0.0, 1.05]
+  ratio_y_range: [0.5, 1.5]
 
 ID80_pt_eta_bins:
   name: "ID80_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag"
   probe: "id_wp80_probe"
   binvar_x: "pt_probe"
   bins_x:
@@ -118,8 +118,8 @@ ID80_pt_eta_bins:
 
 ID90_pt_eta_bins:
   name: "ID90_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag"
   probe: "id_wp90_probe "
   binvar_x: "pt_probe"
   bins_x:
@@ -140,7 +140,6 @@ ID90_pt_eta_bins:
       50.,
       100.,
       200.,
-      1000.,
     ]
   binvar_y: "eta_probe"
   bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
@@ -156,8 +155,8 @@ ID90_pt_eta_bins:
 
 Iso_pt_bins_inc_eta:
   name: "Iso_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
   probe: "iso_probe < 0.15 "
   binvar_x: "pt_probe"
   bins_x:
@@ -194,8 +193,8 @@ Iso_pt_bins_inc_eta:
 
 Iso_pt_eta_bins:
   name: "Iso_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
   probe: "iso_probe < 0.15 "
   binvar_x: "pt_probe"
   bins_x:
@@ -216,7 +215,6 @@ Iso_pt_eta_bins:
       50.,
       100.,
       200.,
-      1000.,
     ]
   binvar_y: "eta_probe"
   bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
@@ -232,8 +230,8 @@ Iso_pt_eta_bins:
 
 AIso_pt_bins_inc_eta:
   name: "AIso_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
   probe: "iso_probe >= 0.15 "
   binvar_x: "pt_probe"
   bins_x:
@@ -270,9 +268,9 @@ AIso_pt_bins_inc_eta:
 
 AIso_pt_eta_bins:
   name: "AIso_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
-  probe: "iso_probe >= 0.15 "
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && id_wp90_probe"
+  probe: "((iso_probe >= 0.15) && (iso_probe < 0.50))"
   binvar_x: "pt_probe"
   bins_x:
     [
@@ -308,8 +306,8 @@ AIso_pt_eta_bins:
 
 Trg_Iso_pt_bins_inc_eta:
   name: "Trg_Iso_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
   probe: "(trg_single_ele25_probe || trg_single_ele27_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -355,8 +353,8 @@ Trg_Iso_pt_bins_inc_eta:
 
 Trg_Iso_pt_eta_bins:
   name: "Trg_Iso_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
   probe: "(trg_single_ele25_probe || trg_single_ele27_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -402,8 +400,8 @@ Trg_Iso_pt_eta_bins:
 
 Trg_AIso_pt_bins_inc_eta:
   name: "Trg_AIso_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
   probe: "(trg_single_ele25_probe || trg_single_ele27_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -450,8 +448,8 @@ Trg_AIso_pt_bins_inc_eta:
 
 Trg25_Iso_pt_eta_bins:
   name: "Trg25_Iso_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
   probe: "(trg_single_ele25_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -481,7 +479,6 @@ Trg25_Iso_pt_eta_bins:
       50.,
       100.,
       200.,
-      1000.,
     ]
   binvar_y: "eta_probe"
   bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
@@ -497,8 +494,8 @@ Trg25_Iso_pt_eta_bins:
 
 Trg25_AIso_pt_bins_inc_eta:
   name: "Trg25_AIso_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
   probe: "(trg_single_ele25_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -544,8 +541,8 @@ Trg25_AIso_pt_bins_inc_eta:
 
 Trg27_Iso_pt_eta_bins:
   name: "Trg27_Iso_pt_eta_bins"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
   probe: "(trg_single_ele27_probe)"
   binvar_x: "pt_probe"
   bins_x:
@@ -591,8 +588,8 @@ Trg27_Iso_pt_eta_bins:
 
 Trg27_AIso_pt_bins_inc_eta:
   name: "Trg27_AIso_pt_bins_inc_eta"
-  var: "m_vis(100,50,150)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.1 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele27_tag && pt_tag >= 28 && id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
   probe: "(trg_single_ele27_probe)"
   binvar_x: "pt_probe"
   bins_x:

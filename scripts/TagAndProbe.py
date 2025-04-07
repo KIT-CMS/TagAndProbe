@@ -35,7 +35,9 @@ def parse_arguments():
 def get_outputfiles(channel, era, out_dir, settings_folder):
     # small function to get the path for all expected output files
     # this is used to check if the output files exist
-    bin_cfgs = yaml.safe_load(open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml"))
+    bin_cfgs = yaml.safe_load(
+        open(f"{settings_folder}/UL/settings_{channel}_{era}.yaml")
+    )
     outputfiles = []
     if channel == "embeddingselection":
         samples = ["Data"]
@@ -44,7 +46,9 @@ def get_outputfiles(channel, era, out_dir, settings_folder):
     for sample in samples:
         outputfiles.append("{}/{}_TP_{}_{}.root".format(out_dir, channel, sample, era))
         for key in bin_cfgs:
-            outputfiles.append("{}/{}_TP_{}_{}_{}.root".format(out_dir, channel, sample, era, key))
+            outputfiles.append(
+                "{}/{}_TP_{}_{}_{}.root".format(out_dir, channel, sample, era, key)
+            )
     return outputfiles
 
 
@@ -87,6 +91,8 @@ def translate_from_crown(tag, probe, binvar_x, binvar_y):
     converted_cfg["probe"].append(convert_cutstrings(probe, tag=2))
     converted_cfg["binvar_x"].append(convert_cutstrings(binvar_x, tag=2))
     converted_cfg["binvar_y"].append(convert_cutstrings(binvar_y, tag=2))
+    print("huhuhu weightstring")
+    print(converted_cfg["tag"])
     return converted_cfg
 
 
@@ -130,7 +136,21 @@ def process_trees(
     outfile.cd()
     print(f"{sample} - Bins per histogram: {number_of_bins}")
     print(f"{sample} - Total number of histograms: {len(drawlist)}")
-    hists = tree.Draw(drawlist, compiled=True)
+    if channel == "electron":
+        if sample == "DY":
+            drawlist_w_weight = [
+                (
+                    var,
+                    f"({selection}) * ((((pt_2>20)*reco_ptgt20_wgt_ele_2)+((pt_2<20&&pt_2>10)*reco_ptst20_wgt_ele_2))*(((pt_1>20)*reco_ptgt20_wgt_ele_1)+((pt_1<20&&pt_1>10)*reco_ptst20_wgt_ele_1)))",
+                )
+                for var, selection in drawlist
+            ]
+        else:
+            print("in data")
+            drawlist_w_weight = drawlist
+    else:
+        drawlist_w_weight = drawlist
+    hists = tree.Draw(drawlist_w_weight, compiled=True)
 
     cleaned_hists = []
     counter = 0
@@ -168,7 +188,7 @@ def process_trees(
     for key, cfg in bin_cfgs.items():
         print(f"{sample} - Writing histogram {key}")
         wsp = ROOT.RooWorkspace("wsp_" + cfg["name"], "")
-        var = wsp.factory("m_vis[100,50,150]")
+        var = wsp.factory("m_vis[50,65,115]")
         ROOT.RooFit.Silence(True)
         outfile.cd()
         outfile.mkdir(cfg["name"])
