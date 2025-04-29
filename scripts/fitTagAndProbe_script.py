@@ -264,6 +264,14 @@ def main(
         res.append(
             (dat, wsp.var("efficiency").getVal(), wsp.var("efficiency").getError())
         )
+        # print('Finally getting there')
+        # for _ in range(10):
+        #     print('')
+        # print('efficiencies vv')
+        # print(wsp.var("efficiency").getVal(), wsp.var("efficiency").getError())
+        # print('efficiencies ^^')
+        # print(type(wsp))
+        # print(wsp.var("efficiency"))
 
         hist.SetBinContent(b[0], b[1], wsp.var("efficiency").getVal())
         hist.SetBinError(b[0], b[1], wsp.var("efficiency").getError())
@@ -334,6 +342,7 @@ def main(
             "#varepsilon = %.4f #pm %.4f"
             % (wsp.var("efficiency").getVal(), wsp.var("efficiency").getError()),
         )
+        # eff
         ROOT.gStyle.SetLegendBorderSize(1)
         legend1 = ROOT.TLegend(0.6, 0.8, 0.925, 0.939)
         legend1.AddEntry(xframe.findObject("DataPass"), "data", "ep")

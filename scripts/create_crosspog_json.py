@@ -249,15 +249,75 @@ class pt_eta_correction(Correction):
                                             inputtype="Embedding",
                                         ),
                                     },
+                                    {
+                                        "key": "mc_stat",
+                                        "value": self.get_single_sf_err(
+                                            pt,
+                                            pt_i,
+                                            eta,
+                                            eta_i,
+                                            self.data_only,
+                                            inputtype="DY"
+                                        ),
+                                    },
+                                    {
+                                        "key": "emb_stat",
+                                        "value": self.get_single_sf_err(
+                                            pt,
+                                            pt_i,
+                                            eta,
+                                            eta_i,
+                                            self.data_only,
+                                            inputtype="Embedding"
+                                        ), 
+                                    },
+
                                 ],
                             }
-                            for eta in self.etabinning[:-1]
+                            for eta_i, eta in enumerate(self.etabinning[:-1])
                         ],
                     }
-                    for pt in self.ptbinning[:-1]
+                    for pt_i, pt in enumerate(self.ptbinning[:-1])
                 ],
             }
         return schema.Binning.parse_obj(sfs)
+
+    def get_single_sf_err(self, pt, pt_i, eta, eta_i, data_only, inputtype=None):
+        # leave of the last eta bin, which is the overflow bin
+        efficiency = {}
+        efficiency_err = {}
+        test = {}
+        for _type in self.types:
+            efficiency[_type] = self.inputobjects[_type]["object"].GetBinContent(
+                self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
+                self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
+            )
+            efficiency_err[_type] = self.inputobjects[_type]["object"].GetBinError(
+                self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
+                self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
+            )
+        if data_only:
+            if efficiency["Data"] < epsilon:
+                sf_err = 0.0
+            else:
+                sf = 1.0 / efficiency["Data"] 
+                sf_err = efficiency_err[_type]/(efficiency["Data"]**2)
+        else:
+            if efficiency[inputtype] == 0.:
+                sf = 1.0
+                sf_err = 1
+            else: 
+                sf = efficiency["Data"] / efficiency[inputtype]
+                # set scalefactor to 1.0 if the efficiencies are the same within a given epsilon
+                if abs(efficiency["Data"] - efficiency[inputtype]) < epsilon:
+                    sf = 1.0
+                    sf_err = 0.01
+                if efficiency["Data"] < 0.01 and efficiency[inputtype] < 0.01:
+                    sf = 1.0 
+                    sf_err = 0.01
+                else:
+                    sf_err = math.sqrt((efficiency_err["Data"]/efficiency[inputtype])**2+(efficiency_err[inputtype]*efficiency["Data"]/(efficiency[inputtype]**2))**2)
+        return sf_err
 
     def get_single_sf(self, pt, eta, data_only, inputtype=None):
         # leave of the last eta bin, which is the overflow bin

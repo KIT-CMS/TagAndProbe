@@ -1,5 +1,5 @@
-eras=("2017UL" "2018UL" "2016preVFPUL" "2016postVFPUL")
-channels=("muon" "embeddingselection")
+eras=("2018UL")
+channels=("electron")
 
 output_dir="output"
 
