@@ -298,14 +298,14 @@ class pt_eta_correction(Correction):
             )
         if data_only:
             if efficiency["Data"] < epsilon:
-                sf_err = 0.0
+                sf_err = 0.01
             else:
                 sf = 1.0 / efficiency["Data"] 
                 sf_err = efficiency_err[_type]/(efficiency["Data"]**2)
         else:
             if efficiency[inputtype] == 0.:
                 sf = 1.0
-                sf_err = 1
+                sf_err = 0.01
             else: 
                 sf = efficiency["Data"] / efficiency[inputtype]
                 # set scalefactor to 1.0 if the efficiencies are the same within a given epsilon
@@ -317,7 +317,13 @@ class pt_eta_correction(Correction):
                     sf_err = 0.01
                 else:
                     sf_err = math.sqrt((efficiency_err["Data"]/efficiency[inputtype])**2+(efficiency_err[inputtype]*efficiency["Data"]/(efficiency[inputtype]**2))**2)
-        return sf_err
+                if sf_err < 0.0001:
+                    print('pt, eta: ', pt, eta)
+                    print('Data-Efficiency_err: ', efficiency_err["Data"])
+                    print('Data-Efficiency: ', efficiency["Data"])
+                    print('Inputtype-Efficiency_err: ', efficiency_err[inputtype])
+                    print('Inputtype-Efficiency: ', efficiency[inputtype])
+        return sf_err 
 
     def get_single_sf(self, pt, eta, data_only, inputtype=None):
         # leave of the last eta bin, which is the overflow bin

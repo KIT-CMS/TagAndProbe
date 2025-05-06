@@ -115,42 +115,42 @@
 #   info: "Scale factor for the WP80 electron ID. Scale factor is provided for Embedding (emb) and Simulation (mc)"
 #   header: "Scale factor for the WP80 electron ID"
 
-# ID90_pt_eta_bins:
-#   name: "ID90_pt_eta_bins"
-#   var: "m_vis(50,65,115)"
-#   tag: "(abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 && id_wp90_tag)"
-#   probe: "id_wp90_probe "
-#   binvar_x: "pt_probe"
-#   bins_x:
-#     [
-#       10.,
-#       15.,
-#       20.,
-#       24.,
-#       26.,
-#       28.,
-#       30.,
-#       32.,
-#       34.,
-#       36.,
-#       38.,
-#       40.,
-#       45.,
-#       50.,
-#       100.,
-#       200.,
-#     ]
-#   binvar_y: "eta_probe"
-#   bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
-#   # Settings for fits
-#   BKG: "CMSShape"
-#   SIG: "DoubleVCorr"
-#   # Settings for plotting
-#   TITLE: "Electron ID WP90"
-#   y_range: [0.0, 1.05]
-#   ratio_y_range: [0.8, 1.3]
-#   info: "Scale factor for the WP90 electron ID . Scale factor is provided for Embedding (emb) and Simulation (mc)"
-#   header: "Scale factor for the WP90 electron ID"
+ID90_pt_eta_bins:
+  name: "ID90_pt_eta_bins"
+  var: "m_vis(50,65,115)"
+  tag: "(abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 && id_wp90_tag)"
+  probe: "id_wp90_probe "
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      15.,
+      20.,
+      24.,
+      26.,
+      28.,
+      30.,
+      32.,
+      34.,
+      36.,
+      38.,
+      40.,
+      45.,
+      50.,
+      100.,
+      200.,
+    ]
+  binvar_y: "eta_probe"
+  bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+  # Settings for fits
+  BKG: "CMSShape"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Electron ID WP90"
+  y_range: [0.0, 1.05]
+  ratio_y_range: [0.8, 1.3]
+  info: "Scale factor for the WP90 electron ID . Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the WP90 electron ID"
 # Iso_pt_bins_inc_eta:
 #   name: "Iso_pt_bins_inc_eta"
 #   var: "m_vis(50,65,115)"
@@ -631,57 +631,10 @@
 #   info: "Scale factor for the electron trigger HLT_Ele32_WPTight_Gsf in anti-isolated region ele_iso > 0.15. Scale factor is provided for Embedding (emb) and Simulation (mc)"
 #   header: "Scale factor for the electron trigger HLT_Ele32_WPTight_Gsf in anti-isolated region ele_iso > 0.15"
 
-Trg35_Iso_pt_eta_bins:
-  name: "Trg35_Iso_pt_eta_bins"
-  var: "m_vis(50,65,115)"
-  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
-  probe: "(trg_single_ele35_probe)"
-  binvar_x: "pt_probe"
-  bins_x:
-    [
-      10.,
-      20.,
-      25.,
-      26.,
-      27.,
-      28.,
-      29.,
-      30.,
-      31,
-      32.,
-      33.,
-      34.,
-      35.,
-      36.,
-      37.,
-      38.,
-      39.,
-      40.,
-      42.,
-      44.,
-      46.,
-      48.,
-      50.,
-      100.,
-      200.,
-      1000.,
-    ]
-  binvar_y: "eta_probe"
-  bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
-  # Settings for fits
-  BKG: "Exponential"
-  SIG: "DoubleVCorr"
-  # Settings for plotting
-  TITLE: "Trg Ele35"
-  y_range: [0.0, 1.1]
-  ratio_y_range: [0.1, 1.9]
-  info: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in isolated region ele_iso < 0.15. Scale factor is provided for Embedding (emb) and Simulation (mc)"
-  header: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in isolated region ele_iso < 0.15"
-
-# Trg35_AIso_pt_bins_inc_eta:
-#   name: "Trg35_AIso_pt_bins_inc_eta"
+# Trg35_Iso_pt_eta_bins:
+#   name: "Trg35_Iso_pt_eta_bins"
 #   var: "m_vis(50,65,115)"
-#   tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
+#   tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 &&  id_wp90_tag && iso_probe < 0.15 && id_wp90_probe"
 #   probe: "(trg_single_ele35_probe)"
 #   binvar_x: "pt_probe"
 #   bins_x:
@@ -713,17 +666,64 @@ Trg35_Iso_pt_eta_bins:
 #       200.,
 #       1000.,
 #     ]
-#   binvar_y: "abs(eta_probe)"
-#   bins_y: [0, 2.5]
+#   binvar_y: "eta_probe"
+#   bins_y: [-2.5, -2.1, -1.56, -1.4442, -1.0, 0.0, 1.0, 1.4442, 1.56, 2.1, 2.5]
 #   # Settings for fits
 #   BKG: "Exponential"
 #   SIG: "DoubleVCorr"
 #   # Settings for plotting
-#   TITLE: "Trg Ele35, Iso_{rel} > 0.15"
+#   TITLE: "Trg Ele35"
 #   y_range: [0.0, 1.1]
 #   ratio_y_range: [0.1, 1.9]
-#   info: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in anti-isolated region ele_iso > 0.15. Scale factor is provided for Embedding (emb) and Simulation (mc)"
-#   header: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in anti-isolated region ele_iso > 0.15"
+#   info: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in isolated region ele_iso < 0.15. Scale factor is provided for Embedding (emb) and Simulation (mc)"
+#   header: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in isolated region ele_iso < 0.15"
+
+Trg35_AIso_pt_bins_inc_eta:
+  name: "Trg35_AIso_pt_bins_inc_eta"
+  var: "m_vis(50,65,115)"
+  tag: " abs(eta_tag) < 2.5 && dxy_tag < 0.045 && dz_tag < 0.2 && iso_tag < 0.15 && trg_single_ele35_tag && pt_tag >= 36 &&  id_wp90_tag && iso_probe >= 0.15 && id_wp90_probe"
+  probe: "(trg_single_ele35_probe)"
+  binvar_x: "pt_probe"
+  bins_x:
+    [
+      10.,
+      20.,
+      25.,
+      26.,
+      27.,
+      28.,
+      29.,
+      30.,
+      31,
+      32.,
+      33.,
+      34.,
+      35.,
+      36.,
+      37.,
+      38.,
+      39.,
+      40.,
+      42.,
+      44.,
+      46.,
+      48.,
+      50.,
+      100.,
+      200.,
+      1000.,
+    ]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 2.5]
+  # Settings for fits
+  BKG: "Exponential"
+  SIG: "DoubleVCorr"
+  # Settings for plotting
+  TITLE: "Trg Ele35, Iso_{rel} > 0.15"
+  y_range: [0.0, 1.1]
+  ratio_y_range: [0.1, 1.9]
+  info: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in anti-isolated region ele_iso > 0.15. Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the electron trigger HLT_Ele35_WPTight_Gsf in anti-isolated region ele_iso > 0.15"
 
 # Trg27_or_Trg32_Iso_pt_eta_bins:
 #   name: "Trg27_or_Trg32_Iso_pt_eta_bins"

@@ -255,23 +255,16 @@ def main(
         # fitres.Print()
         # fitres.correlationMatrix().Print()
 
-        # print "The Error for this Bin is: {}".format(wsp.var('efficiency').getError())
+        # print("The Error for this Bin is: {}".format(wsp.var('efficiency').getError()))
 
         if rewrite_efficiency_to_zero:
             wsp.var("efficiency").setVal(0)
             wsp.var("efficiency").setAsymError(0, 0)
+            
 
         res.append(
             (dat, wsp.var("efficiency").getVal(), wsp.var("efficiency").getError())
-        )
-        # print('Finally getting there')
-        # for _ in range(10):
-        #     print('')
-        # print('efficiencies vv')
-        # print(wsp.var("efficiency").getVal(), wsp.var("efficiency").getError())
-        # print('efficiencies ^^')
-        # print(type(wsp))
-        # print(wsp.var("efficiency"))
+        )       
 
         hist.SetBinContent(b[0], b[1], wsp.var("efficiency").getVal())
         hist.SetBinError(b[0], b[1], wsp.var("efficiency").getError())
