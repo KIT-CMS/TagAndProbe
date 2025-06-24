@@ -88,6 +88,7 @@ def main(args):
         correctionset.add_correction(EmbSelEffID)
     else:
         add_corrections(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}.yaml", correctionset, args.era, outdir)
+        print(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}.yaml")
     correctionset.write_json(f"{outdir}/jsons/{args.channel}_{args.era}.json")
     return
 

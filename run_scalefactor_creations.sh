@@ -1,5 +1,5 @@
 eras=("2018UL")
-channels=("electron")
+channels=("electron") # ("muon" "electron" "embeddingselection")
 
 output_dir="output"
 
@@ -8,6 +8,16 @@ cp -r settings $output_dir/used_settings         # Copy settings that are used t
 cp set_inputfiles.yaml $output_dir/used_settings # Copy input file list to output directory
 
 # ---
+
+FILE="efficiencies.csv"
+
+if [ -f "$FILE" ]; then
+  > "$FILE"         
+  echo "File '$FILE' existed and was cleared."
+else
+  touch "$FILE"     
+  echo "File '$FILE' created."
+fi
 
 for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 	(

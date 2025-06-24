@@ -286,24 +286,27 @@ class pt_eta_correction(Correction):
         # leave of the last eta bin, which is the overflow bin
         efficiency = {}
         efficiency_err = {}
-        test = {}
+        fail = True
         for _type in self.types:
             efficiency[_type] = self.inputobjects[_type]["object"].GetBinContent(
                 self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
                 self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
             )
+            if efficiency[_type] < epsilon**2:
+                fail = False
             efficiency_err[_type] = self.inputobjects[_type]["object"].GetBinError(
                 self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
                 self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
             )
+
         if data_only:
             if efficiency["Data"] < epsilon:
                 sf_err = 0.01
             else:
                 sf = 1.0 / efficiency["Data"] 
-                sf_err = efficiency_err[_type]/(efficiency["Data"]**2)
+                sf_err = efficiency_err["Data"]/(efficiency["Data"]**2)
         else:
-            if efficiency[inputtype] == 0.:
+            if efficiency[inputtype] < epsilon:
                 sf = 1.0
                 sf_err = 0.01
             else: 
@@ -317,8 +320,9 @@ class pt_eta_correction(Correction):
                     sf_err = 0.01
                 else:
                     sf_err = math.sqrt((efficiency_err["Data"]/efficiency[inputtype])**2+(efficiency_err[inputtype]*efficiency["Data"]/(efficiency[inputtype]**2))**2)
-                if sf_err < 0.0001:
+                if sf_err < 0.0001 and fail:
                     print('pt, eta: ', pt, eta)
+                    print('sf ', sf)
                     print('Data-Efficiency_err: ', efficiency_err["Data"])
                     print('Data-Efficiency: ', efficiency["Data"])
                     print('Inputtype-Efficiency_err: ', efficiency_err[inputtype])

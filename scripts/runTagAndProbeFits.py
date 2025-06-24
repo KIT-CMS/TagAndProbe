@@ -61,6 +61,7 @@ if args.fit:
         if args.channel == "embeddingselection":
             filename = ["{}/{}_TP_Data_{}.root".format(args.output, args.channel, args.era)]
             Dir_ext = ["/data"]
+            Dtype = ['Data']
         else:
             filename = [
                 "{}/{}_TP_Embedding_{}.root".format(args.output, args.channel, args.era),
@@ -68,6 +69,7 @@ if args.fit:
                 "{}/{}_TP_DY_{}.root".format(args.output, args.channel, args.era),
             ]
             Dir_ext = ["/embedding", "/data", "/DY"]
+            Dtype = ["Embedding", "Data", "DY"]
         for i, file_ in enumerate(filename):
             expression_list.append(
                 [
@@ -82,16 +84,16 @@ if args.fit:
                     None,
                 ]
             )
-    #       fitTagAndProbe_script.main(
-    #           filename=file_,
-    #           name=label,
-    #           sig_model=parameters[label]["SIG"],
-    #           bkg_model=parameters[label]["BKG"],
-    #           title=parameters[label]["TITLE"],
-    #           particle=particle,
-    #           postfix="",
-    #           plot_dir=Dir + label + Dir_ext[i],
-    #           bin_replace=None)
+    fitTagAndProbe_script.main(
+        filename=file_,
+        name=label,
+        sig_model_=parameters[label]["SIG"],
+        bkg_model_=parameters[label]["BKG"],
+        title=parameters[label]["TITLE"],
+        particle=particle,
+        postfix="",
+        plot_dir=Dir + label + Dir_ext[i],
+        bin_replace=None)
     procs = []
     for expression in expression_list:
         p = Process(target=fitTagAndProbe_script.main, args=(expression))
