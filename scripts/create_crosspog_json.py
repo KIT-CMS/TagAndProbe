@@ -156,6 +156,18 @@ class pt_eta_correction(Correction):
             )
             self.inputobjects[_input] = self.inputfiles[_input]
             self.inputobjects[_input]["object"] = histogram
+            try:
+                syst_hist_name = f"sys_{self.inputfiles[_input]['name']}"
+                syst_hist = self.GetFromTFile(self.inputfiles[_input]["file"], syst_hist_name)
+                self.inputobjects[_input]["syst"] = syst_hist
+            except Exception:
+                self.inputobjects[_input]["syst"] = None
+            try:
+                syst2_hist_name = f"sys2_{self.inputfiles[_input]['name']}"
+                syst2_hist = self.GetFromTFile(self.inputfiles[_input]["file"], syst2_hist_name)
+                self.inputobjects[_input]["syst2"] = syst2_hist
+            except Exception:
+                self.inputobjects[_input]["syst2"] = None
         self.info = config[self.name]["info"]
         self.header = config[self.name]["header"]
 
@@ -174,6 +186,11 @@ class pt_eta_correction(Correction):
                     "name": "abs(eta)",
                     "type": "real",
                     "description": "Reconstructed muon eta",
+                },
+                {
+                    "name": "uncertainty",
+                    "type": "string",
+                    "description": "Type of value: nominal, stat_up, stat_down, syst_up or syst_down"
                 },
             ],
             "output": {
@@ -229,74 +246,227 @@ class pt_eta_correction(Correction):
                         "content": [
                             {
                                 "nodetype": "category",
-                                "input": "type",
+                                "input": "type",  
                                 "content": [
                                     {
                                         "key": "mc",
-                                        "value": self.get_single_sf(
-                                            pt,
-                                            eta,
-                                            self.data_only,
-                                            inputtype="DY",
-                                        ),
+                                        "value": {
+                                            "nodetype": "category",
+                                            "input": "uncertainty",  
+                                            "content": [
+                                                {
+                                                    "key": "nominal",
+                                                    "value": self.get_single_sf(
+                                                        pt, eta, self.data_only, inputtype="DY"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "stat_up",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only, inputtype="DY"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "syst_up",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only,
+                                                        inputtype="DY", uncertainty_type="syst"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "stat_down",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only, inputtype="DY"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "syst_down",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only,
+                                                        inputtype="DY", uncertainty_type="syst"
+                                                    ),
+                                                } # ,
+                                                # {
+                                                #     "key": "syst2",
+                                                #     "value": self.get_single_sf_err(
+                                                #         pt, pt_i, eta, eta_i, self.data_only,
+                                                #         inputtype="DY", uncertainty_type="syst2"
+                                                #     ),
+                                                # }
+                                            ]
+                                        }
                                     },
                                     {
                                         "key": "emb",
-                                        "value": self.get_single_sf(
-                                            pt,
-                                            eta,
-                                            self.data_only,
-                                            inputtype="Embedding",
-                                        ),
-                                    },
-                                    {
-                                        "key": "mc_stat",
-                                        "value": self.get_single_sf_err(
-                                            pt,
-                                            pt_i,
-                                            eta,
-                                            eta_i,
-                                            self.data_only,
-                                            inputtype="DY"
-                                        ),
-                                    },
-                                    {
-                                        "key": "emb_stat",
-                                        "value": self.get_single_sf_err(
-                                            pt,
-                                            pt_i,
-                                            eta,
-                                            eta_i,
-                                            self.data_only,
-                                            inputtype="Embedding"
-                                        ), 
-                                    },
-
-                                ],
+                                        "value": {
+                                            "nodetype": "category",
+                                            "input": "uncertainty",
+                                            "content": [
+                                                {
+                                                    "key": "nominal",
+                                                    "value": self.get_single_sf(
+                                                        pt, eta, self.data_only, inputtype="Embedding"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "stat_up",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only,
+                                                        inputtype="Embedding"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "syst_up",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only,
+                                                        inputtype="Embedding", uncertainty_type="syst"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "stat_down",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only,
+                                                        inputtype="Embedding"
+                                                    ),
+                                                },
+                                                {
+                                                    "key": "syst_down",
+                                                    "value": self.get_single_sf_err(
+                                                        pt, pt_i, eta, eta_i, self.data_only,
+                                                        inputtype="Embedding", uncertainty_type="syst"
+                                                    ),
+                                                } #,
+                                                # {
+                                                #     "key": "syst2",
+                                                #     "value": self.get_single_sf_err(
+                                                #         pt, pt_i, eta, eta_i, self.data_only,
+                                                #         inputtype="Embedding", uncertainty_type="syst2"
+                                                #     ),
+                                                # }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                             for eta_i, eta in enumerate(self.etabinning[:-1])
-                        ],
+                        ]
                     }
                     for pt_i, pt in enumerate(self.ptbinning[:-1])
-                ],
+                ]
             }
+
+            # sfs = {
+            #     "nodetype": "binning",
+            #     "input": "pt",
+            #     "edges": self.ptbinning,
+            #     "flow": "clamp",
+            #     "content": [
+            #         {
+            #             "nodetype": "binning",
+            #             "input": "abs(eta)",
+            #             "edges": self.etabinning,
+            #             "flow": "clamp",
+            #             "content": [
+            #                 {
+            #                     "nodetype": "category",
+            #                     "input": "type",
+            #                     "content": [
+            #                         {
+            #                             "key": "mc",
+            #                             "value": self.get_single_sf(
+            #                                 pt,
+            #                                 eta,
+            #                                 self.data_only,
+            #                                 inputtype="DY",
+            #                             ),
+            #                         },
+            #                         {
+            #                             "key": "emb",
+            #                             "value": self.get_single_sf(
+            #                                 pt,
+            #                                 eta,
+            #                                 self.data_only,
+            #                                 inputtype="Embedding",
+            #                             ),
+            #                         },
+            #                         {
+            #                             "key": "mc_stat",
+            #                             "value": self.get_single_sf_err(
+            #                                 pt,
+            #                                 pt_i,
+            #                                 eta,
+            #                                 eta_i,
+            #                                 self.data_only,
+            #                                 inputtype="DY"
+            #                             ),
+            #                         },
+            #                         {
+            #                             "key": "emb_stat",
+            #                             "value": self.get_single_sf_err(
+            #                                 pt,
+            #                                 pt_i,
+            #                                 eta,
+            #                                 eta_i,
+            #                                 self.data_only,
+            #                                 inputtype="Embedding"
+            #                             ), 
+            #                         },
+            #                         {
+            #                             "key": "mc_syst",
+            #                             "value": self.get_single_sf_err(
+            #                                 pt,
+            #                                 pt_i,
+            #                                 eta,
+            #                                 eta_i,
+            #                                 self.data_only,
+            #                                 inputtype="DY",
+            #                                 uncertainty_type="syst"
+            #                             ),
+            #                         },
+            #                         {
+            #                             "key": "emb_syst",
+            #                             "value": self.get_single_sf_err(
+            #                                 pt,
+            #                                 pt_i,
+            #                                 eta,
+            #                                 eta_i,
+            #                                 self.data_only,
+            #                                 inputtype="Embedding",
+            #                                 uncertainty_type="syst"
+            #                             ), 
+            #                         },
+
+            #                     ],
+            #                 }
+            #                 for eta_i, eta in enumerate(self.etabinning[:-1])
+            #             ],
+            #         }
+            #         for pt_i, pt in enumerate(self.ptbinning[:-1])
+            #     ],
+            # }
         return schema.Binning.parse_obj(sfs)
 
-    def get_single_sf_err(self, pt, pt_i, eta, eta_i, data_only, inputtype=None):
+    def get_single_sf_err(self, pt, pt_i, eta, eta_i, data_only, inputtype=None, uncertainty_type="stat"):
         # leave of the last eta bin, which is the overflow bin
         efficiency = {}
         efficiency_err = {}
         fail = True
+        if uncertainty_type == "syst":
+            obj = "syst"
+        elif uncertainty_type == "syst2":
+            obj = "syst2"
+        else:
+            obj = "object"
         for _type in self.types:
-            efficiency[_type] = self.inputobjects[_type]["object"].GetBinContent(
-                self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
-                self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
+            efficiency[_type] = self.inputobjects[_type][obj].GetBinContent(
+                self.inputobjects[_type][obj].GetXaxis().FindBin(pt),
+                self.inputobjects[_type][obj].GetYaxis().FindBin(eta),
             )
             if efficiency[_type] < epsilon**2:
                 fail = False
-            efficiency_err[_type] = self.inputobjects[_type]["object"].GetBinError(
-                self.inputobjects[_type]["object"].GetXaxis().FindBin(pt),
-                self.inputobjects[_type]["object"].GetYaxis().FindBin(eta),
+            efficiency_err[_type] = self.inputobjects[_type][obj].GetBinError(
+                self.inputobjects[_type][obj].GetXaxis().FindBin(pt),
+                self.inputobjects[_type][obj].GetYaxis().FindBin(eta),
             )
 
         if data_only:
@@ -309,6 +479,8 @@ class pt_eta_correction(Correction):
             if efficiency[inputtype] < epsilon:
                 sf = 1.0
                 sf_err = 0.01
+            # elif sf_err > 1.0:
+            #     sf_err = 0.01
             else: 
                 sf = efficiency["Data"] / efficiency[inputtype]
                 # set scalefactor to 1.0 if the efficiencies are the same within a given epsilon
@@ -320,7 +492,8 @@ class pt_eta_correction(Correction):
                     sf_err = 0.01
                 else:
                     sf_err = math.sqrt((efficiency_err["Data"]/efficiency[inputtype])**2+(efficiency_err[inputtype]*efficiency["Data"]/(efficiency[inputtype]**2))**2)
-                if sf_err < 0.0001 and fail:
+                if sf_err > 1.0:
+                    print(sf_err)
                     print('pt, eta: ', pt, eta)
                     print('sf ', sf)
                     print('Data-Efficiency_err: ', efficiency_err["Data"])
@@ -344,9 +517,9 @@ class pt_eta_correction(Correction):
                 sf = 1.0 / efficiency["Data"]
         else:
             if efficiency[inputtype] == 0.:
-                print("Sanitizing sf for pt: ", pt, " eta: ", eta, " type: ", inputtype)
-                print("Efficiency Data: ", efficiency["Data"])
-                print("Efficiency Input: ", efficiency[inputtype])
+                #print("Sanitizing sf for pt: ", pt, " eta: ", eta, " type: ", inputtype)
+                #print("Efficiency Data: ", efficiency["Data"])
+                #print("Efficiency Input: ", efficiency[inputtype])
                 sf = 1.0
             else:
                 sf = efficiency["Data"] / efficiency[inputtype]
@@ -490,6 +663,19 @@ class emb_doublemuon_correction(Correction):
             )
             self.inputobjects[_input] = self.inputfiles[_input]
             self.inputobjects[_input]["object"] = histogram
+            try:
+                syst_hist_name = f"sys_{self.inputfiles[_input]['name']}"
+                syst_hist = self.GetFromTFile(self.inputfiles[_input]["file"], syst_hist_name)
+                self.inputobjects[_input]["syst"] = syst_hist
+            except Exception:
+                self.inputobjects[_input]["syst"] = None
+            # For second systematic (background)
+            try:
+                syst2_hist_name = f"sys2_{self.inputfiles[_input]['name']}"
+                syst2_hist = self.GetFromTFile(self.inputfiles[_input]["file"], syst2_hist_name)
+                self.inputobjects[_input]["syst2"] = syst2_hist
+            except Exception:
+                self.inputobjects[_input]["syst2"] = None
         self.info = config[self.name]["info"]
         self.header = config[self.name]["header"]
 
@@ -518,6 +704,11 @@ class emb_doublemuon_correction(Correction):
                     "name": "abs(eta_2)",
                     "type": "real",
                     "description": "Reconstructed trailing genparticle eta",
+                },
+                {
+                    "name": "uncertainty",
+                    "type": "string",
+                    "description": "Type of value: nominal, stat or syst",
                 },
             ],
             "output": {
@@ -558,17 +749,61 @@ class emb_doublemuon_correction(Correction):
                                     "flow": "clamp",
                                     "content": [
                                         {
-                                            "nodetype": "binning",
-                                            "input": "abs(eta_2)",
-                                            "edges": self.etabinning,
-                                            "flow": "clamp",
-                                            "content": self.get_sf(
-                                                pt_1,
-                                                eta_1,
-                                                pt_2,
-                                                self.etabinning,
-                                                self.data_only,
-                                            ),
+                                            "nodetype": "category",
+                                            "input": "uncertainty",
+                                            "content": [
+                                                {
+                                                    "key": "nominal",
+                                                    "value": {
+                                                        "nodetype": "binning",
+                                                        "input": "abs(eta_2)",
+                                                        "edges": self.etabinning,
+                                                        "flow": "clamp",
+                                                        "content": self.get_sf(
+                                                            pt_1,
+                                                            eta_1,
+                                                            pt_2,
+                                                            self.etabinning,
+                                                            self.data_only,
+                                                            inputtype="nominal",
+                                                        ),
+                                                    },
+                                                },
+                                                {
+                                                    "key": "stat",
+                                                    "value": {
+                                                        "nodetype": "binning",
+                                                        "input": "abs(eta_2)",
+                                                        "edges": self.etabinning,
+                                                        "flow": "clamp",
+                                                        "content": self.get_sf(
+                                                            pt_1,
+                                                            eta_1,
+                                                            pt_2,
+                                                            self.etabinning,
+                                                            self.data_only,
+                                                            inputtype="stat",
+                                                        ),
+                                                    },
+                                                },
+                                                {
+                                                    "key": "syst",
+                                                    "value": {
+                                                        "nodetype": "binning",
+                                                        "input": "abs(eta_2)",
+                                                        "edges": self.etabinning,
+                                                        "flow": "clamp",
+                                                        "content": self.get_sf(
+                                                            pt_1,
+                                                            eta_1,
+                                                            pt_2,
+                                                            self.etabinning,
+                                                            self.data_only,
+                                                            inputtype="syst",
+                                                        ),
+                                                    },
+                                                },
+                                            ],
                                         }
                                         for pt_2 in self.ptbinning[:-1]
                                     ],
@@ -584,12 +819,14 @@ class emb_doublemuon_correction(Correction):
             raise Exception("Not implemented")
         return sfs
 
-    def get_sf(self, pt_1, eta_1, pt_2, eta_binning, data_only, inputtype=None):
+    def get_sf(self, pt_1, eta_1, pt_2, eta_binning, data_only, inputtype="nominal"):
         sfs = []
         # leave of the last eta bin, which is the overflow bin
         for eta_2 in eta_binning[:-1]:
             efficiency = {}
+            efficiency_stat = {} # stat is used for stat and syst based on inputtype, stat -> err would be better
             double_quantities_efficiency = {}
+            double_quantities_stat = {}
             for lepton in [1, 2]:
                 for trigger in self.names:
                     shortname = "17" if "17" in trigger else "8"
@@ -604,6 +841,18 @@ class emb_doublemuon_correction(Correction):
                     ]["object"].GetBinContent(
                         self.inputobjects[trigger]["object"].GetXaxis().FindBin(pt_),
                         self.inputobjects[trigger]["object"].GetYaxis().FindBin(eta_),
+                    )
+                    if inputtype == "syst":
+                        obj = "syst"
+                    elif inputtype == "syst2":
+                        obj = "syst2"
+                    else:
+                        obj = "object"
+                    efficiency_stat["{}_{}".format(shortname, lepton)] = self.inputobjects[
+                        trigger
+                    ][obj].GetBinError(
+                        self.inputobjects[trigger][obj].GetXaxis().FindBin(pt_),
+                        self.inputobjects[trigger][obj].GetYaxis().FindBin(eta_),
                     )
 
             if self.double_object_quantities is not None:
@@ -628,8 +877,18 @@ class emb_doublemuon_correction(Correction):
 
             combined_efficiency = efficiency["8_1"] * efficiency["17_2"] + efficiency["8_2"] * efficiency["17_1"] - efficiency["17_1"] * efficiency["17_2"]
 
+
             if self.double_object_quantities is not None and double_quantities_efficiency:
                 combined_efficiency *= math.prod(double_quantities_efficiency.values())
+
+                combined_err = math.sqrt(
+                    (combined_err * math.prod(double_quantities_efficiency.values()))**2 +
+                    (combined_efficiency**2) * sum(
+                        (double_quantities_stat[name] / double_quantities_efficiency[name])**2
+                        for name in double_quantities_efficiency
+                    ) * (math.prod(double_quantities_efficiency.values()))**2
+                )
+
 
             try:
                 sf = 1.0 / combined_efficiency
@@ -642,10 +901,62 @@ class emb_doublemuon_correction(Correction):
                         pt_1, eta_1, pt_2, eta_2
                     )
                 )
-                print("calefactor before: {}".format(sf))
+                print("Scalefactor before: {}".format(sf))
                 print("Scalefactor after: ", 0.0)
                 sf = 0.0
-            sfs.append(sf)
+
+            if inputtype == "nominal":
+                sfs.append(sf)
+            elif inputtype == "stat" or inputtype == "syst": #  inputtype == "stat":
+                combined_err = math.sqrt(
+                    (efficiency_stat["8_1"] * efficiency["17_2"])**2 + 
+                    (efficiency_stat["17_2"] * efficiency["8_1"])**2 + 
+                    (efficiency_stat["8_2"] * efficiency["17_1"])**2 + 
+                    (efficiency_stat["17_1"] * efficiency["8_2"])**2 +
+                    (efficiency_stat["17_1"] * efficiency["17_2"])**2 +
+                    (efficiency_stat["17_2"] * efficiency["17_1"])**2
+                    )
+                ol = combined_err
+                if self.double_object_quantities is not None:
+                    for name in self.double_object_quantities:
+                        _eff_stat_12 = self.double_object_quantities[name][obj].GetBinError(
+                            self.double_object_quantities[name][obj].GetXaxis().FindBin(
+                                eval(self.double_object_quantities[name]["config"]["binvar_x"])
+                            ),
+                            self.double_object_quantities[name][obj].GetYaxis().FindBin(
+                                eval(self.double_object_quantities[name]["config"]["binvar_y"])
+                            ),
+                        )
+                        _eff_stat_21 = self.double_object_quantities[name][obj].GetBinError(
+                            self.double_object_quantities[name][obj].GetXaxis().FindBin(
+                                eval(self.double_object_quantities[name]["config"]["binvar_y"])
+                            ),
+                            self.double_object_quantities[name][obj].GetYaxis().FindBin(
+                                eval(self.double_object_quantities[name]["config"]["binvar_x"])
+                            ),
+                        )
+                    double_quantities_stat[name] = math.sqrt((_eff_stat_12**2 + _eff_stat_21**2) / 4.0)
+                    
+                    combined_err = math.sqrt(
+                        (combined_err * math.prod(double_quantities_efficiency.values()))**2 +
+                        (combined_efficiency**2) * sum(
+                            (double_quantities_stat[name] / double_quantities_efficiency[name])**2
+                            for name in double_quantities_efficiency
+                        ) * (math.prod(double_quantities_efficiency.values()))**2
+                    )
+
+                sf_err = sf * combined_err / (combined_efficiency)
+                # if inputtype == "stat" and sf_err > 1 and pt_1 == 100:
+                #     print("Large uncertainty in bin (pt_1: {}, eta_1: {}, pt_2: {}, eta_2: {})".format(pt_1, eta_1, pt_2, eta_2))
+                #     print("Efficiencies:", efficiency["8_1"], efficiency["17_2"], efficiency["8_2"], efficiency["17_1"])
+                #     print("uncertainties:", efficiency_stat["8_1"], efficiency_stat["17_2"], efficiency_stat["8_2"], efficiency_stat["17_1"])
+                #     print(self.double_object_quantities)
+                #     print("Combined error before double object quantities: {}".format(ol))
+                #     print("Combined error after double object quantities: {}".format(combined_err))
+                #     print("SF:", sf, "SF_err:", sf_err)
+                sfs.append(sf_err)
+            else:
+                raise ValueError("Unknown input type: {}".format(inputtype))
             if self.verbose:
                 print("pt_1:", pt_1, "eta_1:", eta_1, "pt_2:", pt_2, "eta_2:", eta_2)
                 print("sf:", sf)
