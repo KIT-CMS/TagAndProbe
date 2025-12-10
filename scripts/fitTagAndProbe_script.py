@@ -208,7 +208,7 @@ def main(
     # name = input.split(':')[1]
 
     infile = ROOT.TFile(filename)
-    sig_models = ["DoubleVPartcorr", "DoubleVCorr", "BWDoubleCBConvCorr", "DoubleVUncorr"]
+    sig_models = ["DoubleVPartcorr", "DoubleVCorr", "DoubleVUncorr", "BWDoubleCBConvCorr"] # , #"BWDoubleCBConvCorr"]#, "DoubleVUncorr"]
     bkg_models = ["CMSShape", "Exponential"] # , "Chebychev"]
     hist = infile.Get(name)
     pt_bins = []
@@ -229,13 +229,18 @@ def main(
                     len(pt_bins)-1, array.array('d', pt_bins),
                     len(eta_bins)-1, array.array('d', eta_bins))
 
-    hmod = ROOT.TH2D(f"accepted_model", f"Accepted signal model per bin; p_{{T}} bin; #eta bin", len(pt_bins)-1, array.array('d', pt_bins), len(eta_bins)-1, array.array('d', eta_bins))
-    hmod2 = ROOT.TH2D(f"accepted_model2", f"Accepted background model per bin; p_{{T}} bin; #eta bin", len(pt_bins)-1, array.array('d', pt_bins), len(eta_bins)-1, array.array('d', eta_bins))
- 
+    hmod = ROOT.TH2D(f"accepted_model", f"Accepted signal model per bin; p_{{T}} bin; #eta bin", 
+                     len(pt_bins)-1, array.array('d', pt_bins), 
+                     len(eta_bins)-1, array.array('d', eta_bins))
+    
+    hmod2 = ROOT.TH2D(f"accepted_model2", f"Accepted background model per bin; p_{{T}} bin; #eta bin", 
+                     len(pt_bins)-1, array.array('d', pt_bins), 
+                     len(eta_bins)-1, array.array('d', eta_bins))
+
     chi2s = [] # Tracks chi2 in 
     effs_sig =  [[] for _ in range(len(sig_models))] # Tracks efficiency for signal
     effs_bkg = [[] for _ in range(len(bkg_models))] # Tracks minimum efficiency for each bin
-    effs = effs = [
+    effs = [
                     [
                         [0.0 for _ in range(hist.GetNbinsX() * hist.GetNbinsY())]
                         for _ in range(len(bkg_models))
@@ -247,6 +252,7 @@ def main(
     for run_no, sig_model in enumerate(sig_models):
         for run_no2, bkg_model in enumerate(bkg_models): # remove
             wsp = infile.Get("wsp_" + name)
+            print(wsp)
             pdf_args = []
             nparams = 1
             if sig_model == "BWDoubleCBConvCorr":
@@ -254,12 +260,12 @@ def main(
                 pdf_args.extend(
                     [
                         "BreitWigner::BW(m_vis, meanbw[0], widthbw[2.495])",
-                        "CBShape::CBPass1(m_vis, mean[91.2,85,95], sigma[2,1,4], alpha[1,-50,50], n[1,0,50])",
-                        "CBShape::CBPass2(m_vis, meanp[91.2,85,95], sigmap[4,4,10], alphap[1,-50,50], np[1,0,50])",
+                        "CBShape::CBPass1(m_vis, mean[91.2,85,95], sigma[2,1,4], alpha[3,1.5,6], n[10,5,50])", # alpha[1,-50,50], n[1,0,50], sigma[2,1,4], alpha[1,0.5,3]
+                        "CBShape::CBPass2(m_vis, meanp[91.2,85,95], sigmap[4,4,6], alphap[3,1.5,6], np[10,5,50])", #alphap[1,-50,50], np[1,0,50], sigmap[4,4,10]
                         "SUM::DoubleCBPass(CBPass1, vFracp[0.01,0,1]*CBPass2)",
                         "FFTConvPdf::signalPass(m_vis,DoubleCBPass,BW)",
-                        "CBShape::CBFail1(m_vis, mean[91.2,85,95], sigma[2,1,4], alpha[1,-50,50], n[1,0,50])",
-                        "CBShape::CBFail2(m_vis, meanf[91.2,85,95], sigmaf[4,4,10], alphaf[1,-50,50], nf[1,0,50])",
+                        "CBShape::CBFail1(m_vis, mean[91.2,85,95], sigma[2,1,4], alpha[3,1.5,6], n[10,5,50])",
+                        "CBShape::CBFail2(m_vis, meanf[91.2,85,95], sigmaf[4,4,6], alphaf[3,1.5,6], nf[10,5,50])", # alphaf[1,-50,50], nf[1,0,50]
                         "SUM::DoubleCBFail(CBFail1, vFracf[0.01,0,1]*CBFail2)",
                         "FFTConvPdf::signalFail(m_vis,DoubleCBFail,BW)",
                     ]
@@ -374,7 +380,7 @@ def main(
 
 
             for i, b in enumerate(bins):
-                if b[2] == 45 and b[4] == 0:
+                # if (b[2] == 10):
                     dat = "%s>=%g && %s<%g && %s>=%g && %s<%g" % (
                         bin_cfg["binvar_x"],
                         b[2],
@@ -413,6 +419,7 @@ def main(
                         sds = yield_pass / yield_tot
                     except ZeroDivisionError:
                         wsp.var("efficiency").setVal(0)
+                        sds = 0
                     if rewrite_efficiency_to_zero:
                         wsp.var("efficiency").setVal(0)
                         wsp.var("efficiency").setAsymError(0, 0)
@@ -423,19 +430,23 @@ def main(
                          # ROOT.RooFit.Verbose(True),
                          # ROOT.RooFit.Save(),
                      ) # this fixes issues with the convergence of the second fit
-                    wsp.pdf("model").fitTo(
+                    fitr = wsp.pdf("model").fitTo(
                         wsp.data(dat),
                         ROOT.RooFit.Optimize(False),
-                        ROOT.RooFit.PrintLevel(-1),
+                        #ROOT.RooFit.PrintLevel(2),
                         ROOT.RooFit.Minimizer("Minuit2", "Migrad"),
                         ROOT.RooFit.Offset(True),
                         ROOT.RooFit.Extended(True),
                         ROOT.RooFit.SumW2Error(True),
-                        # ROOT.RooFit.PrintLevel(-1),
+                        ROOT.RooFit.PrintLevel(-1),
+                        # ROOT.RooFit.Verbose(True),
                         ROOT.RooFit.Strategy(2),
-                        # ROOT.RooFit.Save()
+                        ROOT.RooFit.Save()
                     )
-
+                    # fitr.Print()
+                    # fitr.correlationMatrix().Print()
+                    # cov_matrix = fitr.covarianceMatrix()  # returns TMatrixDSym
+                    # print(cov_matrix.Print())
                     # compare_uncertainties(wsp, wsp.data(dat), param_name="efficiency", nsigma=1.0, plot_file="nlllex.png") #f"{filename[:-5]}_nll_efficiency_{i}_k.png"))
 
                     nll = wsp.pdf("model").createNLL(wsp.data(dat), ROOT.RooFit.Extended(True), ROOT.RooFit.Offset(True))
@@ -510,6 +521,8 @@ def main(
                         hsyst.SetBinContent(b[0], b[1], wsp.var("efficiency").getVal())
                         hsyst2.SetBinContent(b[0], b[1], wsp.var("efficiency").getVal())
                         hmod2.SetBinContent(b[0], b[1], run_no2 + 1)
+
+
                         axis = plot.GetAxisHist(pads[0])
                         # plot.Set(axis.GetXaxis().SetTitle('m_{tag-probe} (GeV)'))
                         if particle == "e":
@@ -600,18 +613,21 @@ def main(
                         legend2.AddEntry(xframe2.findObject("BkgFail"), "BG", "l")
                         legend2.Draw()
 
-                        # canv.Print("%s/%s_%s_%s.png" % (plot_dir, canv.GetName(), sig_model, bkg_model))
-                        canv.Print("%s/%s.png" % (plot_dir, canv.GetName()))
-                        # canv.Print("%s/%s.pdf" % (plot_dir, canv.GetName())) uncomment
+                        canv.Print("%s/%s_%s_%s.png" % (plot_dir, canv.GetName(), sig_model, bkg_model))
+                            #canv.Print("%s/%s.png" % (plot_dir, canv.GetName()))
+                            # canv.Print("%s/%s.pdf" % (plot_dir, canv.GetName())) uncomment
                     if (run_no == (len(sig_models)-1)) & (bkg_model == bkg_models[-1]):
+                        sig_mean = sum([effs[j][best_comb[1][i]][i] for j in range(len(sig_models))]) / len(sig_models) if sig_models else 0.0
                         
                         sig_dev = [abs(effs[j][best_comb[1][i]][i] - effs[best_comb[0][i]][best_comb[1][i]][i]) for j in range(len(sig_models))] # Calulate efficiency deviation for signal models
+                        # kek = [effs[j][best_comb[1][i]][i] for j in range(len(sig_models))]
+                        # print(sig_mean, kek)
                         bkg_dev = [abs(effs[best_comb[0][i]][j][i] - effs[best_comb[0][i]][best_comb[1][i]][i]) for j in range(len(bkg_models))]
-
+                        new = abs(sig_mean - effs[best_comb[0][i]][best_comb[1][i]][i])
                         max_sig_dev = max(sig_dev) if sig_dev else 0.0
                         max_bkg_dev = max(bkg_dev) if bkg_dev else 0.0
             
-                        hsyst.SetBinError(b[0], b[1], max_sig_dev)
+                        hsyst.SetBinError(b[0], b[1], new)
                         hsyst2.SetBinError(b[0], b[1], max_bkg_dev)
 
     if bin_replace is not None:
