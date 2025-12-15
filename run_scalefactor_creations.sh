@@ -1,6 +1,7 @@
-eras=("2017UL" "2018UL" "2016preVFPUL" "2016postVFPUL")
-channels=("muon" "embeddingselection")
+eras=("2018UL") #"2016preVFPUL" "2016postVFPUL") # "2017UL" "2016preVFPUL" "2016postVFPUL")
+channels=("electron")  #"embeddingselection")   
 
+#step =
 output_dir="output"
 
 mkdir -p $output_dir
@@ -19,28 +20,28 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 					--channel $channel \
 					--era $era \
 					--settings-folder $output_dir/used_settings \
-					--output $output_dir
+					--output $output_dir 
 				if [[ "$channel" == "embeddingselection" ]]; then # Additional dz quantity of trg_Mu17TrkMu8_DZ_Mu17
 					nice -n 19 python3 scripts/TagAndProbe.py \
 						--channel $channel \
-						--era $era \
-						--no-leg-switching \
-						--mode="UPDATE" \
-						--settings-folder $output_dir/used_settings \
-						--output $output_dir
+				 		--era $era \
+				 		--no-leg-switching \
+				 		--mode="UPDATE" \
+				 		--settings-folder $output_dir/used_settings \
+				 		--output $output_dir
 				fi
 				nice -n 19 python3 scripts/runTagAndProbeFits.py \
 					--channel $channel \
-					--era $era \
-					--fit \
-					--plot \
-					--settings-folder $output_dir/used_settings \
-					--output $output_dir
+				 	--era $era \
+				 	--fit \
+				 	--plot \
+				 	--settings-folder $output_dir/used_settings \
+				 	--output $output_dir
 				nice -n 19 python3 scripts/translate_to_crosspog_json.py \
-					--era $era \
-					--channel $channel \
-					--output $output_dir \
-					--settings-folder $output_dir/used_settings
+				 	--era $era \
+				 	--channel $channel \
+				 	--output $output_dir \
+				 	--settings-folder $output_dir/used_settings
 			) &
 			pids[${channel_idx}]=$!
 		done
@@ -48,11 +49,11 @@ for era_idx in $(seq 0 $((${#eras[@]} - 1))); do
 		for pid in ${pids[*]}; do
 			wait $pid
 		done
-		python3 merge_jsons.py \
-			--json-a $output_dir/jsons/muon_${era}.json \
-			--json-b $output_dir/jsons/embeddingselection_${era}.json \
-			--json-output muon_${era}.json \
-			--output $output_dir/jsons/merged
+		# python3 merge_jsons.py \
+		# 	--json-a $output_dir/jsons/muon_${era}.json \
+		# 	--json-b $output_dir/jsons/embeddingselection_${era}.json \
+		# 	--json-output muon_${era}.json \
+		# 	--output $output_dir/jsons/merged
 	) &
 	pids_eras[${era_idx}]=$!
 done
@@ -62,6 +63,6 @@ for pid_era in ${pids_eras[*]}; do
 done
 wait
 
-mv $output_dir $output_dir.done
+#mv $output_dir $output_dir.done
 
 echo "All done"

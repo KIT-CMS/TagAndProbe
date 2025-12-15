@@ -1,0 +1,209 @@
+bins:
+- best_bkg: CMSShape
+  best_sig: DoubleVCorr
+  bkg_chi2: 3.4420375163348282
+  bkg_uncertainty: 0.008691491631040549
+  eff: 0.787289415176393
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 10.0
+  - 15.0
+  sig_chi2: 3.4420375163348282
+  sig_uncertainty: 0.031011049636475052
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 12.232866636100027
+  bkg_uncertainty: 0.006089384026466194
+  eff: 0.8218356146415364
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 15.0
+  - 20.0
+  sig_chi2: 12.232866636100027
+  sig_uncertainty: 0.0010007894766207448
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 17.532501922538398
+  bkg_uncertainty: 0.005562278107246743
+  eff: 0.8463042139261548
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 20.0
+  - 24.0
+  sig_chi2: 17.532501922538398
+  sig_uncertainty: 0.000211001922190035
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 14.083993216270708
+  bkg_uncertainty: 0.00417093775598254
+  eff: 0.8605441092539784
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 24.0
+  - 26.0
+  sig_chi2: 14.083993216270708
+  sig_uncertainty: 0.0019846536226433287
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 14.665755407482502
+  bkg_uncertainty: 0.011332611371017376
+  eff: 0.8734814437602444
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 26.0
+  - 28.0
+  sig_chi2: 14.665755407482502
+  sig_uncertainty: 0.00010604062202812514
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 35.834463835891356
+  bkg_uncertainty: 0.01958113868272504
+  eff: 0.8850540817331423
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 28.0
+  - 30.0
+  sig_chi2: 35.834463835891356
+  sig_uncertainty: 0.000256484365609877
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 95.70381495617424
+  bkg_uncertainty: 0.025445904604484038
+  eff: 0.893756979541035
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 30.0
+  - 32.0
+  sig_chi2: 95.70381495617424
+  sig_uncertainty: 0.008152471368977343
+- best_bkg: CMSShape
+  best_sig: DoubleVCorr
+  bkg_chi2: 159.8936094367844
+  bkg_uncertainty: 0.02344595333786026
+  eff: 0.8980846887679257
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 32.0
+  - 34.0
+  sig_chi2: 159.8936094367844
+  sig_uncertainty: 0.01832918649716897
+- best_bkg: Exponential
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 291.55401172250714
+  bkg_uncertainty: 0.0008928506438652395
+  eff: 0.8790470267548391
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 34.0
+  - 36.0
+  sig_chi2: 291.55401172250714
+  sig_uncertainty: 0.0001622527638732718
+- best_bkg: Exponential
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 750.4147665929239
+  bkg_uncertainty: 4.4111735464369417e-07
+  eff: 0.8893774090901849
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 36.0
+  - 38.0
+  sig_chi2: 750.4147665929239
+  sig_uncertainty: 4.1880489298762313e-07
+- best_bkg: Exponential
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 1814.3259226096018
+  bkg_uncertainty: 8.387655434649588e-07
+  eff: 0.8982029017556907
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 38.0
+  - 40.0
+  sig_chi2: 1814.3259226096018
+  sig_uncertainty: 1.1987950236935774e-06
+- best_bkg: Exponential
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 14145.034054587542
+  bkg_uncertainty: 5.250020973512903e-09
+  eff: 0.9105347257885941
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 40.0
+  - 45.0
+  sig_chi2: 14145.034054587542
+  sig_uncertainty: 2.464738468876959e-07
+- best_bkg: Exponential
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 10243.293926953329
+  bkg_uncertainty: 0.0007460888971011492
+  eff: 0.9185902055381883
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 45.0
+  - 50.0
+  sig_chi2: 10243.293926953329
+  sig_uncertainty: 6.276214757905407e-07
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 1563.591526922111
+  bkg_uncertainty: 0.0021903356593879764
+  eff: 0.9225260447931354
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 50.0
+  - 100.0
+  sig_chi2: 1563.591526922111
+  sig_uncertainty: 0.00519271747900707
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 1.8272963865051832
+  bkg_uncertainty: 0.004053650659376351
+  eff: 0.9277317559270711
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 100.0
+  - 200.0
+  sig_chi2: 1.8272963865051832
+  sig_uncertainty: 0.0003213882056779527
+- best_bkg: CMSShape
+  best_sig: DoubleVPartcorr
+  bkg_chi2: 0.5986135384404856
+  bkg_uncertainty: 0.0013950449070132542
+  eff: 0.9152441699516827
+  eta:
+  - 0.0
+  - 2.5
+  pt:
+  - 200.0
+  - 1000.0
+  sig_chi2: 0.5986135384404856
+  sig_uncertainty: 0.0013689057513079916

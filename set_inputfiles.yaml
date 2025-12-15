@@ -9,6 +9,12 @@
     Embedding: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2017UL/MuonEmbedding_2017UL.root
     DY: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2017UL/DYJetsToLL_2017UL_mm.root
 
+  electron:
+    folder: ntuple
+    Data: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/EGamma_2017UL.root
+    Embedding: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/ElEmbedding_2017UL.root
+    DY: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/DYJets_2017UL_ee.root
+
 
 2018UL:
   embeddingselection:
@@ -19,7 +25,13 @@
     folder: ntuple
     Data: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2018UL/SingleMuon_2018UL.root
     Embedding: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2018UL/MuonEmbedding_2018UL.root
-    DY: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2018UL/DYJetsToLL_2018UL_mm.root
+    DY: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2018UL/DYJetsToLL_2018UL.root
+
+  electron:
+    folder: ntuple
+    Data: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/EGamma_2018UL.root
+    Embedding: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/ElEmbedding_2018UL.root
+    DY: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/DYJets_2018UL_ee.root
 
 
 2016preVFPUL:
@@ -33,6 +45,12 @@
     Embedding: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2016preVFPUL/MuonEmbedding_2016preVFPUL.root
     DY: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2016preVFPUL/DYJetsToLL_2016preVFPUL_mm.root
 
+  electron:
+    folder: ntuple
+    Data: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/EGamma_2016preVFPUL.root
+    Embedding: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/ElEmbedding_2016preVFPUL.root
+    DY: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/DYJets_2016preVFPUL_ee.root
+
 
 2016postVFPUL:
   embeddingselection:
@@ -44,3 +62,10 @@
     Data: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2016postVFPUL/SingleMuon_2016postVFPUL.root
     Embedding: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2016postVFPUL/MuonEmbedding_2016postVFPUL.root
     DY: /ceph/amonsch/HiggsToTauTau/scalefactors/tap_2016preVFPUL_2016postVFPUL_2017UL_2018UL_mm_2024-04-02_v2/2016postVFPUL/DYJetsToLL_2016postVFPUL_mm.root
+
+  electron:
+    folder: ntuple
+    Data: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/EGamma_2016postVFPUL.root
+    Embedding: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/ElEmbedding_2016postVFPUL.root
+    DY: /ceph/rschmieder/Run2UltraLegacy/scalefactors/29_01_25_tagandprobe_ee/merged/DYJets_2016postVFPUL_ee.root
+

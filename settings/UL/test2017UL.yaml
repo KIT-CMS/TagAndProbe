@@ -1,0 +1,16 @@
+ID_pt_eta_bins:
+  name: ID_pt_eta_bins
+  var: "m_vis(50,65,115)"
+  tag: "( (iso_tag < 0.35) && ((fsr_photon_veto_tag < 0.5) && (fsr_photon_veto_probe < 0.5)) && (id_medium_tag) && (trg_IsoMu27__no_filterbit_tag) && (pt_tag > 28.0) && ((q_1 + q_2) == 0) && (abs(dz_tag) < 0.2) && (abs(dxy_tag) < 0.045) )"
+  probe: "(id_medium_probe)"
+  binvar_x: pt_probe
+  bins_x: [10.0, 16.5, 21.5, 22.6, 24.6, 26.6, 28.6, 30.6, 32.6, 34.6, 36.6, 38.6, 40.6, 46.5, 51.5, 63.0, 86.0, 106.0, 200.0]
+  binvar_y: "abs(eta_probe)"
+  bins_y: [0, 0.9, 1.2, 2.1, 2.4]
+  BKG: CMSShape
+  SIG: DoubleVCorr
+  TITLE: "Medium Muon ID"
+  y_range: [0.7, 1.05]
+  ratio_y_range: [0.7, 1.1]
+  info: "Scale factor for the medium muon ID (binned in eta). Scale factor is provided for Embedding (emb) and Simulation (mc)"
+  header: "Scale factor for the medium muon ID (binned in eta)"

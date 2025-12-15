@@ -1,0 +1,127 @@
+#!/bin/env python
+import subprocess
+import prototype_fitTagAndProbe_script_bestmodel
+import plotEffSlices_script
+import argparse
+import yaml
+from multiprocessing import Process
+import plot_lepton_sf
+import sys
+import logging
+
+logger = logging.getLogger("")
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--channel", required=True)
+parser.add_argument("--fit", action="store_true")
+parser.add_argument("--plot", action="store_true")
+parser.add_argument("--era", required=True)
+parser.add_argument("--output", default="output", required=False)
+parser.add_argument("--settings-folder", default="settings", required=False)
+parser.add_argument("--passfail_hist", default="no", choices=["yes", "no"], help="Create Chi² pass/fail histograms", required=False)
+
+args = parser.parse_args()
+
+
+def setup_logging(output_file, level=logging.DEBUG):
+    logger.setLevel(level)
+    formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    file_handler = logging.FileHandler(output_file, "w")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+
+Dir = "{}/tag_and_probe_{}_{}/".format(args.output, args.channel, args.era)
+
+setup_logging("{}/fits_plots.log".format(args.output), logging.INFO)
+
+parameters = yaml.safe_load(
+    open(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}.yaml")
+)
+
+print("Adding double object quantities...")
+try:
+    parameters.update(
+        yaml.safe_load(
+            open(f"{args.settings_folder}/UL/settings_{args.channel}_{args.era}_double_object_quantities.yaml")
+        )
+    )
+    print(f"Double object quantities of {args.channel}, {args.era} added")
+except FileNotFoundError:
+    print(f"Double object quantities of {args.channel}, {args.era} not found or not present, continue without...")
+
+if args.fit:
+    particle = "m" if ("muon" in args.channel or "embedding" in args.channel) else "e"
+    expression_list = []
+    for label in parameters:
+        if args.channel == "embeddingselection":
+            filename = ["{}/{}_TP_Data_{}.root".format(args.output, args.channel, args.era)]
+            Dir_ext = ["/data"]
+        else:
+            filename = [
+                "{}/{}_TP_Embedding_{}.root".format(args.output, args.channel, args.era),
+                "{}/{}_TP_Data_{}.root".format(args.output, args.channel, args.era),
+                "{}/{}_TP_DY_{}.root".format(args.output, args.channel, args.era),
+            ]
+            Dir_ext = ["/embedding", "/data", "/DY"]
+        for i, file_ in enumerate(filename):
+            expression_list.append(
+                [
+                    file_,
+                    label,
+                    Dir + label + Dir_ext[i],
+                    parameters[label]["SIG"],
+                    parameters[label]["BKG"],
+                    parameters[label]["TITLE"],
+                    particle,
+                    "",
+                    None,
+                    args.passfail_hist,
+                ]
+            )
+    #       fitTagAndProbe_script.main(
+    #           filename=file_,
+    #           name=label,
+    #           sig_model=parameters[label]["SIG"],
+    #           bkg_model=parameters[label]["BKG"],
+    #           title=parameters[label]["TITLE"],
+    #           particle=particle,
+    #           postfix="",
+    #           plot_dir=Dir + label + Dir_ext[i],
+    #           bin_replace=None)
+    procs = []
+    for expression in expression_list:
+        p = Process(target=prototype_fitTagAndProbe_script_bestmodel.main, args=tuple(expression))
+        procs.append(p)
+        p.start()
+    for p in procs:
+        p.join()
+
+if args.plot:
+    for label in parameters:
+        eta_binning = parameters[label]["bins_y"]
+        for i, etalimit in enumerate(eta_binning[:-1:]):
+            plotoptions = parameters[label]
+            plotoptions["etarange"] = "{}-{}".format(eta_binning[i], eta_binning[i + 1])
+            plotoptions["ptrange"] = [
+                min(plotoptions["bins_x"]),
+                max(plotoptions["bins_x"]),
+            ]
+            plotoptions["dataonly"] = False
+            if max(plotoptions["bins_x"]) == 1000.0:
+                plotoptions["ptrange"][1] = 999.0
+            plotoptions["outputdir"] = Dir
+            if args.channel == "embeddingselection":
+                plotoptions["dataonly"] = True
+                plot_lepton_sf.plot_efficiency(
+                    args.output, label, args.era, args.channel, i, plotoptions
+                )
+            else:
+                plot_lepton_sf.build_plot(
+                    args.output, label, args.era, args.channel, i, plotoptions
+                )

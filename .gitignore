@@ -10,6 +10,16 @@ tmp/
 *.png
 *.pdf
 *.ipynb
+model_systematics/
+*.aux
+*.tex
+*.log
+*.json
+*.json.gz
+*.txt
+*.npz
+*.odp
+
 
 
 # Byte-compiled / optimized / DLL files
