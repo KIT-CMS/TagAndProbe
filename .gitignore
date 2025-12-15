@@ -9,6 +9,7 @@ tmp/
 # plots
 *.png
 *.pdf
+*.ipynb
 
 
 # Byte-compiled / optimized / DLL files
@@ -118,3 +119,4 @@ venv.bak/
 
 # HEP specific
 *.root
+used_settings/
